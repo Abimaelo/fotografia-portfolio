@@ -6,8 +6,8 @@
   NODE_VERSION = "18"
 
 # Configuración de funciones
-[build.functions]
-  directory = "functions"
+[functions]
+  directory = "netlify/functions"
 
 # Headers de seguridad
 [[headers]]
@@ -58,23 +58,21 @@
 [plugins.inputs]
   minify = true
 
-# Configuración de variables de entorno para producción
+# Configuración de variables de entorno
 [context.production.environment]
-  GITHUB_TOKEN = "YOUR_GITHUB_TOKEN_HERE"
-  REPO_OWNER = "YOUR_GITHUB_USERNAME"
-  REPO_NAME = "YOUR_REPO_NAME"
-  BRANCH = "main"
+  GITHUB_TOKEN = ""
+  GITHUB_OWNER = "abimaelo"
+  GITHUB_REPO = "fotografia-portfolio"
+  GITHUB_BRANCH = "main"
 
-# Configuración para deploy de preview
 [context.deploy-preview.environment]
-  GITHUB_TOKEN = "YOUR_GITHUB_TOKEN_HERE"
-  REPO_OWNER = "YOUR_GITHUB_USERNAME"
-  REPO_NAME = "YOUR_REPO_NAME"
-  BRANCH = "main"
+  GITHUB_TOKEN = ""
+  GITHUB_OWNER = "abimaelo"
+  GITHUB_REPO = "fotografia-portfolio"
+  GITHUB_BRANCH = "main"
 
-# Configuración para branch deploys
 [context.branch-deploy.environment]
-  GITHUB_TOKEN = "YOUR_GITHUB_TOKEN_HERE"
-  REPO_OWNER = "YOUR_GITHUB_USERNAME"
-  REPO_NAME = "YOUR_REPO_NAME"
-  BRANCH = "main"
+  GITHUB_TOKEN = ""
+  GITHUB_OWNER = "abimaelo"
+  GITHUB_REPO = "fotografia-portfolio"
+  GITHUB_BRANCH = "main"
