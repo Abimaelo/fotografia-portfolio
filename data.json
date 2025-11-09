@@ -1,10 +1,10 @@
 {
   "siteTitle": "Abimael Ortiz Álvarez",
   "photographer": {
-    "name": "Carlos Martínez",
-    "specialty": "Fotografía de Retratos y Eventos",
+    "name": "Abimael Ortiz Àlvarez",
+    "specialty": "Fotografía de Retratos",
     "experience": "8 años de experiencia",
-    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
+    "image": "https://raw.githubusercontent.com/abimaelo/fotografia-portfolio/main/images/portfolio/hero-1762729317421-sxwa1ry8gg_1762729339608.jpg"
   },
   "socialMedia": {
     "instagram": "https://instagram.com/carlos_fotografo",
@@ -14,8 +14,8 @@
     "website": "https://carlosmartinez-fotografia.com"
   },
   "hero": {
-    "title": "Capturando Momentos Únicos",
-    "subtitle": "Fotografía profesional que transforma tus momentos especiales en recuerdos eternos. Especializados en retratos, eventos y fotografía comercial.",
+    "title": "Capturando belleza y estilo",
+    "subtitle": "Fotografía profesional especializada en retratos y fotografía comercial.",
     "image": "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1920&h=1080&fit=crop",
     "ctaText": "Ver Mi Portfolio"
   },
