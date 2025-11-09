@@ -1405,11 +1405,44 @@ p {
         right: 0;
     }
     
+    .nav-menu::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 30%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-menu.active::before {
+        opacity: 1;
+        visibility: visible;
+    }
+    
     .nav-menu a {
         font-size: 1.2rem;
         padding: 1rem 0;
         text-align: center;
         width: 100%;
+        color: var(--color-black);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        position: relative;
+        z-index: 1001;
+    }
+    
+    .nav-menu a:hover {
+        color: var(--color-dark-gray);
+    }
+    
+    .nav-menu a::after {
+        display: none;
     }
 }
 

@@ -4,6 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScrolling();
     initContactForm();
     initMobileMenu();
+    
+    // Fix hero image flash issue - hide hero image initially
+    const heroImage = document.getElementById('hero-image');
+    if (heroImage) {
+        heroImage.style.opacity = '0';
+        heroImage.style.transition = 'opacity 0.5s ease';
+    }
 });
 
 // Cargar datos del sitio desde JSON
@@ -33,7 +40,12 @@ function updatePageContent(data) {
         document.getElementById('hero-subtitle').textContent = data.hero.subtitle;
         document.getElementById('hero-cta').textContent = data.hero.ctaText;
         if (data.hero.image) {
-            document.getElementById('hero-image').src = data.hero.image;
+            const heroImage = document.getElementById('hero-image');
+            heroImage.src = data.hero.image;
+            // Show image after it's loaded to prevent flash
+            heroImage.onload = function() {
+                this.style.opacity = '1';
+            };
         }
     }
     
@@ -83,6 +95,14 @@ function updatePageContent(data) {
     // Footer
     const footerTitle = data.siteTitle || 'Mi Sitio Web';
     document.getElementById('footer-title').textContent = footerTitle;
+    
+    // Update copyright text from data
+    if (data.meta?.copyright) {
+        const copyrightElement = document.querySelector('.footer-bottom p');
+        if (copyrightElement) {
+            copyrightElement.textContent = data.meta.copyright;
+        }
+    }
     
     // Social media links
     if (data.socialMedia) {
@@ -341,7 +361,7 @@ function initScrollAnimations() {
 }
 
 // Abrir galería de imágenes
-function openGallery(title, images) {
+window.openGallery = function(title, images) {
     // Crear modal para la galería
     const modal = document.createElement('div');
     modal.className = 'gallery-modal';
@@ -384,7 +404,7 @@ function openGallery(title, images) {
     modal.dataset.currentIndex = '0';
 }
 
-function closeGallery() {
+window.closeGallery = function() {
     const modal = document.querySelector('.gallery-modal');
     if (modal) {
         modal.remove();
@@ -441,7 +461,7 @@ document.addEventListener('click', function(e) {
 });
 
 // Abrir post del blog en modal
-function openBlogPost(title, content, date) {
+window.openBlogPost = function(title, content, date) {
     // Crear modal para el post del blog
     const modal = document.createElement('div');
     modal.className = 'blog-post-modal';
@@ -927,9 +947,21 @@ function initMobileMenu() {
     const navMenu = document.getElementById('nav-menu');
     
     if (navToggle && navMenu) {
-        navToggle.addEventListener('click', function() {
+        // Add event listener for toggle button
+        navToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Toggle active states
             this.classList.toggle('active');
             navMenu.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         });
         
         // Close menu when clicking on a link
@@ -938,14 +970,25 @@ function initMobileMenu() {
             link.addEventListener('click', function() {
                 navToggle.classList.remove('active');
                 navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
             });
         });
         
         // Close menu when clicking outside
         document.addEventListener('click', function(e) {
-            if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+            if (!navToggle.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
                 navToggle.classList.remove('active');
                 navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Close menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
             }
         });
     }

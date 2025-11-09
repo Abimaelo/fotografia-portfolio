@@ -572,6 +572,10 @@
                 <input type="text" id="site-title-input" placeholder="Mi Sitio Web">
             </div>
             <div class="form-group">
+                <label for="copyright-input">Texto de Copyright</label>
+                <input type="text" id="copyright-input" placeholder="© 2025 Mi Sitio Web. Todos los derechos reservados.">
+            </div>
+            <div class="form-group">
                 <label for="footer-title-input">Título en el Footer</label>
                 <input type="text" id="footer-title-input" placeholder="Mi Sitio Web">
             </div>
@@ -811,6 +815,7 @@
             // General settings
             document.getElementById('site-title-input').value = siteData.siteTitle || '';
             document.getElementById('footer-title-input').value = siteData.siteTitle || '';
+            document.getElementById('copyright-input').value = siteData.meta?.copyright || '';
             
             // Photographer info
             document.getElementById('photographer-name-input').value = siteData.photographer?.name || '';
@@ -1044,6 +1049,10 @@
             try {
                 // Update siteData from forms
                 siteData.siteTitle = document.getElementById('site-title-input').value;
+                
+                // Update meta section for copyright
+                if (!siteData.meta) siteData.meta = {};
+                siteData.meta.copyright = document.getElementById('copyright-input').value;
                 
                 siteData.photographer = {
                     name: document.getElementById('photographer-name-input').value,
