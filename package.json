@@ -1,0 +1,27 @@
+{
+  "name": "cms-sitio-web",
+  "version": "2.0.0",
+  "description": "Sistema completo de sitio web con CMS integrado usando GitHub + Netlify + Funcionalidad de Carga de Imágenes",
+  "main": "index.html",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'Build complete'",
+    "deploy": "netlify deploy --prod"
+  },
+  "dependencies": {
+    "@octokit/rest": "^20.0.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "keywords": [
+    "cms",
+    "netlify",
+    "github",
+    "javascript",
+    "html",
+    "css"
+  ],
+  "author": "MiniMax Agent",
+  "license": "MIT"
+}
