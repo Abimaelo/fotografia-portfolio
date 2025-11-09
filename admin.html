@@ -253,6 +253,84 @@
             transform: none;
         }
         
+        /* Social Media Toggles */
+        .social-controls {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--color-off-white);
+            border-radius: 4px;
+            border: 1px solid var(--color-light-gray);
+        }
+        
+        .social-controls h3 {
+            margin: 0 0 1rem 0;
+            color: var(--color-black);
+            font-size: 1.1rem;
+        }
+        
+        .social-toggles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: var(--color-dark-gray);
+            padding: 0.75rem;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .toggle-label:hover {
+            background: var(--color-white);
+        }
+        
+        .toggle-label input[type="checkbox"] {
+            display: none;
+        }
+        
+        .toggle-slider {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: var(--color-medium-gray);
+            border-radius: 12px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: var(--color-white);
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .toggle-label input[type="checkbox"]:checked + .toggle-slider {
+            background: var(--color-black);
+        }
+        
+        .toggle-label input[type="checkbox"]:checked + .toggle-slider::before {
+            transform: translateX(20px);
+        }
+        
+        .social-urls h3 {
+            margin: 0 0 1rem 0;
+            color: var(--color-black);
+            font-size: 1.1rem;
+        }
+        }
+        
         .status-message {
             padding: 1rem 1.5rem;
             border-radius: 2px;
@@ -515,6 +593,10 @@
                 <input type="text" id="photographer-experience-input" placeholder="8 años de experiencia">
             </div>
             <div class="form-group">
+                <label for="photographer-bio-input">Biografía del Fotógrafo</label>
+                <textarea id="photographer-bio-input" rows="6" placeholder="Escribe aquí tu biografía profesional..."></textarea>
+            </div>
+            <div class="form-group">
                 <label for="photographer-image-input">Foto del Fotógrafo</label>
                 <div class="image-upload-container">
                     <input type="text" id="photographer-image-input" placeholder="URL de la imagen o usa el botón de carga">
@@ -586,26 +668,59 @@
         <!-- Social Media Section -->
         <div id="social" class="admin-section">
             <h2>Redes Sociales</h2>
-            <div class="two-column">
-                <div class="form-group">
-                    <label for="instagram-input">Instagram URL</label>
-                    <input type="url" id="instagram-input" placeholder="https://instagram.com/tu_usuario">
+            <div class="social-controls">
+                <h3>Mostrar/Ocultar Redes Sociales</h3>
+                <div class="social-toggles">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="show-instagram" checked>
+                        <span class="toggle-slider"></span>
+                        Mostrar Instagram
+                    </label>
+                    <label class="toggle-label">
+                        <input type="checkbox" id="show-facebook" checked>
+                        <span class="toggle-slider"></span>
+                        Mostrar Facebook
+                    </label>
+                    <label class="toggle-label">
+                        <input type="checkbox" id="show-twitter">
+                        <span class="toggle-slider"></span>
+                        Mostrar Twitter
+                    </label>
+                    <label class="toggle-label">
+                        <input type="checkbox" id="show-linkedin" checked>
+                        <span class="toggle-slider"></span>
+                        Mostrar LinkedIn
+                    </label>
+                    <label class="toggle-label">
+                        <input type="checkbox" id="show-website">
+                        <span class="toggle-slider"></span>
+                        Mostrar Sitio Web
+                    </label>
                 </div>
-                <div class="form-group">
-                    <label for="facebook-input">Facebook URL</label>
-                    <input type="url" id="facebook-input" placeholder="https://facebook.com/tu_pagina">
-                </div>
-                <div class="form-group">
-                    <label for="twitter-input">Twitter URL</label>
-                    <input type="url" id="twitter-input" placeholder="https://twitter.com/tu_usuario">
-                </div>
-                <div class="form-group">
-                    <label for="linkedin-input">LinkedIn URL</label>
-                    <input type="url" id="linkedin-input" placeholder="https://linkedin.com/in/tu_perfil">
-                </div>
-                <div class="form-group">
-                    <label for="website-input">Sitio Web Personal URL</label>
-                    <input type="url" id="website-input" placeholder="https://tuweb.com">
+            </div>
+            <div class="social-urls">
+                <h3>URLs de Redes Sociales</h3>
+                <div class="two-column">
+                    <div class="form-group">
+                        <label for="instagram-input">Instagram URL</label>
+                        <input type="url" id="instagram-input" placeholder="https://instagram.com/tu_usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="facebook-input">Facebook URL</label>
+                        <input type="url" id="facebook-input" placeholder="https://facebook.com/tu_pagina">
+                    </div>
+                    <div class="form-group">
+                        <label for="twitter-input">Twitter URL</label>
+                        <input type="url" id="twitter-input" placeholder="https://twitter.com/tu_usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="linkedin-input">LinkedIn URL</label>
+                        <input type="url" id="linkedin-input" placeholder="https://linkedin.com/in/tu_perfil">
+                    </div>
+                    <div class="form-group">
+                        <label for="website-input">Sitio Web Personal URL</label>
+                        <input type="url" id="website-input" placeholder="https://tuweb.com">
+                    </div>
                 </div>
             </div>
         </div>
@@ -701,6 +816,7 @@
             document.getElementById('photographer-name-input').value = siteData.photographer?.name || '';
             document.getElementById('photographer-specialty-input').value = siteData.photographer?.specialty || '';
             document.getElementById('photographer-experience-input').value = siteData.photographer?.experience || '';
+            document.getElementById('photographer-bio-input').value = siteData.photographer?.bio || '';
             document.getElementById('photographer-image-input').value = siteData.photographer?.image || '';
             
             // Hero section
@@ -715,6 +831,14 @@
             document.getElementById('twitter-input').value = siteData.socialMedia?.twitter || '';
             document.getElementById('linkedin-input').value = siteData.socialMedia?.linkedin || '';
             document.getElementById('website-input').value = siteData.socialMedia?.website || '';
+            
+            // Social media visibility toggles
+            const showControls = siteData.socialMedia?.show || {};
+            document.getElementById('show-instagram').checked = showControls.instagram ?? true;
+            document.getElementById('show-facebook').checked = showControls.facebook ?? true;
+            document.getElementById('show-twitter').checked = showControls.twitter ?? false;
+            document.getElementById('show-linkedin').checked = showControls.linkedin ?? true;
+            document.getElementById('show-website').checked = showControls.website ?? false;
             
             // Contact
             document.getElementById('contact-email-input').value = siteData.contact?.email || '';
@@ -925,6 +1049,7 @@
                     name: document.getElementById('photographer-name-input').value,
                     specialty: document.getElementById('photographer-specialty-input').value,
                     experience: document.getElementById('photographer-experience-input').value,
+                    bio: document.getElementById('photographer-bio-input').value,
                     image: document.getElementById('photographer-image-input').value
                 };
                 
@@ -936,6 +1061,13 @@
                 };
                 
                 siteData.socialMedia = {
+                    show: {
+                        instagram: document.getElementById('show-instagram').checked,
+                        facebook: document.getElementById('show-facebook').checked,
+                        twitter: document.getElementById('show-twitter').checked,
+                        linkedin: document.getElementById('show-linkedin').checked,
+                        website: document.getElementById('show-website').checked
+                    },
                     instagram: document.getElementById('instagram-input').value,
                     facebook: document.getElementById('facebook-input').value,
                     twitter: document.getElementById('twitter-input').value,

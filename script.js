@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadSiteData();
     initSmoothScrolling();
     initContactForm();
+    initMobileMenu();
 });
 
 // Cargar datos del sitio desde JSON
@@ -41,6 +42,9 @@ function updatePageContent(data) {
         document.getElementById('photographer-name').textContent = data.photographer.name;
         document.getElementById('photographer-specialty').textContent = data.photographer.specialty;
         document.getElementById('photographer-experience').textContent = data.photographer.experience;
+        if (data.photographer.bio) {
+            document.getElementById('photographer-bio').textContent = data.photographer.bio;
+        }
         if (data.photographer.image) {
             document.getElementById('photographer-image').src = data.photographer.image;
         }
@@ -82,14 +86,53 @@ function updatePageContent(data) {
     
     // Social media links
     if (data.socialMedia) {
-        if (data.socialMedia.instagram) {
-            document.getElementById('instagram-link').href = data.socialMedia.instagram;
-        }
-        if (data.socialMedia.facebook) {
-            document.getElementById('facebook-link').href = data.socialMedia.facebook;
-        }
-        if (data.socialMedia.linkedin) {
-            document.getElementById('linkedin-link').href = data.socialMedia.linkedin;
+        if (data.socialMedia.show) {
+            // Control which social media links to show
+            if (data.socialMedia.show.instagram && data.socialMedia.instagram) {
+                document.getElementById('instagram-link').style.display = 'flex';
+                document.getElementById('instagram-link').href = data.socialMedia.instagram;
+            } else {
+                document.getElementById('instagram-link').style.display = 'none';
+            }
+            
+            if (data.socialMedia.show.facebook && data.socialMedia.facebook) {
+                document.getElementById('facebook-link').style.display = 'flex';
+                document.getElementById('facebook-link').href = data.socialMedia.facebook;
+            } else {
+                document.getElementById('facebook-link').style.display = 'none';
+            }
+            
+            if (data.socialMedia.show.twitter && data.socialMedia.twitter) {
+                document.getElementById('twitter-link').style.display = 'flex';
+                document.getElementById('twitter-link').href = data.socialMedia.twitter;
+            } else {
+                document.getElementById('twitter-link').style.display = 'none';
+            }
+            
+            if (data.socialMedia.show.linkedin && data.socialMedia.linkedin) {
+                document.getElementById('linkedin-link').style.display = 'flex';
+                document.getElementById('linkedin-link').href = data.socialMedia.linkedin;
+            } else {
+                document.getElementById('linkedin-link').style.display = 'none';
+            }
+            
+            if (data.socialMedia.show.website && data.socialMedia.website) {
+                document.getElementById('website-link').style.display = 'flex';
+                document.getElementById('website-link').href = data.socialMedia.website;
+            } else {
+                document.getElementById('website-link').style.display = 'none';
+            }
+        } else {
+            // Fallback to show all if no show control
+            if (data.socialMedia.instagram) {
+                document.getElementById('instagram-link').href = data.socialMedia.instagram;
+            }
+            if (data.socialMedia.facebook) {
+                document.getElementById('facebook-link').href = data.socialMedia.facebook;
+            }
+            if (data.socialMedia.linkedin) {
+                document.getElementById('linkedin-link').href = data.socialMedia.linkedin;
+            }
         }
     }
 }
@@ -877,3 +920,33 @@ window.addEventListener('resize', () => {
         initScrollAnimations();
     }, 100);
 });
+
+// Mobile menu functionality
+function initMobileMenu() {
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a link
+        const navLinks = navMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    }
+}
