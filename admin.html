@@ -6,6 +6,12 @@
     <title>Panel de Administración - CMS</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Netlify Identity Widget - OAuth 2.0 -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
+    <!-- OAuth Verification Script -->
+    <script src="oauth-verification.js"></script>
     <style>
         /* Variables CSS para el admin - compatibles con el diseño monocromático */
         :root {
@@ -552,10 +558,225 @@
             border-radius: 2px;
             border: 1px solid var(--color-light-gray);
         }
+        
+        /* OAuth Login Styles */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .login-container {
+            background: var(--color-white);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .login-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--color-black);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .login-header p {
+            color: var(--color-dark-gray);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        
+        .login-btn {
+            background: var(--color-black);
+            color: var(--color-white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .login-btn:hover {
+            background: var(--color-dark-gray);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .login-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .login-info {
+            background: var(--color-off-white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .login-info p {
+            font-weight: 600;
+            color: var(--color-black);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .login-info ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .login-info li {
+            color: var(--color-dark-gray);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .login-footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-light-gray);
+        }
+        
+        .login-footer a {
+            color: var(--color-black);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .user-info {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--color-white);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .user-info.show {
+            display: block;
+        }
+        
+        .user-info .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+        }
+        
+        .user-info .user-name {
+            font-weight: 600;
+            color: var(--color-black);
+        }
+        
+        .user-info .user-email {
+            font-size: 0.9rem;
+            color: var(--color-dark-gray);
+        }
+        
+        .logout-btn {
+            background: var(--error-color);
+            color: var(--color-white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: #c82333;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-white);
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
-    <div class="admin-container">
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <h1>🔐 Acceso Seguro</h1>
+                <p>Autentícate con GitHub para acceder al panel de administración</p>
+            </div>
+            
+            <div class="login-button-container">
+                <div data-netlify-identity-button style="margin: 2rem 0;">
+                    <button type="button" class="login-btn" onclick="initNetlifyIdentity()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        Iniciar Sesión con GitHub
+                    </button>
+                </div>
+            </div>
+            
+            <div class="login-info">
+                <p><strong>Seguridad OAuth 2.0</strong></p>
+                <ul>
+                    <li>✅ Autenticación segura con GitHub</li>
+                    <li>✅ Sin almacenamiento de contraseñas</li>
+                    <li>✅ Tokens JWT de tiempo limitado</li>
+                    <li>✅ Auditoría completa de actividades</li>
+                </ul>
+            </div>
+            
+            <div class="login-footer">
+                <p>¿Problemas de acceso? <a href="#" onclick="showTroubleshooting()">Ver ayuda</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel (Hidden until login) -->
+    <div id="admin-panel" class="admin-container" style="display: none;">
         <div class="admin-header">
             <h1>Panel de Administración CMS</h1>
             <a href="index.html" style="color: white; text-decoration: none;">Ver Sitio</a>
@@ -1380,6 +1601,329 @@
                 statusDiv.style.display = 'none';
             }, 5000);
         }
+        
+        // === OAUTH 2.0 AUTHENTICATION ===
+        
+        // Initialize Netlify Identity
+        function initNetlifyIdentity() {
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.on('init', (user) => {
+                    if (user) {
+                        // User is already logged in
+                        showAdminPanel(user);
+                    } else {
+                        // No user logged in, show login
+                        showLoginScreen();
+                    }
+                });
+                
+                window.netlifyIdentity.on('login', (user) => {
+                    // User successfully logged in
+                    showAdminPanel(user);
+                });
+                
+                window.netlifyIdentity.on('logout', () => {
+                    // User logged out
+                    showLoginScreen();
+                });
+                
+                // Initialize the widget
+                window.netlifyIdentity.init();
+            } else {
+                console.error('Netlify Identity widget not loaded');
+                showError('Error de configuración: Netlify Identity no está disponible');
+            }
+        }
+        
+        // Show admin panel after successful login
+        function showAdminPanel(user) {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+            
+            // Show user info
+            showUserInfo(user);
+            
+            // Load data and populate forms
+            loadDataAndPopulate();
+        }
+        
+        // Show login screen
+        function showLoginScreen() {
+            document.getElementById('login-screen').style.display = 'flex';
+            document.getElementById('admin-panel').style.display = 'none';
+            document.getElementById('user-info').classList.remove('show');
+        }
+        
+        // Show user information
+        function showUserInfo(user) {
+            const userInfo = document.getElementById('user-info');
+            if (userInfo) {
+                userInfo.innerHTML = `
+                    <div style="display: flex; align-items: center;">
+                        <img src="${user.user_metadata?.avatar_url || user.avatar_url || 'https://github.com/github.png'}" 
+                             alt="Avatar" class="user-avatar">
+                        <div>
+                            <div class="user-name">${user.user_metadata?.full_name || user.user_metadata?.name || user.email}</div>
+                            <div class="user-email">${user.email}</div>
+                        </div>
+                        <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+                    </div>
+                `;
+                userInfo.classList.add('show');
+            }
+        }
+        
+        // Logout function
+        function logout() {
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.logout();
+            }
+        }
+        
+        // Load data and populate forms (modified to work with OAuth)
+        async function loadDataAndPopulate() {
+            try {
+                await loadData();
+                populateForms();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                showStatus('Error cargando los datos del sitio', 'error');
+            }
+        }
+        
+        // Modified fetch function to include auth token
+        async function authenticatedFetch(url, options = {}) {
+            if (!window.netlifyIdentity) {
+                throw new Error('Netlify Identity no está inicializado');
+            }
+            
+            const user = window.netlifyIdentity.currentUser();
+            if (!user) {
+                throw new Error('Usuario no autenticado');
+            }
+            
+            // Get the access token
+            const token = await user.jwt();
+            
+            // Add authorization header
+            const headers = {
+                ...options.headers,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
+            
+            return fetch(url, {
+                ...options,
+                headers
+            });
+        }
+        
+        // Modified save function to use OAuth
+        async function saveChanges() {
+            const btn = document.querySelector('.save-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading-spinner"></span> Guardando...';
+            
+            try {
+                // Update siteData from forms
+                siteData.siteTitle = document.getElementById('site-title-input').value;
+                
+                if (!siteData.meta) siteData.meta = {};
+                siteData.meta.copyright = document.getElementById('copyright-input').value;
+                
+                siteData.photographer = {
+                    name: document.getElementById('photographer-name-input').value,
+                    specialty: document.getElementById('photographer-specialty-input').value,
+                    experience: document.getElementById('photographer-experience-input').value,
+                    bio: document.getElementById('photographer-bio-input').value,
+                    image: document.getElementById('photographer-image-input').value
+                };
+                
+                siteData.hero = {
+                    title: document.getElementById('hero-title-input').value,
+                    subtitle: document.getElementById('hero-subtitle-input').value,
+                    image: document.getElementById('hero-image-input').value,
+                    ctaText: document.getElementById('hero-cta-input').value
+                };
+                
+                siteData.socialMedia = {
+                    show: {
+                        instagram: document.getElementById('show-instagram').checked,
+                        facebook: document.getElementById('show-facebook').checked,
+                        twitter: document.getElementById('show-twitter').checked,
+                        linkedin: document.getElementById('show-linkedin').checked,
+                        website: document.getElementById('show-website').checked
+                    },
+                    instagram: document.getElementById('instagram-input').value,
+                    facebook: document.getElementById('facebook-input').value,
+                    twitter: document.getElementById('twitter-input').value,
+                    linkedin: document.getElementById('linkedin-input').value,
+                    website: document.getElementById('website-input').value
+                };
+                
+                siteData.contact = {
+                    email: document.getElementById('contact-email-input').value,
+                    phone: document.getElementById('contact-phone-input').value,
+                    address: document.getElementById('contact-address-input').value,
+                    studio: document.getElementById('contact-studio-input').value,
+                    availability: document.getElementById('contact-availability-input').value
+                };
+                
+                // Send to Netlify Function with authentication
+                const response = await authenticatedFetch('/.netlify/functions/update-content', {
+                    method: 'POST',
+                    body: JSON.stringify(siteData)
+                });
+                
+                if (response.ok) {
+                    showStatus('¡Cambios guardados exitosamente!', 'success');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    const errorData = await response.json().catch(() => ({ error: 'Error desconocido' }));
+                    throw new Error(errorData.error || 'Error en la respuesta del servidor');
+                }
+                
+            } catch (error) {
+                console.error('Error saving:', error);
+                showStatus('Error guardando los cambios: ' + error.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '💾 Guardar Cambios';
+            }
+        }
+        
+        // Modified image upload to use OAuth
+        async function uploadImage(inputId, portfolioIndex, field) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'text') return;
+            
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    try {
+                        showStatus('Subiendo imagen...', 'info');
+                        
+                        const base64 = await fileToBase64(file);
+                        const fileName = generateFileName(file.name);
+                        
+                        // Upload to GitHub via Netlify Function with OAuth
+                        const response = await authenticatedFetch('/.netlify/functions/upload-image', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                fileName: fileName,
+                                fileContent: base64,
+                                portfolioIndex: portfolioIndex,
+                                field: field
+                            })
+                        });
+                        
+                        if (response.ok) {
+                            const result = await response.json();
+                            input.value = result.url;
+                            
+                            if (field === 'image') {
+                                updatePortfolioItem(portfolioIndex, 'image', result.url);
+                            }
+                            
+                            renderPortfolio();
+                            showStatus('¡Imagen subida exitosamente!', 'success');
+                        } else {
+                            const errorData = await response.json().catch(() => ({ error: 'Error desconocido' }));
+                            throw new Error(errorData.error || 'Error subiendo la imagen');
+                        }
+                        
+                    } catch (error) {
+                        console.error('Error uploading image:', error);
+                        showStatus('Error subiendo la imagen: ' + error.message, 'error');
+                    }
+                }
+            };
+            fileInput.click();
+        }
+        
+        // Show troubleshooting information
+        function showTroubleshooting() {
+            const troubleshooting = `
+                <div style="background: var(--color-off-white); padding: 1.5rem; border-radius: 8px; margin-top: 1rem; text-align: left;">
+                    <h3 style="margin-top: 0; color: var(--color-black);">🔧 Solución de Problemas</h3>
+                    <ul style="color: var(--color-dark-gray); line-height: 1.6;">
+                        <li><strong>No aparece el botón de GitHub:</strong> Verifica que Netlify Identity esté habilitado</li>
+                        <li><strong>Error 401:</strong> Tu sesión ha expirado, refresca la página</li>
+                        <li><strong>Error al guardar:</strong> Verifica que Git Gateway esté habilitado</li>
+                        <li><strong>Problemas de carga:</strong> Asegúrate de que las Netlify Functions estén desplegadas</li>
+                    </ul>
+                    <p style="font-size: 0.9rem; color: var(--color-medium-gray); margin-bottom: 0;">
+                        <strong>Documentación completa:</strong> Revisa los archivos de configuración incluidos
+                    </p>
+                </div>
+            `;
+            
+            const loginContainer = document.querySelector('.login-container');
+            const existingTroubleshooting = loginContainer.querySelector('.troubleshooting');
+            if (existingTroubleshooting) {
+                existingTroubleshooting.remove();
+            } else {
+                const div = document.createElement('div');
+                div.className = 'troubleshooting';
+                div.innerHTML = troubleshooting;
+                loginContainer.appendChild(div);
+            }
+        }
+        
+        // Show error message
+        function showError(message) {
+            const loginContainer = document.querySelector('.login-container');
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = `
+                background: var(--error-color);
+                color: white;
+                padding: 1rem;
+                border-radius: 8px;
+                margin: 1rem 0;
+                text-align: center;
+                font-weight: 500;
+            `;
+            errorDiv.textContent = message;
+            loginContainer.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        }
+        
+        // Initialize OAuth on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add user info div
+            if (!document.getElementById('user-info')) {
+                const userInfoDiv = document.createElement('div');
+                userInfoDiv.id = 'user-info';
+                userInfoDiv.className = 'user-info';
+                document.body.appendChild(userInfoDiv);
+            }
+            
+            // Initialize Netlify Identity
+            setTimeout(() => {
+                initNetlifyIdentity();
+            }, 100);
+        });
+        
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                // Check if user is still authenticated
+                if (window.netlifyIdentity) {
+                    const user = window.netlifyIdentity.currentUser();
+                    if (!user) {
+                        showLoginScreen();
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>
