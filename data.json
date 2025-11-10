@@ -1,8 +1,8 @@
 {
-  "siteTitle": "Estudio de Fotografía",
+  "siteTitle": "Abimael Ortiz Álvarez",
   "photographer": {
-    "name": "Carlos Martínez",
-    "specialty": "Fotografía de Retratos y Eventos",
+    "name": "Abimael Ortiz Àlvarez",
+    "specialty": "Fotografía de Retratos",
     "experience": "8 años de experiencia",
     "bio": "Con más de 8 años de experiencia en fotografía de retratos y eventos, me especializo en capturar la esencia única de cada momento. Mi enfoque artístico combina técnica profesional con sensibilidad creativa, resultando en imágenes que cuentan historias y preservan emociones para toda la vida.",
     "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
@@ -12,7 +12,7 @@
       "instagram": true,
       "facebook": true,
       "twitter": false,
-      "linkedin": true,
+      "linkedin": false,
       "website": false
     },
     "instagram": "https://instagram.com/carlos_fotografo",
@@ -22,8 +22,8 @@
     "website": "https://carlosmartinez-fotografia.com"
   },
   "hero": {
-    "title": "Capturando Momentos Únicos",
-    "subtitle": "Fotografía profesional que transforma tus momentos especiales en recuerdos eternos. Especializados en retratos, eventos y fotografía comercial.",
+    "title": "Capturando belleza y estilo",
+    "subtitle": "Fotografía profesional especializada",
     "image": "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1920&h=1080&fit=crop",
     "ctaText": "Ver Mi Portfolio"
   },
@@ -31,10 +31,6 @@
     {
       "title": "Fotografía de Retratos",
       "description": "Sesiones fotográficas personalizadas para capturar tu esencia y personalidad con un enfoque artístico y profesional."
-    },
-    {
-      "title": "Fotografía de Eventos",
-      "description": "Documentamos tus eventos especiales con discreción y creatividad, creando un relato visual de momentos inolvidables."
     },
     {
       "title": "Fotografía Comercial",
@@ -112,6 +108,6 @@
   "meta": {
     "lastModified": "2025-01-02T12:00:00Z",
     "version": "2.0",
-    "copyright": "© 2025 Estudio de Fotografía Carlos Martínez. Todos los derechos reservados."
+    "copyright": "© 2025 Estudio de Fotografía Abimael Ortiz Álvarez. Todos los derechos reservados."
   }
 }
