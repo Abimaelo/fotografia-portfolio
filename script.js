@@ -1115,16 +1115,35 @@ window.openGallery = function(title, images) {
     // Event listeners para navegación
     const prevBtn = modal.querySelector('.gallery-prev');
     const nextBtn = modal.querySelector('.gallery-next');
+    const closeBtn = modal.querySelector('.gallery-close');
     
-    prevBtn.addEventListener('click', () => {
-        currentIndex = currentIndex > 0 ? currentIndex - 1 : imageArray.length - 1;
-        showImage(currentIndex);
-    });
+    console.log('🛠️ Configurando event listeners - prevBtn:', prevBtn, 'nextBtn:', nextBtn, 'closeBtn:', closeBtn);
     
-    nextBtn.addEventListener('click', () => {
-        currentIndex = currentIndex < imageArray.length - 1 ? currentIndex + 1 : 0;
-        showImage(currentIndex);
-    });
+    if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentIndex = currentIndex > 0 ? currentIndex - 1 : imageArray.length - 1;
+            showImage(currentIndex);
+            console.log('⬅️ Navegando a imagen anterior:', currentIndex);
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentIndex = currentIndex < imageArray.length - 1 ? currentIndex + 1 : 0;
+            showImage(currentIndex);
+            console.log('➡️ Navegando a imagen siguiente:', currentIndex);
+        });
+    }
+    
+    if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeModal();
+            console.log('❌ Cerrando modal');
+        });
+    }
     
     // Hover effects para botones
     prevBtn.addEventListener('mouseenter', () => {
@@ -1155,32 +1174,36 @@ window.openGallery = function(title, images) {
         }, 300);
     }
     
-    const closeBtn = modal.querySelector('.gallery-close');
-    closeBtn.addEventListener('click', closeModal);
+
     
-    // Cerrar al hacer clic fuera de la imagen
+    // Cerrar al hacer clic fuera del contenido
     modal.addEventListener('click', (e) => {
         if (e.target === modal || e.target.closest('.gallery-content') === null) {
             closeModal();
+            console.log('🖱️ Cerrando modal por clic exterior');
         }
     });
     
-    // No cerrar al hacer clic en la imagen
-    currentImage.addEventListener('click', (e) => {
+    // No cerrar al hacer clic en el contenido
+    modal.querySelector('.gallery-content').addEventListener('click', (e) => {
         e.stopPropagation();
     });
     
     // Navegación con teclado
     const keyHandler = function(e) {
+        console.log('⌨️ Tecla presionada:', e.key);
         if (e.key === 'Escape') {
             closeModal();
             document.removeEventListener('keydown', keyHandler);
+            console.log('❌ Cerrando modal por ESC');
         } else if (e.key === 'ArrowLeft') {
             currentIndex = currentIndex > 0 ? currentIndex - 1 : imageArray.length - 1;
             showImage(currentIndex);
+            console.log('⬅️ Tecla izquierda:', currentIndex);
         } else if (e.key === 'ArrowRight') {
             currentIndex = currentIndex < imageArray.length - 1 ? currentIndex + 1 : 0;
             showImage(currentIndex);
+            console.log('➡️ Tecla derecha:', currentIndex);
         }
     };
     
