@@ -223,8 +223,18 @@ window.closeBlogPost = function() {
     }
 }
 
+// Prevent multiple initializations
+let isInitialized = false;
+
 document.addEventListener('DOMContentLoaded', function() {
+    if (isInitialized) {
+        console.log('⚠️ Already initialized, skipping...');
+        return;
+    }
+    
     console.log('DOM loaded, initializing...');
+    isInitialized = true;
+    
     loadSiteData();
     initSmoothScrolling();
     initContactForm();
@@ -450,6 +460,10 @@ function renderPortfolio(portfolioItems) {
             hasImages: !!item.images
         });
         
+        // Mark button as configured
+        portfolioBtn.setAttribute('data-portfolio-bound', 'true');
+        portfolioBtn.setAttribute('data-title', item.title);
+        
         portfolioBtn.addEventListener('click', (e) => {
             e.preventDefault();
             console.log('🖱️ Portfolio button clicked:', {
@@ -487,7 +501,8 @@ function renderPortfolio(portfolioItems) {
     console.log('🔍 Total portfolio buttons in DOM:', allButtons.length);
     
     allButtons.forEach((button, index) => {
-        console.log('🔍 Button', index, 'has event listeners:', button.onclick !== null);
+        const hasClickListener = button.hasAttribute('data-portfolio-bound');
+        console.log('🔍 Button', index, 'is bound:', hasClickListener, 'title:', button.getAttribute('data-title'));
     });
     
     console.log('✅ Portfolio rendered successfully with', portfolioItems.length, 'items');
