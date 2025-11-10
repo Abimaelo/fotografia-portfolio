@@ -5,13 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScrolling();
     initContactForm();
     initMobileMenu();
-    
-    // Fix hero image flash issue - hide hero image initially
-    const heroImage = document.getElementById('hero-image');
-    if (heroImage) {
-        heroImage.style.opacity = '0';
-        heroImage.style.transition = 'opacity 0.5s ease';
-    }
 });
 
 // Cargar datos del sitio desde JSON
@@ -42,11 +35,12 @@ function updatePageContent(data) {
         document.getElementById('hero-cta').textContent = data.hero.ctaText;
         if (data.hero.image) {
             const heroImage = document.getElementById('hero-image');
-            heroImage.src = data.hero.image;
-            // Show image after it's loaded to prevent flash
-            heroImage.onload = function() {
-                this.style.opacity = '1';
-            };
+            // Set background image for smooth transition
+            heroImage.style.backgroundImage = `url('${data.hero.image}')`;
+            heroImage.style.backgroundSize = 'cover';
+            heroImage.style.backgroundPosition = 'center';
+            heroImage.style.transition = 'opacity 0.5s ease';
+            heroImage.style.opacity = '1';
         }
     }
     
