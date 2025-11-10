@@ -960,7 +960,13 @@ window.openGallery = function(title, images) {
     console.log('🎨 Abriendo galería:', title);
     console.log('🖼️ Imágenes:', images);
     
-    // Crear modal
+    // Cerrar galería existente si hay una
+    const existingModal = document.querySelector('.gallery-modal');
+    if (existingModal) {
+        document.body.removeChild(existingModal);
+    }
+    
+    // Crear modal con z-index muy alto
     const modal = document.createElement('div');
     modal.className = 'gallery-modal';
     modal.style.cssText = `
@@ -969,11 +975,11 @@ window.openGallery = function(title, images) {
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.9);
+        background: rgba(0, 0, 0, 0.95);
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 10000;
+        z-index: 99999;
         opacity: 0;
         transition: opacity 0.3s ease;
     `;
@@ -982,82 +988,99 @@ window.openGallery = function(title, images) {
     modal.innerHTML = `
         <div class="gallery-content" style="
             position: relative;
-            max-width: 90vw;
-            max-height: 90vh;
-            background: white;
-            border-radius: 8px;
+            max-width: 95vw;
+            max-height: 95vh;
+            background: #1a1a1a;
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         ">
             <div class="gallery-header" style="
-                padding: 20px;
+                padding: 20px 30px;
                 background: #333;
                 color: white;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                border-bottom: 1px solid #555;
             ">
-                <h3 style="margin: 0;">${title}</h3>
-                <button class="gallery-close" style="
-                    background: none;
-                    border: none;
-                    color: white;
-                    font-size: 24px;
-                    cursor: pointer;
-                    padding: 0;
-                    width: 30px;
-                    height: 30px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                ">&times;</button>
+                <h3 style="margin: 0; font-size: 1.5rem; font-weight: 600;">${title}</h3>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="image-counter" style="
+                        font-size: 0.9rem;
+                        color: #ccc;
+                        margin-right: 10px;
+                    ">1 de 6</span>
+                    <button class="gallery-close" style="
+                        background: none;
+                        border: none;
+                        color: white;
+                        font-size: 28px;
+                        cursor: pointer;
+                        padding: 0;
+                        width: 40px;
+                        height: 40px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 50%;
+                        transition: background 0.3s ease;
+                    ">&times;</button>
+                </div>
             </div>
             <div class="gallery-body" style="
                 position: relative;
                 width: 100%;
-                height: calc(90vh - 80px);
-                overflow: hidden;
+                height: calc(95vh - 100px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #1a1a1a;
             ">
                 <img class="gallery-current" src="" alt="${title}" style="
-                    width: 100%;
-                    height: 100%;
+                    max-width: 100%;
+                    max-height: 100%;
                     object-fit: contain;
                     display: block;
+                    border-radius: 8px;
                 ">
                 <button class="gallery-prev" style="
                     position: absolute;
                     left: 20px;
                     top: 50%;
                     transform: translateY(-50%);
-                    background: rgba(0, 0, 0, 0.5);
-                    border: none;
+                    background: rgba(255, 255, 255, 0.2);
+                    border: 2px solid rgba(255, 255, 255, 0.3);
                     color: white;
                     font-size: 24px;
-                    padding: 15px;
                     cursor: pointer;
                     border-radius: 50%;
-                    width: 50px;
-                    height: 50px;
+                    width: 60px;
+                    height: 60px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    transition: all 0.3s ease;
+                    backdrop-filter: blur(10px);
                 ">‹</button>
                 <button class="gallery-next" style="
                     position: absolute;
                     right: 20px;
                     top: 50%;
                     transform: translateY(-50%);
-                    background: rgba(0, 0, 0, 0.5);
-                    border: none;
+                    background: rgba(255, 255, 255, 0.2);
+                    border: 2px solid rgba(255, 255, 255, 0.3);
                     color: white;
                     font-size: 24px;
-                    padding: 15px;
                     cursor: pointer;
                     border-radius: 50%;
-                    width: 50px;
-                    height: 50px;
+                    width: 60px;
+                    height: 60px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    transition: all 0.3s ease;
+                    backdrop-filter: blur(10px);
                 ">›</button>
             </div>
         </div>
@@ -1075,10 +1098,14 @@ window.openGallery = function(title, images) {
     let currentIndex = 0;
     const imageArray = JSON.parse(images.replace(/&quot;/g, '"'));
     const currentImage = modal.querySelector('.gallery-current');
+    const imageCounter = modal.querySelector('.image-counter');
     
     function showImage(index) {
         if (imageArray && imageArray[index]) {
             currentImage.src = imageArray[index];
+            currentImage.alt = `${title} - Imagen ${index + 1}`;
+            imageCounter.textContent = `${index + 1} de ${imageArray.length}`;
+            console.log(`📸 Mostrando imagen ${index + 1} de ${imageArray.length}`);
         }
     }
     
@@ -1086,37 +1113,68 @@ window.openGallery = function(title, images) {
     showImage(0);
     
     // Event listeners para navegación
-    modal.querySelector('.gallery-prev').addEventListener('click', () => {
+    const prevBtn = modal.querySelector('.gallery-prev');
+    const nextBtn = modal.querySelector('.gallery-next');
+    
+    prevBtn.addEventListener('click', () => {
         currentIndex = currentIndex > 0 ? currentIndex - 1 : imageArray.length - 1;
         showImage(currentIndex);
     });
     
-    modal.querySelector('.gallery-next').addEventListener('click', () => {
+    nextBtn.addEventListener('click', () => {
         currentIndex = currentIndex < imageArray.length - 1 ? currentIndex + 1 : 0;
         showImage(currentIndex);
+    });
+    
+    // Hover effects para botones
+    prevBtn.addEventListener('mouseenter', () => {
+        prevBtn.style.background = 'rgba(255, 255, 255, 0.3)';
+        prevBtn.style.transform = 'translateY(-50%) scale(1.1)';
+    });
+    prevBtn.addEventListener('mouseleave', () => {
+        prevBtn.style.background = 'rgba(255, 255, 255, 0.2)';
+        prevBtn.style.transform = 'translateY(-50%) scale(1)';
+    });
+    
+    nextBtn.addEventListener('mouseenter', () => {
+        nextBtn.style.background = 'rgba(255, 255, 255, 0.3)';
+        nextBtn.style.transform = 'translateY(-50%) scale(1.1)';
+    });
+    nextBtn.addEventListener('mouseleave', () => {
+        nextBtn.style.background = 'rgba(255, 255, 255, 0.2)';
+        nextBtn.style.transform = 'translateY(-50%) scale(1)';
     });
     
     // Cerrar modal
     function closeModal() {
         modal.style.opacity = '0';
         setTimeout(() => {
-            document.body.removeChild(modal);
+            if (document.body.contains(modal)) {
+                document.body.removeChild(modal);
+            }
         }, 300);
     }
     
-    modal.querySelector('.gallery-close').addEventListener('click', closeModal);
+    const closeBtn = modal.querySelector('.gallery-close');
+    closeBtn.addEventListener('click', closeModal);
     
+    // Cerrar al hacer clic fuera de la imagen
     modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
+        if (e.target === modal || e.target.closest('.gallery-content') === null) {
             closeModal();
         }
     });
     
+    // No cerrar al hacer clic en la imagen
+    currentImage.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+    
     // Navegación con teclado
-    document.addEventListener('keydown', function escapeHandler(e) {
+    const keyHandler = function(e) {
         if (e.key === 'Escape') {
             closeModal();
-            document.removeEventListener('keydown', escapeHandler);
+            document.removeEventListener('keydown', keyHandler);
         } else if (e.key === 'ArrowLeft') {
             currentIndex = currentIndex > 0 ? currentIndex - 1 : imageArray.length - 1;
             showImage(currentIndex);
@@ -1124,7 +1182,9 @@ window.openGallery = function(title, images) {
             currentIndex = currentIndex < imageArray.length - 1 ? currentIndex + 1 : 0;
             showImage(currentIndex);
         }
-    });
+    };
+    
+    document.addEventListener('keydown', keyHandler);
     
     console.log('✅ Galería abierta correctamente');
 };
