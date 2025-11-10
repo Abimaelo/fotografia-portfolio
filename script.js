@@ -189,11 +189,14 @@ function renderPortfolio(portfolioItems) {
     portfolioItems.forEach(item => {
         const portfolioCard = document.createElement('div');
         portfolioCard.className = 'portfolio-card';
-        portfolioCard.innerHTML = `
+        
+        // Crear el contenido del portfolio card
+        const portfolioContent = document.createElement('div');
+        portfolioContent.innerHTML = `
             <div class="portfolio-image">
                 <img src="${item.image}" alt="${item.title}" loading="lazy">
                 <div class="portfolio-overlay">
-                    <button class="portfolio-btn" onclick="openGallery('${item.title}', ${JSON.stringify(item.images).replace(/"/g, '&quot;')})">
+                    <button class="portfolio-btn" data-title="${item.title}" data-images="${encodeURIComponent(JSON.stringify(item.images))}">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -207,7 +210,20 @@ function renderPortfolio(portfolioItems) {
                 <p>${item.description}</p>
             </div>
         `;
+        
+        portfolioCard.appendChild(portfolioContent);
         container.appendChild(portfolioCard);
+    });
+    
+    // Agregar event listeners después de crear todos los elementos
+    const portfolioButtons = container.querySelectorAll('.portfolio-btn');
+    portfolioButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const title = this.getAttribute('data-title');
+            const imagesJson = decodeURIComponent(this.getAttribute('data-images'));
+            const images = JSON.parse(imagesJson);
+            openGallery(title, images);
+        });
     });
 }
 
@@ -982,7 +998,11 @@ function initMobileMenu() {
     }
     
     // Add event listener for toggle button
-    navToggle.addEventListener('click', toggleMenu);
+    navToggle.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleMenu();
+    };
     
     // Close menu when clicking on a link
     const navLinks = navMenu.querySelectorAll('a');
@@ -1013,4 +1033,8 @@ function initMobileMenu() {
     });
     
     console.log('Mobile menu initialized successfully');
+}
+
+// Make mobile menu function globally accessible
+window.initMobileMenu = initMobileMenu;
 }
