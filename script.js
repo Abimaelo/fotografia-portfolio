@@ -1,5 +1,6 @@
 // Script principal para el sitio web
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing...');
     loadSiteData();
     initSmoothScrolling();
     initContactForm();
@@ -98,7 +99,7 @@ function updatePageContent(data) {
     
     // Update copyright text from data
     if (data.meta?.copyright) {
-        const copyrightElement = document.querySelector('.footer-bottom p');
+        const copyrightElement = document.getElementById('copyright-text');
         if (copyrightElement) {
             copyrightElement.textContent = data.meta.copyright;
         }
@@ -192,7 +193,7 @@ function renderPortfolio(portfolioItems) {
             <div class="portfolio-image">
                 <img src="${item.image}" alt="${item.title}" loading="lazy">
                 <div class="portfolio-overlay">
-                    <button class="portfolio-btn">
+                    <button class="portfolio-btn" onclick="openGallery('${item.title}', ${JSON.stringify(item.images).replace(/"/g, '&quot;')})">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -206,12 +207,6 @@ function renderPortfolio(portfolioItems) {
                 <p>${item.description}</p>
             </div>
         `;
-        
-        // Add click event listener instead of inline onclick
-        portfolioCard.querySelector('.portfolio-btn').addEventListener('click', () => {
-            window.openGallery(item.title, item.images);
-        });
-        
         container.appendChild(portfolioCard);
     });
 }
@@ -237,15 +232,8 @@ function renderBlogPosts(posts) {
             </div>
             <h3>${post.title}</h3>
             <p>${truncateText(post.content, 150)}</p>
-            <a href="#" class="blog-link">Leer más →</a>
+            <a href="#" class="blog-link" onclick="openBlogPost('${post.title}', ${JSON.stringify(post.content).replace(/"/g, '&quot;')}, '${formattedDate}'); return false;">Leer más →</a>
         `;
-        
-        // Add click event listener instead of inline onclick
-        postCard.querySelector('.blog-link').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.openBlogPost(post.title, post.content, formattedDate);
-        });
-        
         container.appendChild(postCard);
     });
 }
@@ -427,6 +415,8 @@ window.closeGallery = function() {
 
 function nextImage() {
     const modal = document.querySelector('.gallery-modal');
+    if (!modal) return;
+    
     const images = JSON.parse(modal.dataset.images);
     let currentIndex = parseInt(modal.dataset.currentIndex);
     
@@ -438,6 +428,8 @@ function nextImage() {
 
 function prevImage() {
     const modal = document.querySelector('.gallery-modal');
+    if (!modal) return;
+    
     const images = JSON.parse(modal.dataset.images);
     let currentIndex = parseInt(modal.dataset.currentIndex);
     
@@ -449,9 +441,13 @@ function prevImage() {
 
 function showImage(index) {
     const modal = document.querySelector('.gallery-modal');
-    const images = JSON.parse(modal.dataset.images);
+    if (!modal) return;
     
-    document.getElementById('gallery-main-image').src = images[index];
+    const images = JSON.parse(modal.dataset.images);
+    const mainImage = document.getElementById('gallery-main-image');
+    if (mainImage) {
+        mainImage.src = images[index];
+    }
     modal.dataset.currentIndex = index;
     
     // Actualizar thumbnails
@@ -459,6 +455,11 @@ function showImage(index) {
         img.classList.toggle('active', i === index);
     });
 }
+
+// Make functions global
+window.nextImage = nextImage;
+window.prevImage = prevImage;
+window.showImage = showImage;
 
 // Cerrar galería con ESC o click fuera
 document.addEventListener('keydown', function(e) {
@@ -516,9 +517,6 @@ function closeBlogPost() {
         }, 300);
     }
 }
-
-// Make closeBlogPost global
-window.closeBlogPost = closeBlogPost;
 
 // Cerrar modal del blog con ESC
 document.addEventListener('keydown', function(e) {
@@ -957,14 +955,21 @@ window.addEventListener('resize', () => {
     }, 100);
 });
 
-// Global mobile menu function
-window.toggleMobileMenu = function() {
-    console.log('Toggling mobile menu...');
+// Mobile menu functionality
+function initMobileMenu() {
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
     
-    if (navToggle && navMenu) {
-        // Toggle active states
+    if (!navToggle || !navMenu) {
+        console.log('Mobile menu elements not found');
+        return;
+    }
+    
+    console.log('Initializing mobile menu...');
+    
+    // Toggle function
+    function toggleMenu() {
+        console.log('Toggle menu clicked');
         navToggle.classList.toggle('active');
         navMenu.classList.toggle('active');
         
@@ -975,38 +980,37 @@ window.toggleMobileMenu = function() {
             document.body.style.overflow = 'auto';
         }
     }
-}
-
-// Mobile menu functionality
-function initMobileMenu() {
-    const navToggle = document.getElementById('nav-toggle');
-    const navMenu = document.getElementById('nav-menu');
     
-    if (navToggle && navMenu) {
-        // Close menu when clicking on a link
-        const navLinks = navMenu.querySelectorAll('a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                window.toggleMobileMenu();
-            });
+    // Add event listener for toggle button
+    navToggle.addEventListener('click', toggleMenu);
+    
+    // Close menu when clicking on a link
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
         });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!navToggle.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
-                window.toggleMobileMenu();
-            }
-        });
-        
-        // Close menu on window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                const navToggle = document.getElementById('nav-toggle');
-                const navMenu = document.getElementById('nav-menu');
-                if (navToggle && navMenu && navMenu.classList.contains('active')) {
-                    window.toggleMobileMenu();
-                }
-            }
-        });
-    }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!navToggle.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    // Close menu on window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    console.log('Mobile menu initialized successfully');
 }
