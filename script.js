@@ -83,6 +83,12 @@ window.openGallery = function(title, images) {
     modal.dataset.images = JSON.stringify(images);
     modal.dataset.currentIndex = '0';
     
+    // Show the modal with animation and initialize the first image
+    setTimeout(() => {
+        modal.classList.add('show');
+        window.showImage(0);
+    }, 10);
+    
     console.log('✅ Gallery opened successfully with', images.length, 'images');
 }
 
@@ -438,12 +444,19 @@ function renderPortfolio(portfolioItems) {
         
         // Add click event listener with better debugging
         const portfolioBtn = portfolioCard.querySelector('.portfolio-btn');
+        console.log('🔍 Adding event listener to portfolio button:', {
+            button: portfolioBtn,
+            title: item.title,
+            hasImages: !!item.images
+        });
+        
         portfolioBtn.addEventListener('click', (e) => {
             e.preventDefault();
             console.log('🖱️ Portfolio button clicked:', {
                 title: item.title,
                 index: index,
-                images: item.images
+                images: item.images,
+                buttonElement: portfolioBtn
             });
             
             if (!item.images || item.images.length === 0) {
@@ -451,6 +464,7 @@ function renderPortfolio(portfolioItems) {
                 return;
             }
             
+            console.log('🎨 Calling window.openGallery with:', item.title, item.images);
             window.openGallery(item.title, item.images);
         });
         
@@ -460,9 +474,30 @@ function renderPortfolio(portfolioItems) {
         });
         
         container.appendChild(portfolioCard);
+        
+        console.log('✅ Portfolio card added to DOM:', {
+            title: item.title,
+            buttonExists: !!portfolioBtn,
+            containerHasChildren: container.children.length
+        });
+    });
+    
+    // Verify all buttons are properly attached
+    const allButtons = container.querySelectorAll('.portfolio-btn');
+    console.log('🔍 Total portfolio buttons in DOM:', allButtons.length);
+    
+    allButtons.forEach((button, index) => {
+        console.log('🔍 Button', index, 'has event listeners:', button.onclick !== null);
     });
     
     console.log('✅ Portfolio rendered successfully with', portfolioItems.length, 'items');
+    
+    // Verify global function availability
+    if (typeof window.openGallery === 'function') {
+        console.log('✅ window.openGallery is available globally');
+    } else {
+        console.error('❌ window.openGallery is NOT available globally');
+    }
 }
 
 // Renderizar posts del blog
