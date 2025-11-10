@@ -1111,7 +1111,9 @@ window.openGallery = function(title, images) {
     
     // Configurar navegación de imágenes
     let currentIndex = 0;
-    const imageArray = JSON.parse(images.replace(/&quot;/g, '"'));
+    // images ya es un array, no necesita parsing
+    const imageArray = Array.isArray(images) ? images : JSON.parse(images.replace(/&quot;/g, '"'));
+    console.log('🖼️ Array de imágenes procesado:', imageArray);
     const currentImage = modal.querySelector('.gallery-current');
     const imageCounter = modal.querySelector('.image-counter');
     
