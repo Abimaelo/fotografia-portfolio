@@ -1,20 +1,19 @@
+// Netlify Function: update-content
+// Esta función actualiza el archivo data.json en tu repositorio de GitHub
+
 const { Octokit } = require("@octokit/rest");
 
 exports.handler = async (event, context) => {
-  // Configuración
-  const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-  const GITHUB_OWNER = process.env.GITHUB_OWNER;
-  const GITHUB_REPO = process.env.GITHUB_REPO;
-  const GITHUB_BRANCH = process.env.GITHUB_BRANCH || 'main';
+  // Configuración - IMPORTANTE: Estas variables deben configurarse en Netlify
+  const octokit = new Octokit({
+    auth: process.env.GITHUB_TOKEN // Token de GitHub configurado como variable de entorno
+  });
 
-  if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Variables de entorno no configuradas' })
-    };
-  }
-
-  const octokit = new Octokit({ auth: GITHUB_TOKEN });
+  const {
+    GITHUB_OWNER = process.env.GITHUB_OWNER, // Tu nombre de usuario de GitHub
+    GITHUB_REPO = process.env.GITHUB_REPO,   // Nombre de tu repositorio
+    GITHUB_BRANCH = 'main'                   // Rama principal
+  } = process.env;
 
   if (event.httpMethod !== 'POST') {
     return {
@@ -27,28 +26,21 @@ exports.handler = async (event, context) => {
     const siteData = JSON.parse(event.body);
 
     // 1. Obtener el archivo actual para obtener el SHA
-    let currentSHA = null;
-    try {
-      const { data: currentFile } = await octokit.repos.getContent({
-        owner: GITHUB_OWNER,
-        repo: GITHUB_REPO,
-        path: 'data.json',
-        ref: GITHUB_BRANCH
-      });
-      currentSHA = currentFile.sha;
-    } catch (error) {
-      // Si el archivo no existe, we'll create it
-      console.log('Archivo data.json no existe, será creado');
-    }
+    const { data: currentFile } = await octokit.repos.getContent({
+      owner: GITHUB_OWNER,
+      repo: GITHUB_REPO,
+      path: 'data.json',
+      ref: GITHUB_BRANCH
+    });
 
-    // 2. Actualizar o crear el archivo
+    // 2. Actualizar el archivo con el nuevo contenido
     const { data: updatedFile } = await octokit.repos.createOrUpdateFileContents({
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
       path: 'data.json',
-      message: `Actualización desde panel admin - ${new Date().toISOString()}`,
+      message: `Actualización de contenido desde panel de admin - ${new Date().toISOString()}`,
       content: Buffer.from(JSON.stringify(siteData, null, 2)).toString('base64'),
-      sha: currentSHA,
+      sha: currentFile.sha,
       branch: GITHUB_BRANCH
     });
 
