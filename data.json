@@ -22,8 +22,8 @@
     "website": "https://carlosmartinez-fotografia.com"
   },
   "hero": {
-    "title": "Capturando Momentos Únicos",
-    "subtitle": "Fotografía profesional que transforma tus momentos especiales en recuerdos eternos. Especializados en retratos, eventos y fotografía comercial.",
+    "title": "Capturando belleza y estilo",
+    "subtitle": "Fotografía profesional especializada",
     "image": "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1920&h=1080&fit=crop",
     "ctaText": "Ver Mi Portfolio"
   },
@@ -50,20 +50,6 @@
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&h=600&fit=crop"
-      ]
-    },
-    {
-      "title": "Bodas y Eventos",
-      "category": "Eventos",
-      "description": "Los momentos más especiales de tu día más importante, capturados con elegancia y sensibilidad.",
-      "image": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&h=400&fit=crop",
-      "images": [
-        "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1524854638093-badabf3ec8a4?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1519741347681-1dce92b18ea4?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1511285500659-3ac3653b6cfe?w=800&h=600&fit=crop"
       ]
     },
     {
