@@ -24,7 +24,7 @@
   "hero": {
     "title": "Duoptico Studio",
     "subtitle": "Fotografía profesional que transforma tus momentos especiales en recuerdos eternos. Especializados en retratos, eventos y fotografía comercial.",
-    "image": "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1920&h=1080&fit=crop",
+    "image": "https://raw.githubusercontent.com/abimaelo/fotografia-portfolio/main/images/portfolio/hero-1762803473465-wu29f5vpkk9_1762803476066.jpeg",
     "ctaText": "Ver Mi Portfolio"
   },
   "services": [
@@ -44,9 +44,6 @@
       "description": "Una colección de retratos que exploran la expresión humana y la belleza natural.",
       "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop",
       "images": [
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&h=600&fit=crop",
@@ -61,10 +58,7 @@
       "images": [
         "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1524854638093-badabf3ec8a4?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1519741347681-1dce92b18ea4?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1511285500659-3ac3653b6cfe?w=800&h=600&fit=crop"
+        "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&h=600&fit=crop"
       ]
     },
     {
