@@ -1,5 +1,6 @@
 // Script principal para el sitio web
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing...');
     loadSiteData();
     initSmoothScrolling();
     initContactForm();
@@ -98,7 +99,7 @@ function updatePageContent(data) {
     
     // Update copyright text from data
     if (data.meta?.copyright) {
-        const copyrightElement = document.querySelector('.footer-bottom p');
+        const copyrightElement = document.getElementById('copyright-text');
         if (copyrightElement) {
             copyrightElement.textContent = data.meta.copyright;
         }
@@ -414,6 +415,8 @@ window.closeGallery = function() {
 
 function nextImage() {
     const modal = document.querySelector('.gallery-modal');
+    if (!modal) return;
+    
     const images = JSON.parse(modal.dataset.images);
     let currentIndex = parseInt(modal.dataset.currentIndex);
     
@@ -425,6 +428,8 @@ function nextImage() {
 
 function prevImage() {
     const modal = document.querySelector('.gallery-modal');
+    if (!modal) return;
+    
     const images = JSON.parse(modal.dataset.images);
     let currentIndex = parseInt(modal.dataset.currentIndex);
     
@@ -436,9 +441,13 @@ function prevImage() {
 
 function showImage(index) {
     const modal = document.querySelector('.gallery-modal');
-    const images = JSON.parse(modal.dataset.images);
+    if (!modal) return;
     
-    document.getElementById('gallery-main-image').src = images[index];
+    const images = JSON.parse(modal.dataset.images);
+    const mainImage = document.getElementById('gallery-main-image');
+    if (mainImage) {
+        mainImage.src = images[index];
+    }
     modal.dataset.currentIndex = index;
     
     // Actualizar thumbnails
@@ -446,6 +455,11 @@ function showImage(index) {
         img.classList.toggle('active', i === index);
     });
 }
+
+// Make functions global
+window.nextImage = nextImage;
+window.prevImage = prevImage;
+window.showImage = showImage;
 
 // Cerrar galería con ESC o click fuera
 document.addEventListener('keydown', function(e) {
@@ -946,50 +960,57 @@ function initMobileMenu() {
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
     
-    if (navToggle && navMenu) {
-        // Add event listener for toggle button
-        navToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Toggle active states
-            this.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            
-            // Prevent body scroll when menu is open
-            if (navMenu.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = 'auto';
-            }
-        });
-        
-        // Close menu when clicking on a link
-        const navLinks = navMenu.querySelectorAll('a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                navToggle.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!navToggle.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
-                navToggle.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-        
-        // Close menu on window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                navToggle.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
+    if (!navToggle || !navMenu) {
+        console.log('Mobile menu elements not found');
+        return;
     }
+    
+    console.log('Initializing mobile menu...');
+    
+    // Toggle function
+    function toggleMenu() {
+        console.log('Toggle menu clicked');
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        
+        // Prevent body scroll when menu is open
+        if (navMenu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }
+    
+    // Add event listener for toggle button
+    navToggle.addEventListener('click', toggleMenu);
+    
+    // Close menu when clicking on a link
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!navToggle.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    // Close menu on window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    console.log('Mobile menu initialized successfully');
 }
