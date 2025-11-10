@@ -1,5 +1,5 @@
 {
-  "siteTitle": "Estudio de Fotografía",
+  "siteTitle": "Abimael Ortiz Álvarez",
   "photographer": {
     "name": "Carlos Martínez",
     "specialty": "Fotografía de Retratos y Eventos",
@@ -57,20 +57,6 @@
       ]
     },
     {
-      "title": "Bodas y Eventos",
-      "category": "Eventos",
-      "description": "Los momentos más especiales de tu día más importante, capturados con elegancia y sensibilidad.",
-      "image": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&h=400&fit=crop",
-      "images": [
-        "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1524854638093-badabf3ec8a4?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1519741347681-1dce92b18ea4?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1511285500659-3ac3653b6cfe?w=800&h=600&fit=crop"
-      ]
-    },
-    {
       "title": "Producto y Comercial",
       "category": "Comercial",
       "description": "Fotografía de producto y corporativa que destaca la calidad y el estilo de tu marca.",
@@ -112,6 +98,6 @@
   "meta": {
     "lastModified": "2025-01-02T12:00:00Z",
     "version": "2.0",
-    "copyright": "© 2025 Estudio de Fotografía Carlos Martínez. Todos los derechos reservados."
+    "copyright": "© 2025 Estudio de Fotografía Abimael Ortiz Álvarez. Todos los derechos reservados."
   }
 }
