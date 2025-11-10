@@ -988,54 +988,66 @@ window.openGallery = function(title, images) {
     modal.innerHTML = `
         <div class="gallery-content" style="
             position: relative;
-            max-width: 95vw;
-            max-height: 95vh;
+            width: 90vw;
+            max-width: 1200px;
+            height: 90vh;
             background: #1a1a1a;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
         ">
             <div class="gallery-header" style="
                 padding: 20px 30px;
-                background: #333;
+                background: linear-gradient(135deg, #333 0%, #2a2a2a 100%);
                 color: white;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 border-bottom: 1px solid #555;
+                z-index: 100;
+                position: relative;
+                min-height: 80px;
+                flex-shrink: 0;
             ">
-                <h3 style="margin: 0; font-size: 1.5rem; font-weight: 600;">${title}</h3>
-                <div style="display: flex; align-items: center; gap: 10px;">
+                <h3 style="margin: 0; font-size: 1.4rem; font-weight: 600; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">${title}</h3>
+                <div style="display: flex; align-items: center; gap: 15px;">
                     <span class="image-counter" style="
                         font-size: 0.9rem;
                         color: #ccc;
-                        margin-right: 10px;
+                        background: rgba(255,255,255,0.1);
+                        padding: 5px 10px;
+                        border-radius: 15px;
+                        font-weight: 500;
                     ">1 de 6</span>
                     <button class="gallery-close" style="
-                        background: none;
-                        border: none;
+                        background: rgba(255, 255, 255, 0.1);
+                        border: 1px solid rgba(255, 255, 255, 0.2);
                         color: white;
-                        font-size: 28px;
+                        font-size: 24px;
                         cursor: pointer;
-                        padding: 0;
+                        padding: 8px;
                         width: 40px;
                         height: 40px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         border-radius: 50%;
-                        transition: background 0.3s ease;
+                        transition: all 0.3s ease;
+                        backdrop-filter: blur(10px);
                     ">&times;</button>
                 </div>
             </div>
             <div class="gallery-body" style="
                 position: relative;
-                width: 100%;
-                height: calc(95vh - 100px);
+                flex: 1;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background: #1a1a1a;
+                padding: 20px;
+                min-height: 0;
             ">
                 <img class="gallery-current" src="" alt="${title}" style="
                     max-width: 100%;
@@ -1043,44 +1055,47 @@ window.openGallery = function(title, images) {
                     object-fit: contain;
                     display: block;
                     border-radius: 8px;
+                    z-index: 1;
                 ">
                 <button class="gallery-prev" style="
                     position: absolute;
                     left: 20px;
                     top: 50%;
                     transform: translateY(-50%);
-                    background: rgba(255, 255, 255, 0.2);
-                    border: 2px solid rgba(255, 255, 255, 0.3);
+                    background: rgba(255, 255, 255, 0.15);
+                    border: 2px solid rgba(255, 255, 255, 0.25);
                     color: white;
-                    font-size: 24px;
+                    font-size: 20px;
                     cursor: pointer;
                     border-radius: 50%;
-                    width: 60px;
-                    height: 60px;
+                    width: 50px;
+                    height: 50px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     transition: all 0.3s ease;
-                    backdrop-filter: blur(10px);
+                    backdrop-filter: blur(15px);
+                    z-index: 10;
                 ">‹</button>
                 <button class="gallery-next" style="
                     position: absolute;
                     right: 20px;
                     top: 50%;
                     transform: translateY(-50%);
-                    background: rgba(255, 255, 255, 0.2);
-                    border: 2px solid rgba(255, 255, 255, 0.3);
+                    background: rgba(255, 255, 255, 0.15);
+                    border: 2px solid rgba(255, 255, 255, 0.25);
                     color: white;
-                    font-size: 24px;
+                    font-size: 20px;
                     cursor: pointer;
                     border-radius: 50%;
-                    width: 60px;
-                    height: 60px;
+                    width: 50px;
+                    height: 50px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     transition: all 0.3s ease;
-                    backdrop-filter: blur(10px);
+                    backdrop-filter: blur(15px);
+                    z-index: 10;
                 ">›</button>
             </div>
         </div>
@@ -1143,26 +1158,48 @@ window.openGallery = function(title, images) {
             closeModal();
             console.log('❌ Cerrando modal');
         });
+        
+        // Hover effects para close button
+        closeBtn.addEventListener('mouseenter', () => {
+            closeBtn.style.background = 'rgba(255, 59, 48, 0.8)';
+            closeBtn.style.transform = 'scale(1.1)';
+        });
+        closeBtn.addEventListener('mouseleave', () => {
+            closeBtn.style.background = 'rgba(255, 255, 255, 0.1)';
+            closeBtn.style.transform = 'scale(1)';
+        });
     }
     
-    // Hover effects para botones
-    prevBtn.addEventListener('mouseenter', () => {
-        prevBtn.style.background = 'rgba(255, 255, 255, 0.3)';
-        prevBtn.style.transform = 'translateY(-50%) scale(1.1)';
-    });
-    prevBtn.addEventListener('mouseleave', () => {
-        prevBtn.style.background = 'rgba(255, 255, 255, 0.2)';
-        prevBtn.style.transform = 'translateY(-50%) scale(1)';
-    });
+    // Hover effects para botones de navegación
+    if (prevBtn) {
+        prevBtn.addEventListener('mouseenter', () => {
+            prevBtn.style.background = 'rgba(255, 255, 255, 0.25)';
+            prevBtn.style.transform = 'translateY(-50%) scale(1.15)';
+            prevBtn.style.borderColor = 'rgba(255, 255, 255, 0.4)';
+            prevBtn.style.boxShadow = '0 0 20px rgba(255, 255, 255, 0.2)';
+        });
+        prevBtn.addEventListener('mouseleave', () => {
+            prevBtn.style.background = 'rgba(255, 255, 255, 0.15)';
+            prevBtn.style.transform = 'translateY(-50%) scale(1)';
+            prevBtn.style.borderColor = 'rgba(255, 255, 255, 0.25)';
+            prevBtn.style.boxShadow = 'none';
+        });
+    }
     
-    nextBtn.addEventListener('mouseenter', () => {
-        nextBtn.style.background = 'rgba(255, 255, 255, 0.3)';
-        nextBtn.style.transform = 'translateY(-50%) scale(1.1)';
-    });
-    nextBtn.addEventListener('mouseleave', () => {
-        nextBtn.style.background = 'rgba(255, 255, 255, 0.2)';
-        nextBtn.style.transform = 'translateY(-50%) scale(1)';
-    });
+    if (nextBtn) {
+        nextBtn.addEventListener('mouseenter', () => {
+            nextBtn.style.background = 'rgba(255, 255, 255, 0.25)';
+            nextBtn.style.transform = 'translateY(-50%) scale(1.15)';
+            nextBtn.style.borderColor = 'rgba(255, 255, 255, 0.4)';
+            nextBtn.style.boxShadow = '0 0 20px rgba(255, 255, 255, 0.2)';
+        });
+        nextBtn.addEventListener('mouseleave', () => {
+            nextBtn.style.background = 'rgba(255, 255, 255, 0.15)';
+            nextBtn.style.transform = 'translateY(-50%) scale(1)';
+            nextBtn.style.borderColor = 'rgba(255, 255, 255, 0.25)';
+            nextBtn.style.boxShadow = 'none';
+        });
+    }
     
     // Cerrar modal
     function closeModal() {
