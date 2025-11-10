@@ -28,7 +28,6 @@ window.toggleMobileMenu = function() {
 }
 
 // Global gallery functions - Available from start
-// Global gallery functions - Available from start
 window.openGallery = function(title, images) {
     console.log('🎨 Opening gallery:', title, images);
     if (!images || !Array.isArray(images) || images.length === 0) {
@@ -713,7 +712,7 @@ document.addEventListener('keydown', function(e) {
         if (blogModal) {
             window.closeBlogPost();
         }
-    });
+    }
 });
 
 // Initialize all effects
