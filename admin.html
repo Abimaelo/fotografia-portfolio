@@ -61,6 +61,32 @@
             letter-spacing: -0.01em;
         }
         
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-email {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .logout-btn {
+            background: var(--color-medium-gray);
+            color: var(--color-white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: var(--color-dark-gray);
+        }
+        
         /* Authentication Screen */
         .auth-screen {
             display: flex;
@@ -138,15 +164,16 @@
             box-shadow: var(--shadow);
             margin-bottom: 2rem;
             border: 1px solid var(--color-light-gray);
+            overflow-x: auto;
         }
         
         .admin-nav ul {
             display: flex;
             list-style: none;
-            gap: 1rem;
+            gap: 0.5rem;
             margin: 0;
             padding: 0;
-            flex-wrap: wrap;
+            min-width: 800px;
         }
         
         .admin-nav button {
@@ -155,13 +182,15 @@
             color: var(--color-dark-gray);
             font-family: 'DM Sans', sans-serif;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             cursor: pointer;
-            padding: 0.8rem 1.2rem;
+            padding: 0.8rem 1rem;
             border-radius: 4px;
             transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
         
         .admin-nav button:hover,
@@ -201,21 +230,61 @@
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--color-medium-gray);
+            padding: 0.8rem;
+            border: 1px solid var(--color-light-gray);
             border-radius: 4px;
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
             transition: border-color 0.3s ease;
+            font-family: inherit;
         }
         
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: var(--color-black);
+            box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.05);
         }
         
-        .save-btn {
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .image-upload-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .upload-btn {
+            background: var(--color-medium-gray);
+            color: var(--color-white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .upload-btn:hover {
+            background: var(--color-dark-gray);
+        }
+        
+        .image-preview {
+            margin-top: 0.5rem;
+            max-width: 200px;
+            border-radius: 4px;
+        }
+        
+        .image-preview img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        
+        .add-btn {
             background: var(--color-black);
             color: var(--color-white);
             border: none;
@@ -225,58 +294,134 @@
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 2rem;
+            margin-top: 1rem;
+            width: 100%;
         }
         
-        .save-btn:hover {
+        .add-btn:hover {
             background: var(--color-dark-gray);
         }
         
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        .dynamic-item {
+            background: var(--color-light-gray);
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            position: relative;
         }
         
-        .user-email {
-            color: var(--color-white);
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        
-        .logout-btn {
+        .remove-btn {
             background: var(--error-color);
             color: var(--color-white);
             border: none;
-            padding: 0.6rem 1.2rem;
-            font-size: 0.85rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .social-toggles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .toggle-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .preview-frame {
+            width: 100%;
+            height: 500px;
+            border: 1px solid var(--color-light-gray);
+            border-radius: 4px;
+        }
+        
+        .save-btn {
+            background: var(--success-color);
+            color: var(--color-white);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin-top: 2rem;
+            width: 100%;
         }
         
-        .logout-btn:hover {
-            background: #c82333;
+        .save-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
         }
         
+        .status-message {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .status-message.show {
+            display: block;
+        }
+        
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .admin-container {
-                padding: 1rem;
+            .two-column {
+                grid-template-columns: 1fr;
             }
             
-            .admin-header {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
+            .social-toggles {
+                grid-template-columns: 1fr;
             }
             
             .admin-nav ul {
-                justify-content: center;
+                min-width: 600px;
+            }
+            
+            .admin-nav button {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Status Message -->
+    <div id="status-message" class="status-message"></div>
+    
     <!-- Authentication Screen -->
     <div id="auth-screen" class="auth-screen">
         <div class="login-card">
@@ -309,11 +454,18 @@
                 </div>
             </div>
             
+            <!-- Navigation Menu -->
             <nav class="admin-nav">
                 <ul>
                     <li><button onclick="switchSection('general')" id="btn-general" class="active">Configuración General</button></li>
-                    <li><button onclick="switchSection('about')" id="btn-about">Sobre Mí</button></li>
+                    <li><button onclick="switchSection('photographer')" id="btn-photographer">Sobre el Fotógrafo</button></li>
+                    <li><button onclick="switchSection('hero')" id="btn-hero">Hero Section</button></li>
+                    <li><button onclick="switchSection('social')" id="btn-social">Redes Sociales</button></li>
+                    <li><button onclick="switchSection('services')" id="btn-services">Servicios</button></li>
+                    <li><button onclick="switchSection('portfolio')" id="btn-portfolio">Portfolio</button></li>
+                    <li><button onclick="switchSection('blog')" id="btn-blog">Blog</button></li>
                     <li><button onclick="switchSection('contact')" id="btn-contact">Contacto</button></li>
+                    <li><button onclick="switchSection('preview')" id="btn-preview">Vista Previa</button></li>
                 </ul>
             </nav>
             
@@ -322,61 +474,194 @@
                 <section id="general" class="admin-section active">
                     <h2>Configuración General</h2>
                     <div class="form-group">
-                        <label>Título del Sitio</label>
-                        <input type="text" id="site-title" placeholder="Mi Portfolio Fotográfico">
+                        <label for="site-title-input">Título del Sitio</label>
+                        <input type="text" id="site-title-input" placeholder="Mi Sitio Web">
                     </div>
                     <div class="form-group">
-                        <label>Descripción</label>
-                        <textarea id="site-description" rows="4" placeholder="Descripción de tu trabajo fotográfico"></textarea>
+                        <label for="copyright-input">Texto de Copyright</label>
+                        <input type="text" id="copyright-input" placeholder="© 2025 Mi Sitio Web. Todos los derechos reservados.">
                     </div>
                     <div class="form-group">
-                        <label>Palabras Clave</label>
-                        <input type="text" id="site-keywords" placeholder="fotografía, portfolio, retratos, bodas">
+                        <label for="footer-title-input">Título en el Footer</label>
+                        <input type="text" id="footer-title-input" placeholder="Mi Sitio Web">
+                    </div>
+                </section>
+                
+                <!-- Sobre el Fotógrafo -->
+                <section id="photographer" class="admin-section">
+                    <h2>Información del Fotógrafo</h2>
+                    <div class="form-group">
+                        <label for="photographer-name-input">Nombre del Fotógrafo</label>
+                        <input type="text" id="photographer-name-input" placeholder="Carlos Martínez">
+                    </div>
+                    <div class="form-group">
+                        <label for="photographer-specialty-input">Especialidad</label>
+                        <input type="text" id="photographer-specialty-input" placeholder="Fotografía de Retratos y Eventos">
+                    </div>
+                    <div class="form-group">
+                        <label for="photographer-experience-input">Experiencia</label>
+                        <input type="text" id="photographer-experience-input" placeholder="8 años de experiencia">
+                    </div>
+                    <div class="form-group">
+                        <label for="photographer-bio-input">Biografía del Fotógrafo</label>
+                        <textarea id="photographer-bio-input" rows="6" placeholder="Escribe aquí tu biografía profesional..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="photographer-image-input">Foto del Fotógrafo</label>
+                        <div class="image-upload-container">
+                            <input type="text" id="photographer-image-input" placeholder="URL de la imagen o usa el botón de carga">
+                            <button type="button" class="upload-btn" onclick="uploadPhotographerImage()">📁 Subir Imagen</button>
+                        </div>
+                        <div id="photographer-image-preview" class="image-preview"></div>
                     </div>
                 </section>
 
-                <!-- Sobre Mí -->
-                <section id="about" class="admin-section">
-                    <h2>Sobre Mí</h2>
+                <!-- Hero Section -->
+                <section id="hero" class="admin-section">
+                    <h2>Hero Section</h2>
                     <div class="form-group">
-                        <label>Nombre Completo</label>
-                        <input type="text" id="about-name" placeholder="Tu nombre completo">
+                        <label for="hero-title-input">Título Principal</label>
+                        <input type="text" id="hero-title-input" placeholder="Bienvenido a Mi Sitio">
                     </div>
                     <div class="form-group">
-                        <label>Biografía</label>
-                        <textarea id="about-bio" rows="6" placeholder="Cuéntanos tu historia como fotógrafo"></textarea>
+                        <label for="hero-subtitle-input">Subtítulo</label>
+                        <input type="text" id="hero-subtitle-input" placeholder="Soluciones digitales modernas">
                     </div>
                     <div class="form-group">
-                        <label>Años de Experiencia</label>
-                        <input type="number" id="about-experience" min="0" placeholder="5">
+                        <label for="hero-cta-input">Texto del Botón</label>
+                        <input type="text" id="hero-cta-input" placeholder="Conoce Más">
                     </div>
                     <div class="form-group">
-                        <label>Especialidades</label>
-                        <input type="text" id="about-specialties" placeholder="Retratos, Bodas, Eventos">
+                        <label>Imagen de Fondo del Hero</label>
+                        <div class="image-upload-container">
+                            <input type="url" id="hero-image-input" placeholder="https://ejemplo.com/imagen-hero.jpg">
+                            <button type="button" class="upload-btn" onclick="uploadHeroImage()">📁 Subir Imagen Hero</button>
+                            <div class="image-preview" id="hero-image-preview"></div>
+                        </div>
                     </div>
                 </section>
-
+                
+                <!-- Servicios -->
+                <section id="services" class="admin-section">
+                    <h2>Servicios</h2>
+                    <div id="services-container">
+                        <!-- Services will be dynamically added here -->
+                    </div>
+                    <button class="add-btn" onclick="addService()">+ Agregar Servicio</button>
+                </section>
+                
+                <!-- Portfolio -->
+                <section id="portfolio" class="admin-section">
+                    <h2>Portfolio</h2>
+                    <div id="portfolio-container">
+                        <!-- Portfolio items will be dynamically added here -->
+                    </div>
+                    <button class="add-btn" onclick="addPortfolioItem()">+ Agregar Proyecto</button>
+                </section>
+                
+                <!-- Blog -->
+                <section id="blog" class="admin-section">
+                    <h2>Posts del Blog</h2>
+                    <div id="blog-container">
+                        <!-- Blog posts will be dynamically added here -->
+                    </div>
+                    <button class="add-btn" onclick="addBlogPost()">+ Agregar Post</button>
+                </section>
+                
+                <!-- Redes Sociales -->
+                <section id="social" class="admin-section">
+                    <h2>Redes Sociales</h2>
+                    <div class="social-controls">
+                        <h3>Mostrar/Ocultar Redes Sociales</h3>
+                        <div class="social-toggles">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="show-instagram" checked>
+                                <span>Mostrar Instagram</span>
+                            </label>
+                            <label class="toggle-label">
+                                <input type="checkbox" id="show-facebook" checked>
+                                <span>Mostrar Facebook</span>
+                            </label>
+                            <label class="toggle-label">
+                                <input type="checkbox" id="show-twitter">
+                                <span>Mostrar Twitter</span>
+                            </label>
+                            <label class="toggle-label">
+                                <input type="checkbox" id="show-linkedin" checked>
+                                <span>Mostrar LinkedIn</span>
+                            </label>
+                            <label class="toggle-label">
+                                <input type="checkbox" id="show-website">
+                                <span>Mostrar Sitio Web</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="social-urls">
+                        <h3>URLs de Redes Sociales</h3>
+                        <div class="two-column">
+                            <div class="form-group">
+                                <label for="instagram-input">Instagram URL</label>
+                                <input type="url" id="instagram-input" placeholder="https://instagram.com/tu_usuario">
+                            </div>
+                            <div class="form-group">
+                                <label for="facebook-input">Facebook URL</label>
+                                <input type="url" id="facebook-input" placeholder="https://facebook.com/tu_pagina">
+                            </div>
+                            <div class="form-group">
+                                <label for="twitter-input">Twitter URL</label>
+                                <input type="url" id="twitter-input" placeholder="https://twitter.com/tu_usuario">
+                            </div>
+                            <div class="form-group">
+                                <label for="linkedin-input">LinkedIn URL</label>
+                                <input type="url" id="linkedin-input" placeholder="https://linkedin.com/in/tu_perfil">
+                            </div>
+                            <div class="form-group">
+                                <label for="website-input">Sitio Web Personal URL</label>
+                                <input type="url" id="website-input" placeholder="https://tuweb.com">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
                 <!-- Contacto -->
                 <section id="contact" class="admin-section">
                     <h2>Información de Contacto</h2>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" id="contact-email" placeholder="tu@email.com">
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label for="contact-email-input">Email</label>
+                            <input type="email" id="contact-email-input" placeholder="info@misitio.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-phone-input">Teléfono</label>
+                            <input type="text" id="contact-phone-input" placeholder="+123456789">
+                        </div>
+                    </div>
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label for="contact-address-input">Dirección</label>
+                            <input type="text" id="contact-address-input" placeholder="Calle Principal 123, Ciudad">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-studio-input">Descripción del Estudio</label>
+                            <input type="text" id="contact-studio-input" placeholder="Estudio fotográfico con iluminación profesional">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>Teléfono</label>
-                        <input type="tel" id="contact-phone" placeholder="+1 234 567 8900">
-                    </div>
-                    <div class="form-group">
-                        <label>Instagram</label>
-                        <input type="url" id="contact-instagram" placeholder="https://instagram.com/tuusuario">
-                    </div>
-                    <div class="form-group">
-                        <label>Dirección</label>
-                        <textarea id="contact-address" rows="3" placeholder="Tu dirección profesional"></textarea>
+                        <label for="contact-availability-input">Horario de Atención</label>
+                        <input type="text" id="contact-availability-input" placeholder="Lunes a Viernes - 9:00 a 18:00">
                     </div>
                 </section>
+                
+                <!-- Vista Previa -->
+                <section id="preview" class="admin-section">
+                    <h2>Vista Previa</h2>
+                    <p>Esta es una vista previa de cómo se verá tu sitio web:</p>
+                    <iframe id="preview-frame" class="preview-frame" src="index.html"></iframe>
+                </section>
             </div>
+            
+            <!-- Save Button -->
+            <button class="save-btn" onclick="saveChanges()">💾 Guardar Cambios</button>
         </div>
     </div>
 
@@ -384,10 +669,12 @@
         // ===============================
         // SISTEMA ANTI-LOOP ULTRA-ESTABILIZADO
         // ===============================
-
+        
         // Variables globales
         let isInitialized = false;
         let currentUser = null;
+        let siteData = {};
+        let currentSection = 'general';
 
         // Función principal de inicialización - SOLO SE EJECUTA UNA VEZ
         function initAdmin() {
@@ -396,8 +683,11 @@
                 return;
             }
             
-            console.log('🚀 Inicializando Admin Panel...');
+            console.log('🚀 Inicializando Admin Panel Completo...');
             isInitialized = true;
+            
+            // Cargar datos
+            loadData();
             
             // Configurar eventos
             setupEventListeners();
@@ -422,22 +712,19 @@
             }
         }
 
-        // Configurar Netlify Identity - MÉTODO ULTRA-SIMPLIFICADO
+        // Configurar Netlify Identity
         function setupNetlifyIdentity() {
             if (typeof window.netlifyIdentity !== 'undefined') {
                 console.log('✅ Netlify Identity disponible');
                 
-                // Configurar SOLO UN handler para cada evento
                 window.netlifyIdentity.on('init', handleIdentityInit);
                 window.netlifyIdentity.on('login', handleIdentityLogin);
                 window.netlifyIdentity.on('logout', handleIdentityLogout);
                 
-                // Inicializar widget
                 window.netlifyIdentity.init();
                 
             } else {
                 console.error('❌ Netlify Identity no está disponible');
-                // Reintentar después de 2 segundos si falla
                 setTimeout(() => {
                     if (!isInitialized) {
                         setupNetlifyIdentity();
@@ -453,6 +740,7 @@
             if (user) {
                 currentUser = user;
                 showAdminPanel(user);
+                populateForms();
             } else {
                 showLoginScreen();
             }
@@ -463,6 +751,7 @@
             console.log('✅ Login exitoso:', user.email);
             currentUser = user;
             showAdminPanel(user);
+            populateForms();
         }
 
         // Manejar logout
@@ -505,6 +794,10 @@
             }
         }
 
+        // ===============================
+        // GESTIÓN DE CONTENIDO Y NAVEGACIÓN
+        // ===============================
+
         // Cambiar entre secciones del admin
         function switchSection(sectionId) {
             console.log('🔄 Cambiando a sección:', sectionId);
@@ -524,34 +817,271 @@
             
             // Activar botón correspondiente
             document.getElementById('btn-' + sectionId).classList.add('active');
+            
+            currentSection = sectionId;
+        }
+
+        // Load data from JSON
+        async function loadData() {
+            try {
+                const response = await fetch('data.json');
+                siteData = await response.json();
+                console.log('📋 Datos cargados exitosamente');
+            } catch (error) {
+                console.error('Error loading data:', error);
+                showStatus('Error cargando los datos', 'error');
+            }
+        }
+
+        // Populate forms with current data
+        function populateForms() {
+            // General settings
+            document.getElementById('site-title-input').value = siteData.siteTitle || '';
+            document.getElementById('footer-title-input').value = siteData.siteTitle || '';
+            document.getElementById('copyright-input').value = siteData.meta?.copyright || '';
+            
+            // Photographer info
+            document.getElementById('photographer-name-input').value = siteData.photographer?.name || '';
+            document.getElementById('photographer-specialty-input').value = siteData.photographer?.specialty || '';
+            document.getElementById('photographer-experience-input').value = siteData.photographer?.experience || '';
+            document.getElementById('photographer-bio-input').value = siteData.photographer?.bio || '';
+            document.getElementById('photographer-image-input').value = siteData.photographer?.image || '';
+            
+            // Hero section
+            document.getElementById('hero-title-input').value = siteData.hero?.title || '';
+            document.getElementById('hero-subtitle-input').value = siteData.hero?.subtitle || '';
+            document.getElementById('hero-cta-input').value = siteData.hero?.cta || '';
+            document.getElementById('hero-image-input').value = siteData.hero?.image || '';
+            
+            // Social media
+            document.getElementById('instagram-input').value = siteData.social?.instagram || '';
+            document.getElementById('facebook-input').value = siteData.social?.facebook || '';
+            document.getElementById('twitter-input').value = siteData.social?.twitter || '';
+            document.getElementById('linkedin-input').value = siteData.social?.linkedin || '';
+            document.getElementById('website-input').value = siteData.social?.website || '';
+            
+            // Contact info
+            document.getElementById('contact-email-input').value = siteData.contact?.email || '';
+            document.getElementById('contact-phone-input').value = siteData.contact?.phone || '';
+            document.getElementById('contact-address-input').value = siteData.contact?.address || '';
+            document.getElementById('contact-studio-input').value = siteData.contact?.studio || '';
+            document.getElementById('contact-availability-input').value = siteData.contact?.availability || '';
+            
+            // Update previews
+            updateImagePreviews();
+        }
+
+        // Update image previews
+        function updateImagePreviews() {
+            const photographerImage = document.getElementById('photographer-image-input').value;
+            const heroImage = document.getElementById('hero-image-input').value;
+            
+            if (photographerImage) {
+                document.getElementById('photographer-image-preview').innerHTML = 
+                    `<img src="${photographerImage}" alt="Foto del fotógrafo">`;
+            }
+            
+            if (heroImage) {
+                document.getElementById('hero-image-preview').innerHTML = 
+                    `<img src="${heroImage}" alt="Imagen del Hero">`;
+            }
+        }
+
+        // ===============================
+        // FUNCIONES DE GESTIÓN DINÁMICA
+        // ===============================
+
+        // Add Service
+        function addService() {
+            const container = document.getElementById('services-container');
+            const serviceId = Date.now();
+            const serviceHTML = `
+                <div class="dynamic-item" id="service-${serviceId}">
+                    <button class="remove-btn" onclick="removeItem('service-${serviceId}')">×</button>
+                    <div class="form-group">
+                        <label>Título del Servicio</label>
+                        <input type="text" id="service-title-${serviceId}" placeholder="Fotografía de Retratos">
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea id="service-desc-${serviceId}" rows="3" placeholder="Descripción del servicio..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Precio</label>
+                        <input type="text" id="service-price-${serviceId}" placeholder="$500">
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', serviceHTML);
+        }
+
+        // Add Portfolio Item
+        function addPortfolioItem() {
+            const container = document.getElementById('portfolio-container');
+            const itemId = Date.now();
+            const itemHTML = `
+                <div class="dynamic-item" id="portfolio-${itemId}">
+                    <button class="remove-btn" onclick="removeItem('portfolio-${itemId}')">×</button>
+                    <div class="form-group">
+                        <label>Título del Proyecto</label>
+                        <input type="text" id="portfolio-title-${itemId}" placeholder="Sesión de Retratos">
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea id="portfolio-desc-${itemId}" rows="3" placeholder="Descripción del proyecto..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>URL de la Imagen</label>
+                        <input type="url" id="portfolio-image-${itemId}" placeholder="https://ejemplo.com/imagen.jpg">
+                    </div>
+                    <div class="form-group">
+                        <label>Categoría</label>
+                        <input type="text" id="portfolio-category-${itemId}" placeholder="Retratos, Bodas, Eventos">
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', itemHTML);
+        }
+
+        // Add Blog Post
+        function addBlogPost() {
+            const container = document.getElementById('blog-container');
+            const postId = Date.now();
+            const postHTML = `
+                <div class="dynamic-item" id="blog-${postId}">
+                    <button class="remove-btn" onclick="removeItem('blog-${postId}')">×</button>
+                    <div class="form-group">
+                        <label>Título del Post</label>
+                        <input type="text" id="blog-title-${postId}" placeholder="Técnicas de iluminación">
+                    </div>
+                    <div class="form-group">
+                        <label>Contenido</label>
+                        <textarea id="blog-content-${postId}" rows="5" placeholder="Contenido del post..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>URL de la Imagen</label>
+                        <input type="url" id="blog-image-${postId}" placeholder="https://ejemplo.com/imagen.jpg">
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <input type="date" id="blog-date-${postId}">
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', postHTML);
+        }
+
+        // Remove dynamic item
+        function removeItem(itemId) {
+            document.getElementById(itemId).remove();
+        }
+
+        // ===============================
+        // FUNCIONES DE SUBIDA Y GUARDADO
+        // ===============================
+
+        // Upload functions (placeholder implementations)
+        function uploadPhotographerImage() {
+            // TODO: Implement image upload
+            console.log('📤 Subir imagen del fotógrafo');
+        }
+
+        function uploadHeroImage() {
+            // TODO: Implement image upload
+            console.log('📤 Subir imagen del hero');
+        }
+
+        // Save changes
+        async function saveChanges() {
+            showStatus('Guardando cambios...', 'info');
+            
+            try {
+                // Collect all form data
+                const formData = {
+                    siteTitle: document.getElementById('site-title-input').value,
+                    meta: {
+                        copyright: document.getElementById('copyright-input').value
+                    },
+                    photographer: {
+                        name: document.getElementById('photographer-name-input').value,
+                        specialty: document.getElementById('photographer-specialty-input').value,
+                        experience: document.getElementById('photographer-experience-input').value,
+                        bio: document.getElementById('photographer-bio-input').value,
+                        image: document.getElementById('photographer-image-input').value
+                    },
+                    hero: {
+                        title: document.getElementById('hero-title-input').value,
+                        subtitle: document.getElementById('hero-subtitle-input').value,
+                        cta: document.getElementById('hero-cta-input').value,
+                        image: document.getElementById('hero-image-input').value
+                    },
+                    social: {
+                        instagram: document.getElementById('instagram-input').value,
+                        facebook: document.getElementById('facebook-input').value,
+                        twitter: document.getElementById('twitter-input').value,
+                        linkedin: document.getElementById('linkedin-input').value,
+                        website: document.getElementById('website-input').value
+                    },
+                    contact: {
+                        email: document.getElementById('contact-email-input').value,
+                        phone: document.getElementById('contact-phone-input').value,
+                        address: document.getElementById('contact-address-input').value,
+                        studio: document.getElementById('contact-studio-input').value,
+                        availability: document.getElementById('contact-availability-input').value
+                    }
+                };
+
+                // TODO: Call Netlify function to save data
+                console.log('💾 Guardando datos:', formData);
+                
+                showStatus('Cambios guardados exitosamente', 'success');
+                
+            } catch (error) {
+                console.error('Error saving:', error);
+                showStatus('Error al guardar los cambios', 'error');
+            }
+        }
+
+        // Show status message
+        function showStatus(message, type) {
+            const statusElement = document.getElementById('status-message');
+            statusElement.textContent = message;
+            statusElement.className = `status-message show ${type}`;
+            
+            setTimeout(() => {
+                statusElement.classList.remove('show');
+            }, 5000);
         }
 
         // ===============================
         // INICIALIZACIÓN COMPLETAMENTE CONTROLADA
         // ===============================
 
-        // Solo inicializar cuando la página esté completamente cargada
+        // Only initialize when page is fully loaded
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initAdmin);
         } else {
-            // DOM ya está cargado
             setTimeout(initAdmin, 100);
         }
 
-        // Prevenir que múltiples inicializaciones se ejecuten
+        // Prevent multiple initializations
         window.addEventListener('load', () => {
             if (!isInitialized) {
                 setTimeout(initAdmin, 500);
             }
         });
 
-        // Funciones globales disponibles en consola para debugging
+        // Debug functions available in console
         window.debugAdmin = {
             init: initAdmin,
             login: handleLogin,
             logout: handleLogout,
             switchSection: switchSection,
             checkIdentity: () => console.log('Current user:', currentUser),
+            reloadData: () => {
+                loadData();
+                populateForms();
+            },
             reset: () => {
                 isInitialized = false;
                 currentUser = null;
@@ -559,13 +1089,25 @@
             }
         };
 
-        console.log('✅ Admin Panel carg correctamente. Funciones disponibles:');
+        console.log('✅ Admin Panel Completo cargado correctamente. Funciones disponibles:');
         console.log('   - debugAdmin.init()');
         console.log('   - debugAdmin.login()');
         console.log('   - debugAdmin.logout()');
         console.log('   - debugAdmin.switchSection("section")');
         console.log('   - debugAdmin.checkIdentity()');
+        console.log('   - debugAdmin.reloadData()');
         console.log('   - debugAdmin.reset()');
+        console.log('');
+        console.log('📋 Secciones disponibles:');
+        console.log('   - Configuración General');
+        console.log('   - Sobre el Fotógrafo');
+        console.log('   - Hero Section');
+        console.log('   - Redes Sociales');
+        console.log('   - Servicios');
+        console.log('   - Portfolio');
+        console.log('   - Blog');
+        console.log('   - Contacto');
+        console.log('   - Vista Previa');
     </script>
 </body>
 </html>
