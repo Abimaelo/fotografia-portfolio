@@ -628,6 +628,11 @@
             <h2>Panel de Administración</h2>
             <p>Debes iniciar sesión para acceder al panel de administración</p>
             <div data-netlify-identity-button></div>
+            <div id="fallback-login" style="margin-top: 1rem; display: none;">
+                <p style="font-size: 0.9rem; color: var(--color-medium-gray);">
+                    Si el botón anterior no aparece, verifica tu conexión e intenta recargar la página.
+                </p>
+            </div>
         </div>
     </div>
 
@@ -1489,36 +1494,60 @@
 
     <!-- Netlify Identity Authentication Script -->
     <script>
-        // Initialize Netlify Identity
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on('init', (user) => {
-                if (user) {
-                    showAdminPanel();
+        // Initialize Netlify Identity on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            let identityCheckTimeout;
+            
+            function checkNetlifyIdentity() {
+                if (window.netlifyIdentity) {
+                    window.netlifyIdentity.init();
+                    
+                    // Listen for authentication events
+                    window.netlifyIdentity.on('init', (user) => {
+                        if (user) {
+                            showAdminPanel();
+                        } else {
+                            showLoginModal();
+                        }
+                    });
+
+                    window.netlifyIdentity.on('login', () => {
+                        showAdminPanel();
+                    });
+
+                    window.netlifyIdentity.on('logout', () => {
+                        showLoginModal();
+                    });
                 } else {
-                    showLoginModal();
+                    // Show fallback after 3 seconds if widget doesn't load
+                    identityCheckTimeout = setTimeout(() => {
+                        const fallback = document.getElementById('fallback-login');
+                        if (fallback) {
+                            fallback.style.display = 'block';
+                        }
+                        console.error('Netlify Identity widget failed to load');
+                    }, 3000);
                 }
-            });
-
-            window.netlifyIdentity.on('login', () => {
-                showAdminPanel();
-            });
-
-            window.netlifyIdentity.on('logout', () => {
-                showLoginModal();
-            });
-        }
+            }
+            
+            // Start checking for Netlify Identity
+            checkNetlifyIdentity();
+        });
 
         function showLoginModal() {
             const loginModal = document.getElementById('login-modal');
-            const adminContent = document.querySelector('.admin-content');
+            const adminContent = document.querySelectorAll('.admin-content');
             
             if (loginModal) {
                 loginModal.classList.remove('login-hidden');
             }
             
-            if (adminContent) {
-                adminContent.classList.remove('authenticated');
-            }
+            adminContent.forEach(element => {
+                element.classList.remove('authenticated');
+            });
+            
+            // Store that user is not authenticated
+            localStorage.removeItem('netlify_token');
         }
 
         function showAdminPanel() {
