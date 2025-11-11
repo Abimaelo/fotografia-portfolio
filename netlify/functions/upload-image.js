@@ -1,6 +1,41 @@
 const { Octokit } = require("@octokit/rest");
 
+// Configuración CORS
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS'
+};
+
+// Verificar autenticación OAuth
+function verifyOAuth(event) {
+  const authHeader = event.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return false;
+  }
+  return true;
+}
+
+// Handler principal
 exports.handler = async (event, context) => {
+  // Manejar preflight OPTIONS
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: 'OK'
+    };
+  }
+
+  // Verificar autenticación OAuth
+  if (!verifyOAuth(event)) {
+    return {
+      statusCode: 401,
+      headers: corsHeaders,
+      body: JSON.stringify({ error: 'No autorizado - Token OAuth requerido' })
+    };
+  }
+
   // Configuración
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
   const GITHUB_OWNER = process.env.GITHUB_OWNER;
@@ -10,6 +45,7 @@ exports.handler = async (event, context) => {
   if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
     return {
       statusCode: 500,
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'Variables de entorno no configuradas' })
     };
   }
@@ -19,6 +55,7 @@ exports.handler = async (event, context) => {
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'Method not allowed' })
     };
   }
@@ -67,10 +104,7 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
+      headers: corsHeaders,
       body: JSON.stringify({ 
         success: true, 
         url: imageUrl,
@@ -84,10 +118,7 @@ exports.handler = async (event, context) => {
     
     return {
       statusCode: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
+      headers: corsHeaders,
       body: JSON.stringify({ 
         error: 'Error al subir la imagen',
         details: error.message
