@@ -1,187 +1,148 @@
 const { Octokit } = require("@octokit/rest");
-const jwt = require("jsonwebtoken");
 
 exports.handler = async (event, context) => {
+  // Headers CORS para permitir solicitudes desde el admin panel
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  };
+
+  // Manejar preflight OPTIONS
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: ''
+    };
+  }
+
   // Configuración
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
   const GITHUB_OWNER = process.env.GITHUB_OWNER;
   const GITHUB_REPO = process.env.GITHUB_REPO;
   const GITHUB_BRANCH = process.env.GITHUB_BRANCH || 'main';
-  const NETLIFY_IDENTITY_SECRET = process.env.NETLIFY_IDENTITY_SECRET;
 
   if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
+    console.error('Variables de entorno no configuradas');
     return {
       statusCode: 500,
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'Variables de entorno no configuradas' })
     };
-  }
-
-  // === OAUTH 2.0 VERIFICATION ===
-  if (!NETLIFY_IDENTITY_SECRET) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'NETLIFY_IDENTITY_SECRET no configurado' })
-    };
-  }
-
-  // Verify JWT token
-  const authHeader = event.headers.authorization || event.headers.Authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return {
-      statusCode: 401,
-      body: JSON.stringify({ error: 'Token de autorización requerido' })
-    };
-  }
-
-  const token = authHeader.split(' ')[1];
-  let user;
-
-  try {
-    // Verify the JWT token
-    user = jwt.verify(token, NETLIFY_IDENTITY_SECRET);
-    console.log('Token verificado para usuario:', user.email);
-  } catch (error) {
-    console.error('Error verificando token:', error);
-    return {
-      statusCode: 401,
-      body: JSON.stringify({ 
-        error: 'Token de autorización inválido o expirado',
-        details: error.message
-      })
-    };
-  }
-
-  // Check if user has admin privileges (if implemented)
-  if (user.app_metadata && user.app_metadata.roles) {
-    const hasAdminRole = user.app_metadata.roles.includes('admin') || 
-                        user.app_metadata.roles.includes('cms_admin');
-    
-    if (!hasAdminRole) {
-      return {
-        statusCode: 403,
-        body: JSON.stringify({ error: 'Permisos insuficientes. Se requiere rol de administrador.' })
-      };
-    }
   }
 
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'Method not allowed' })
     };
   }
 
   try {
-    const requestData = JSON.parse(event.body);
-    const { fileName, fileContent, portfolioIndex, field } = requestData;
-
-    if (!fileName || !fileContent) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: 'Nombre de archivo y contenido son requeridos' })
-      };
-    }
-
-    // Validar tipo de archivo
-    if (!fileName.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: 'Solo se permiten archivos de imagen (JPG, PNG, GIF, WebP)' })
-      };
-    }
-
-    // Crear nombre único y ruta
-    const timestamp = Date.now();
-    const randomId = Math.random().toString(36).substring(2, 8);
-    const extension = fileName.split('.').pop().toLowerCase();
-    const baseName = fileName.split('.')[0].replace(/[^a-zA-Z0-9]/g, '-');
-    const uniqueFileName = `${baseName}_${timestamp}_${randomId}.${extension}`;
+    console.log('📷 Iniciando subida de imagen...');
     
-    // Determinar la carpeta según el tipo de imagen
-    let filePath;
-    if (portfolioIndex !== undefined) {
-      filePath = `images/portfolio/${uniqueFileName}`;
-    } else {
-      filePath = `images/uploads/${uniqueFileName}`;
+    // Parsear FormData
+    const formData = new URLSearchParams(event.body);
+    const imageFile = formData.get('image');
+    
+    if (!imageFile) {
+      return {
+        statusCode: 400,
+        headers: corsHeaders,
+        body: JSON.stringify({ error: 'No se proporcionó imagen' })
+      };
     }
+
+    // Convertir base64 a Buffer
+    const imageBuffer = Buffer.from(imageFile, 'base64');
+    
+    // Generar nombre único para la imagen
+    const timestamp = Date.now();
+    const randomId = Math.random().toString(36).substring(2, 15);
+    const imageName = `image_${timestamp}_${randomId}.jpg`;
+    const imagePath = `images/${imageName}`;
+
+    console.log('📁 Subiendo imagen:', imagePath);
 
     const octokit = new Octokit({ auth: GITHUB_TOKEN });
 
-    // Verificar si el archivo existe
-    let existingSHA = null;
+    // Verificar si ya existe una imagen con el mismo nombre
+    let currentSHA = null;
     try {
       const { data: existingFile } = await octokit.repos.getContent({
         owner: GITHUB_OWNER,
         repo: GITHUB_REPO,
-        path: filePath,
+        path: imagePath,
         ref: GITHUB_BRANCH
       });
-      existingSHA = existingFile.sha;
-      console.log('Archivo existente encontrado, será sobrescrito');
+      currentSHA = existingFile.sha;
+      console.log('🗑️ Imagen existente encontrada, será reemplazada');
     } catch (error) {
-      // El archivo no existe, es normal
-      console.log('Subiendo nuevo archivo');
+      if (error.status !== 404) {
+        throw error;
+      }
     }
 
-    // Limpiar el contenido base64
-    let cleanContent = fileContent;
-    if (fileContent.startsWith('data:image/')) {
-      cleanContent = fileContent.replace(/^data:image\/\w+;base64,/, '');
-    }
-
-    // Subir la imagen
-    const commitMessage = `Subida de imagen: ${uniqueFileName} por ${user.user_metadata?.full_name || user.email}`;
-    
-    const { data: uploadResult } = await octokit.repos.createOrUpdateFileContents({
+    // Subir la imagen a GitHub
+    const { data: uploadedFile } = await octokit.repos.createOrUpdateFileContents({
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
-      path: filePath,
-      message: commitMessage,
-      content: cleanContent,
-      sha: existingSHA,
+      path: imagePath,
+      message: `Subida de imagen: ${imageName} - ${new Date().toISOString()}`,
+      content: imageBuffer.toString('base64'),
+      sha: currentSHA,
       branch: GITHUB_BRANCH
     });
 
-    console.log('Imagen subida exitosamente:', uniqueFileName);
+    // Generar URL de la imagen
+    const imageUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${imagePath}`;
 
-    // URL de la imagen
-    const imageUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${filePath}`;
+    console.log('✅ Imagen subida exitosamente:', imageUrl);
 
     return {
       statusCode: 200,
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Authorization, Content-Type',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS'
+        ...corsHeaders,
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ 
-        success: true, 
+      body: JSON.stringify({
+        success: true,
         url: imageUrl,
-        fileName: uniqueFileName,
-        filePath: filePath,
-        commit: uploadResult.commit.sha,
-        uploadedBy: user.email,
-        timestamp: new Date().toISOString(),
-        size: cleanContent.length
+        path: imagePath,
+        filename: imageName,
+        message: 'Imagen subida exitosamente',
+        commit: uploadedFile.commit.sha
       })
     };
 
   } catch (error) {
-    console.error('Error uploading image:', error);
+    console.error('❌ Error subiendo imagen:', error);
+    
+    let statusCode = 500;
+    let errorMessage = 'Error interno del servidor';
+    
+    if (error.status === 401) {
+      statusCode = 401;
+      errorMessage = 'Error de autenticación con GitHub';
+    } else if (error.status === 403) {
+      statusCode = 403;
+      errorMessage = 'Sin permisos para subir archivos al repositorio';
+    } else if (error.status === 413) {
+      statusCode = 413;
+      errorMessage = 'Archivo demasiado grande (máximo 1MB)';
+    }
     
     return {
-      statusCode: 500,
+      statusCode,
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Authorization, Content-Type',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS'
+        ...corsHeaders,
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ 
-        error: 'Error al subir la imagen',
-        details: error.message,
-        user: user?.email || 'Unknown'
+      body: JSON.stringify({
+        error: errorMessage,
+        details: error.message
       })
     };
   }

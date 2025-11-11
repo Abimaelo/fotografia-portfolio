@@ -1,5 +1,4 @@
 const { Octokit } = require("@octokit/rest");
-const jwt = require("jsonwebtoken");
 
 exports.handler = async (event, context) => {
   // Configuración
@@ -7,94 +6,70 @@ exports.handler = async (event, context) => {
   const GITHUB_OWNER = process.env.GITHUB_OWNER;
   const GITHUB_REPO = process.env.GITHUB_REPO;
   const GITHUB_BRANCH = process.env.GITHUB_BRANCH || 'main';
-  const NETLIFY_IDENTITY_SECRET = process.env.NETLIFY_IDENTITY_SECRET;
+
+  // Headers CORS para permitir solicitudes desde el admin panel
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  };
+
+  // Manejar preflight OPTIONS
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: ''
+    };
+  }
 
   if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
+    console.error('Variables de entorno no configuradas:', {
+      GITHUB_TOKEN: !!GITHUB_TOKEN,
+      GITHUB_OWNER,
+      GITHUB_REPO
+    });
+    
     return {
       statusCode: 500,
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'Variables de entorno no configuradas' })
     };
   }
 
-  // === OAUTH 2.0 VERIFICATION ===
-  if (!NETLIFY_IDENTITY_SECRET) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'NETLIFY_IDENTITY_SECRET no configurado' })
-    };
-  }
+  console.log('🔧 Iniciando actualización de contenido...');
 
-  // Verify JWT token
-  const authHeader = event.headers.authorization || event.headers.Authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return {
-      statusCode: 401,
-      body: JSON.stringify({ error: 'Token de autorización requerido' })
-    };
-  }
-
-  const token = authHeader.split(' ')[1];
-  let user;
-
-  try {
-    // Verify the JWT token
-    user = jwt.verify(token, NETLIFY_IDENTITY_SECRET);
-    console.log('Token verificado para usuario:', user.email);
-  } catch (error) {
-    console.error('Error verificando token:', error);
-    return {
-      statusCode: 401,
-      body: JSON.stringify({ 
-        error: 'Token de autorización inválido o expirado',
-        details: error.message
-      })
-    };
-  }
-
-  // Check if user has admin privileges (if implemented)
-  if (user.app_metadata && user.app_metadata.roles) {
-    const hasAdminRole = user.app_metadata.roles.includes('admin') || 
-                        user.app_metadata.roles.includes('cms_admin');
-    
-    if (!hasAdminRole) {
-      return {
-        statusCode: 403,
-        body: JSON.stringify({ error: 'Permisos insuficientes. Se requiere rol de administrador.' })
-      };
-    }
-  }
+  const octokit = new Octokit({ auth: GITHUB_TOKEN });
 
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'Method not allowed' })
     };
   }
 
   try {
-    const siteData = JSON.parse(event.body);
-
-    // Validate that we have data
-    if (!siteData || typeof siteData !== 'object') {
+    // Parsear el body de la solicitud
+    let siteData;
+    try {
+      const body = JSON.parse(event.body);
+      siteData = body.siteData || body; // Manejar ambos formatos
+    } catch (error) {
+      console.error('Error parsing body:', error);
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'Datos inválidos' })
+        headers: corsHeaders,
+        body: JSON.stringify({ error: 'Formato de datos inválido' })
       };
     }
 
-    // Add metadata about the change
-    siteData._lastUpdated = {
-      timestamp: new Date().toISOString(),
-      user: user.email,
-      user_name: user.user_metadata?.full_name || user.user_metadata?.name || 'Unknown',
-      commit_message: `Actualización desde panel admin por ${user.email}`
-    };
-
-    const octokit = new Octokit({ auth: GITHUB_TOKEN });
+    console.log('📋 Datos recibidos:', Object.keys(siteData));
 
     // 1. Obtener el archivo actual para obtener el SHA
     let currentSHA = null;
     try {
+      console.log('📊 Obteniendo archivo actual de GitHub...');
       const { data: currentFile } = await octokit.repos.getContent({
         owner: GITHUB_OWNER,
         repo: GITHUB_REPO,
@@ -102,59 +77,80 @@ exports.handler = async (event, context) => {
         ref: GITHUB_BRANCH
       });
       currentSHA = currentFile.sha;
-      console.log('Archivo data.json encontrado, SHA:', currentSHA);
+      console.log('✅ SHA actual obtenido:', currentSHA.substring(0, 10));
     } catch (error) {
-      // Si el archivo no existe, we'll create it
-      console.log('Archivo data.json no existe, será creado');
+      if (error.status === 404) {
+        console.log('📄 Archivo data.json no existe, será creado');
+      } else {
+        console.error('❌ Error obteniendo archivo:', error);
+        throw error;
+      }
     }
 
     // 2. Actualizar o crear el archivo
-    const commitMessage = `Actualización CMS por ${user.user_metadata?.full_name || user.email} - ${new Date().toLocaleString('es-ES')}`;
-    
+    console.log('🔄 Actualizando data.json en GitHub...');
     const { data: updatedFile } = await octokit.repos.createOrUpdateFileContents({
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
       path: 'data.json',
-      message: commitMessage,
+      message: `Actualización desde panel admin - ${new Date().toISOString()}`,
       content: Buffer.from(JSON.stringify(siteData, null, 2)).toString('base64'),
       sha: currentSHA,
       branch: GITHUB_BRANCH
     });
 
-    console.log('Archivo actualizado exitosamente:', updatedFile.commit.sha);
+    console.log('✅ Archivo actualizado exitosamente:', updatedFile.commit.sha);
 
+    // 3. Respuesta de éxito
     return {
       statusCode: 200,
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Authorization, Content-Type',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS'
+        ...corsHeaders,
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({ 
         success: true, 
-        message: 'Contenido actualizado exitosamente',
+        message: 'Contenido actualizado exitosamente en GitHub',
         commit: updatedFile.commit.sha,
-        user: user.email,
         timestamp: new Date().toISOString()
       })
     };
 
   } catch (error) {
-    console.error('Error updating content:', error);
+    console.error('❌ Error detallado actualizando contenido:', {
+      message: error.message,
+      status: error.status,
+      stack: error.stack
+    });
+    
+    // Determinar código de estado apropiado
+    let statusCode = 500;
+    let errorMessage = 'Error interno del servidor';
+    
+    if (error.status === 401) {
+      statusCode = 401;
+      errorMessage = 'Error de autenticación con GitHub';
+    } else if (error.status === 403) {
+      statusCode = 403;
+      errorMessage = 'Sin permisos para modificar el repositorio';
+    } else if (error.status === 404) {
+      statusCode = 404;
+      errorMessage = 'Repositorio o archivo no encontrado';
+    } else if (error.status === 422) {
+      statusCode = 422;
+      errorMessage = 'Datos inválidos para actualizar';
+    }
     
     return {
-      statusCode: 500,
+      statusCode,
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Authorization, Content-Type',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS'
+        ...corsHeaders,
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({ 
-        error: 'Error al actualizar el contenido',
+        error: errorMessage,
         details: error.message,
-        user: user?.email || 'Unknown'
+        timestamp: new Date().toISOString()
       })
     };
   }

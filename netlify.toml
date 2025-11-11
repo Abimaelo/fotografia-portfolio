@@ -57,18 +57,15 @@
   GITHUB_OWNER = "abimaelo"
   GITHUB_REPO = "fotografia-portfolio"
   GITHUB_BRANCH = "main"
-  NETLIFY_IDENTITY_SECRET = "secret"
 
 [context.deploy-preview.environment]
   GITHUB_TOKEN = ""
   GITHUB_OWNER = "abimaelo"
   GITHUB_REPO = "fotografia-portfolio"
   GITHUB_BRANCH = "main"
-  NETLIFY_IDENTITY_SECRET = "secret"
 
 [context.branch-deploy.environment]
   GITHUB_TOKEN = ""
   GITHUB_OWNER = "abimaelo"
   GITHUB_REPO = "fotografia-portfolio"
   GITHUB_BRANCH = "main"
-  NETLIFY_IDENTITY_SECRET = "secret"

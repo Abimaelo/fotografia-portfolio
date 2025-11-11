@@ -1,10 +1,253 @@
 // Script principal para el sitio web
+
+// ====================================
+// GLOBAL FUNCTIONS - Available immediately
+// ====================================
+
+// Global mobile menu function - Available from start
+window.toggleMobileMenu = function() {
+    console.log('Toggling mobile menu...');
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    
+    if (navToggle && navMenu) {
+        // Toggle active states
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        
+        // Prevent body scroll when menu is open
+        if (navMenu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+        console.log('Mobile menu toggled successfully');
+    } else {
+        console.error('Menu elements not found');
+    }
+}
+
+// Global gallery functions - Available from start
+window.openGallery = function(title, images) {
+    console.log('🎨 Opening gallery:', title, images);
+    if (!images || !Array.isArray(images) || images.length === 0) {
+        console.error('❌ No images provided for gallery');
+        return;
+    }
+    
+    // Remove existing modal if any
+    const existingModal = document.querySelector('.gallery-modal');
+    if (existingModal) {
+        existingModal.remove();
+        console.log('🗑️ Removed existing modal');
+    }
+    
+    // Create modal for the gallery
+    const modal = document.createElement('div');
+    modal.className = 'gallery-modal';
+    modal.innerHTML = `
+        <div class="gallery-content">
+            <div class="gallery-header">
+                <h2>${title}</h2>
+                <button class="gallery-close" onclick="window.closeGallery()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="gallery-body">
+                <button class="gallery-nav gallery-prev" onclick="window.prevImage()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <img id="gallery-main-image" src="${images[0]}" alt="${title}">
+                <button class="gallery-nav gallery-next" onclick="window.nextImage()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="gallery-thumbnails">
+                ${images.map((img, index) => `
+                    <img src="${img}" alt="${title} ${index + 1}" onclick="window.showImage(${index})" class="${index === 0 ? 'active' : ''}">
+                `).join('')}
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+    
+    // Store images and current index in the modal
+    modal.dataset.images = JSON.stringify(images);
+    modal.dataset.currentIndex = '0';
+    
+    // Show the modal with animation and initialize the first image
+    setTimeout(() => {
+        modal.classList.add('show');
+        window.showImage(0);
+    }, 10);
+    
+    console.log('✅ Gallery opened successfully with', images.length, 'images');
+}
+
+window.closeGallery = function() {
+    console.log('❌ Closing gallery');
+    const modal = document.querySelector('.gallery-modal');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = 'auto';
+        console.log('✅ Gallery closed successfully');
+    } else {
+        console.log('ℹ️ No gallery modal to close');
+    }
+}
+
+window.nextImage = function() {
+    console.log('➡️ Next image');
+    const modal = document.querySelector('.gallery-modal');
+    if (!modal) {
+        console.error('❌ No gallery modal found');
+        return;
+    }
+    
+    const images = JSON.parse(modal.dataset.images);
+    let currentIndex = parseInt(modal.dataset.currentIndex);
+    
+    currentIndex = (currentIndex + 1) % images.length;
+    modal.dataset.currentIndex = currentIndex;
+    
+    window.showImage(currentIndex);
+}
+
+window.prevImage = function() {
+    console.log('⬅️ Previous image');
+    const modal = document.querySelector('.gallery-modal');
+    if (!modal) {
+        console.error('❌ No gallery modal found');
+        return;
+    }
+    
+    const images = JSON.parse(modal.dataset.images);
+    let currentIndex = parseInt(modal.dataset.currentIndex);
+    
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    modal.dataset.currentIndex = currentIndex;
+    
+    window.showImage(currentIndex);
+}
+
+window.showImage = function(index) {
+    console.log('🖼️ Showing image:', index);
+    const modal = document.querySelector('.gallery-modal');
+    if (!modal) {
+        console.error('❌ No gallery modal found');
+        return;
+    }
+    
+    const images = JSON.parse(modal.dataset.images);
+    const mainImage = document.getElementById('gallery-main-image');
+    
+    if (mainImage && images[index]) {
+        mainImage.src = images[index];
+        modal.dataset.currentIndex = index;
+        
+        // Update thumbnails
+        document.querySelectorAll('.gallery-thumbnails img').forEach((img, i) => {
+            img.classList.toggle('active', i === index);
+        });
+        console.log('✅ Image updated to index', index);
+    } else {
+        console.error('❌ Image or mainImage not found', {mainImage, imagesLength: images ? images.length : 'no images'});
+    }
+}
+
+// Global blog functions
+window.openBlogPost = function(title, content, date) {
+    console.log('Opening blog post:', title);
+    if (!content) {
+        console.error('No content provided for blog post');
+        return;
+    }
+    
+    // Remove existing modal if any
+    const existingModal = document.querySelector('.blog-post-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    // Create modal for the blog post
+    const modal = document.createElement('div');
+    modal.className = 'blog-post-modal';
+    modal.innerHTML = `
+        <div class="blog-post-content">
+            <div class="blog-post-header">
+                <h2>${title}</h2>
+                <div class="blog-post-meta">
+                    <time datetime="${date}">${date}</time>
+                </div>
+                <button class="blog-post-close" onclick="window.closeBlogPost()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="blog-post-body">
+                <p>${content}</p>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+    
+    // Animation entry
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10);
+    
+    console.log('Blog post opened successfully');
+}
+
+window.closeBlogPost = function() {
+    console.log('Closing blog post');
+    const modal = document.querySelector('.blog-post-modal');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.remove();
+            document.body.style.overflow = 'auto';
+            console.log('Blog post closed successfully');
+        }, 300);
+    }
+}
+
+// Prevent multiple initializations
+let isInitialized = false;
+
 document.addEventListener('DOMContentLoaded', function() {
+    if (isInitialized) {
+        console.log('⚠️ Already initialized, skipping...');
+        return;
+    }
+    
     console.log('DOM loaded, initializing...');
+    isInitialized = true;
+    
     loadSiteData();
     initSmoothScrolling();
     initContactForm();
     initMobileMenu();
+    
+    // Fix hero image flash issue - hide hero image initially
+    const heroImage = document.getElementById('hero-image');
+    if (heroImage) {
+        heroImage.style.opacity = '0';
+        heroImage.style.transition = 'opacity 0.5s ease';
+    }
+    
+    console.log('Initializations complete');
 });
 
 // Cargar datos del sitio desde JSON
@@ -35,12 +278,11 @@ function updatePageContent(data) {
         document.getElementById('hero-cta').textContent = data.hero.ctaText;
         if (data.hero.image) {
             const heroImage = document.getElementById('hero-image');
-            // Set background image for smooth transition
-            heroImage.style.backgroundImage = `url('${data.hero.image}')`;
-            heroImage.style.backgroundSize = 'cover';
-            heroImage.style.backgroundPosition = 'center';
-            heroImage.style.transition = 'opacity 0.5s ease';
-            heroImage.style.opacity = '1';
+            heroImage.src = data.hero.image;
+            // Show image after it's loaded to prevent flash
+            heroImage.onload = function() {
+                this.style.opacity = '1';
+            };
         }
     }
     
@@ -93,7 +335,7 @@ function updatePageContent(data) {
     
     // Update copyright text from data
     if (data.meta?.copyright) {
-        const copyrightElement = document.getElementById('copyright-text');
+        const copyrightElement = document.querySelector('.footer-bottom p');
         if (copyrightElement) {
             copyrightElement.textContent = data.meta.copyright;
         }
@@ -177,17 +419,25 @@ function renderServices(services) {
 
 // Renderizar portfolio
 function renderPortfolio(portfolioItems) {
+    console.log('🖼️ Rendering portfolio with', portfolioItems.length, 'items');
     const container = document.getElementById('portfolio-grid');
     container.innerHTML = '';
     
-    portfolioItems.forEach(item => {
+    portfolioItems.forEach((item, index) => {
+        console.log(`📸 Portfolio item ${index + 1}:`, {
+            title: item.title,
+            category: item.category,
+            hasImages: !!item.images,
+            imagesCount: item.images ? item.images.length : 0
+        });
+        
         const portfolioCard = document.createElement('div');
         portfolioCard.className = 'portfolio-card';
         portfolioCard.innerHTML = `
             <div class="portfolio-image">
                 <img src="${item.image}" alt="${item.title}" loading="lazy">
                 <div class="portfolio-overlay">
-                    <button class="portfolio-btn" onclick="openGallery('${item.title}', ${JSON.stringify(item.images).replace(/"/g, '&quot;')})">
+                    <button class="portfolio-btn" data-index="${index}" data-title="${item.title}">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -201,8 +451,68 @@ function renderPortfolio(portfolioItems) {
                 <p>${item.description}</p>
             </div>
         `;
+        
+        // Add click event listener with better debugging
+        const portfolioBtn = portfolioCard.querySelector('.portfolio-btn');
+        console.log('🔍 Adding event listener to portfolio button:', {
+            button: portfolioBtn,
+            title: item.title,
+            hasImages: !!item.images
+        });
+        
+        // Mark button as configured
+        portfolioBtn.setAttribute('data-portfolio-bound', 'true');
+        portfolioBtn.setAttribute('data-title', item.title);
+        
+        portfolioBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('🖱️ Portfolio button clicked:', {
+                title: item.title,
+                index: index,
+                images: item.images,
+                buttonElement: portfolioBtn
+            });
+            
+            if (!item.images || item.images.length === 0) {
+                console.error('❌ No images found for portfolio item:', item.title);
+                return;
+            }
+            
+            console.log('🎨 Calling window.openGallery with:', item.title, item.images);
+            window.openGallery(item.title, item.images);
+        });
+        
+        // Add hover effect debugging
+        portfolioBtn.addEventListener('mouseenter', () => {
+            console.log('👆 Hovering over portfolio button:', item.title);
+        });
+        
         container.appendChild(portfolioCard);
+        
+        console.log('✅ Portfolio card added to DOM:', {
+            title: item.title,
+            buttonExists: !!portfolioBtn,
+            containerHasChildren: container.children.length
+        });
     });
+    
+    // Verify all buttons are properly attached
+    const allButtons = container.querySelectorAll('.portfolio-btn');
+    console.log('🔍 Total portfolio buttons in DOM:', allButtons.length);
+    
+    allButtons.forEach((button, index) => {
+        const hasClickListener = button.hasAttribute('data-portfolio-bound');
+        console.log('🔍 Button', index, 'is bound:', hasClickListener, 'title:', button.getAttribute('data-title'));
+    });
+    
+    console.log('✅ Portfolio rendered successfully with', portfolioItems.length, 'items');
+    
+    // Verify global function availability
+    if (typeof window.openGallery === 'function') {
+        console.log('✅ window.openGallery is available globally');
+    } else {
+        console.error('❌ window.openGallery is NOT available globally');
+    }
 }
 
 // Renderizar posts del blog
@@ -226,8 +536,15 @@ function renderBlogPosts(posts) {
             </div>
             <h3>${post.title}</h3>
             <p>${truncateText(post.content, 150)}</p>
-            <a href="#" class="blog-link" onclick="openBlogPost('${post.title}', ${JSON.stringify(post.content).replace(/"/g, '&quot;')}, '${formattedDate}'); return false;">Leer más →</a>
+            <a href="#" class="blog-link">Leer más →</a>
         `;
+        
+        // Add click event listener instead of inline onclick
+        postCard.querySelector('.blog-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.openBlogPost(post.title, post.content, formattedDate);
+        });
+        
         container.appendChild(postCard);
     });
 }
@@ -355,162 +672,18 @@ function initScrollAnimations() {
     });
 }
 
-// Abrir galería de imágenes
-window.openGallery = function(title, images) {
-    // Crear modal para la galería
-    const modal = document.createElement('div');
-    modal.className = 'gallery-modal';
-    modal.innerHTML = `
-        <div class="gallery-content">
-            <div class="gallery-header">
-                <h2>${title}</h2>
-                <button class="gallery-close" onclick="closeGallery()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="gallery-body">
-                <button class="gallery-nav gallery-prev" onclick="prevImage()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-                <img id="gallery-main-image" src="${images[0]}" alt="${title}">
-                <button class="gallery-nav gallery-next" onclick="nextImage()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="gallery-thumbnails">
-                ${images.map((img, index) => `
-                    <img src="${img}" alt="${title} ${index + 1}" onclick="showImage(${index})" class="${index === 0 ? 'active' : ''}">
-                `).join('')}
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-    document.body.style.overflow = 'hidden';
-    
-    // Almacenar imágenes en el modal
-    modal.dataset.images = JSON.stringify(images);
-    modal.dataset.currentIndex = '0';
-}
-
-window.closeGallery = function() {
-    const modal = document.querySelector('.gallery-modal');
-    if (modal) {
-        modal.remove();
-        document.body.style.overflow = 'auto';
-    }
-}
-
-function nextImage() {
-    const modal = document.querySelector('.gallery-modal');
-    if (!modal) return;
-    
-    const images = JSON.parse(modal.dataset.images);
-    let currentIndex = parseInt(modal.dataset.currentIndex);
-    
-    currentIndex = (currentIndex + 1) % images.length;
-    modal.dataset.currentIndex = currentIndex;
-    
-    showImage(currentIndex);
-}
-
-function prevImage() {
-    const modal = document.querySelector('.gallery-modal');
-    if (!modal) return;
-    
-    const images = JSON.parse(modal.dataset.images);
-    let currentIndex = parseInt(modal.dataset.currentIndex);
-    
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    modal.dataset.currentIndex = currentIndex;
-    
-    showImage(currentIndex);
-}
-
-function showImage(index) {
-    const modal = document.querySelector('.gallery-modal');
-    if (!modal) return;
-    
-    const images = JSON.parse(modal.dataset.images);
-    const mainImage = document.getElementById('gallery-main-image');
-    if (mainImage) {
-        mainImage.src = images[index];
-    }
-    modal.dataset.currentIndex = index;
-    
-    // Actualizar thumbnails
-    document.querySelectorAll('.gallery-thumbnails img').forEach((img, i) => {
-        img.classList.toggle('active', i === index);
-    });
-}
-
-// Make functions global
-window.nextImage = nextImage;
-window.prevImage = prevImage;
-window.showImage = showImage;
-
 // Cerrar galería con ESC o click fuera
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
-        closeGallery();
+        window.closeGallery();
     }
 });
 
 document.addEventListener('click', function(e) {
     if (e.target.classList.contains('gallery-modal')) {
-        closeGallery();
+        window.closeGallery();
     }
 });
-
-// Abrir post del blog en modal
-window.openBlogPost = function(title, content, date) {
-    // Crear modal para el post del blog
-    const modal = document.createElement('div');
-    modal.className = 'blog-post-modal';
-    modal.innerHTML = `
-        <div class="blog-post-content">
-            <div class="blog-post-header">
-                <h2>${title}</h2>
-                <div class="blog-post-meta">
-                    <time datetime="${date}">${date}</time>
-                </div>
-                <button class="blog-post-close" onclick="closeBlogPost()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="blog-post-body">
-                <p>${content}</p>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-    document.body.style.overflow = 'hidden';
-    
-    // Animación de entrada
-    setTimeout(() => {
-        modal.classList.add('show');
-    }, 10);
-}
-
-function closeBlogPost() {
-    const modal = document.querySelector('.blog-post-modal');
-    if (modal) {
-        modal.classList.remove('show');
-        setTimeout(() => {
-            modal.remove();
-            document.body.style.overflow = 'auto';
-        }, 300);
-    }
-}
 
 // Cerrar modal del blog con ESC
 document.addEventListener('keydown', function(e) {
@@ -526,119 +699,71 @@ document.addEventListener('keydown', function(e) {
 window.addEventListener('load', initScrollAnimations);
 
 // ====================================
-// SQUARESPACE-INSPIRED ANIMATIONS
+// REUSABLE FUNCTIONS
 // ====================================
 
-// Header scroll effect
-function initHeaderScrollEffect() {
-    const header = document.querySelector('.header');
+// Mobile menu functionality - WITHOUT addEventListener conflict
+function initMobileMenu() {
+    const navMenu = document.getElementById('nav-menu');
     
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
+    if (navMenu) {
+        // Close menu when clicking on a link
+        const navLinks = navMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                window.toggleMobileMenu();
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navToggle = document.getElementById('nav-toggle');
+            if (!navToggle.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
+                window.toggleMobileMenu();
+            }
+        });
+        
+        // Close menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const navToggle = document.getElementById('nav-toggle');
+                const navMenu = document.getElementById('nav-menu');
+                if (navToggle && navMenu && navMenu.classList.contains('active')) {
+                    window.toggleMobileMenu();
+                }
+            }
+        });
+    }
+}
+
+// Truncar texto
+function truncateText(text, maxLength) {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+}
+
+// Cerrar galería con ESC o click fuera
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        window.closeGallery();
+    }
+});
+
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('gallery-modal')) {
+        window.closeGallery();
+    }
+});
+
+// Cerrar modal del blog con ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const blogModal = document.querySelector('.blog-post-modal');
+        if (blogModal) {
+            window.closeBlogPost();
         }
-    });
-}
-
-// Smooth scroll animations
-function initScrollAnimations() {
-    // Add animation classes to elements
-    const animatedElements = document.querySelectorAll('section, .service-card, .portfolio-item, .blog-card, .stat-item');
-    
-    animatedElements.forEach(el => {
-        el.classList.add('fade-in');
-    });
-    
-    // Intersection Observer for scroll animations
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-    
-    // Observe all animated elements
-    const elementsToAnimate = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
-    elementsToAnimate.forEach(el => observer.observe(el));
-    
-    // Add stagger effect to grid items
-    const gridItems = document.querySelectorAll('.services-grid .service-card, .portfolio-grid .portfolio-item, .blog-grid .blog-card');
-    gridItems.forEach((item, index) => {
-        item.style.transitionDelay = `${index * 0.1}s`;
-    });
-}
-
-// Parallax effect for hero
-function initParallaxEffect() {
-    const hero = document.querySelector('.hero');
-    
-    if (hero) {
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            
-            if (scrolled < hero.offsetHeight) {
-                hero.style.transform = `translateY(${rate}px)`;
-            }
-        });
     }
-}
-
-// Enhanced hover effects
-function initEnhancedHoverEffects() {
-    // Portfolio hover effects
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
-    portfolioItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px) scale(1.02)';
-        });
-        
-        item.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-    
-    // Service card hover effects
-    const serviceCards = document.querySelectorAll('.service-card');
-    serviceCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            const icon = this.querySelector('.service-icon');
-            if (icon) {
-                icon.style.transform = 'scale(1.1) rotate(5deg)';
-            }
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            const icon = this.querySelector('.service-icon');
-            if (icon) {
-                icon.style.transform = 'scale(1) rotate(0deg)';
-            }
-        });
-    });
-}
-
-// Typing effect for hero title (removed duplicate)
-
-// Smooth reveal for navigation
-function initNavReveal() {
-    const nav = document.querySelector('.nav');
-    if (nav) {
-        nav.style.opacity = '0';
-        nav.style.transform = 'translateY(-20px)';
-        
-        setTimeout(() => {
-            nav.style.transition = 'all 0.8s ease';
-            nav.style.opacity = '1';
-            nav.style.transform = 'translateY(0)';
-        }, 300);
-    }
-}
+});
 
 // Initialize all effects
 function initAllEffects() {
@@ -719,126 +844,26 @@ document.addEventListener('DOMContentLoaded', function() {
     loadSiteData();
     initSmoothScrolling();
     initContactForm();
+    initMobileMenu();
     initAllEffects();
     initLoadingScreen();
 });
 
-// ====================================
-// BRING ME SOMEWHERE NICE INSPIRED ENHANCEMENTS
-// ====================================
-
-// Efectos específicos para diseño monocromático
-function initImageFilterEffects() {
-    const images = document.querySelectorAll('img');
-    images.forEach(img => {
-        // Añadir clase para el efecto de escala de grises
-        img.classList.add('monochrome-image');
-        
-        // Efecto hover para remover escala de grises
-        img.addEventListener('mouseenter', function() {
-            this.style.filter = 'grayscale(0%)';
-        });
-        
-        img.addEventListener('mouseleave', function() {
-            this.style.filter = '';
-        });
-    });
-}
-
-// Animaciones mejoradas para tarjetas de servicios
-function initServiceCardAnimations() {
-    const serviceCards = document.querySelectorAll('.service-card');
-    
-    serviceCards.forEach((card, index) => {
-        // Añadir delay escalonado para aparecer
-        card.style.animationDelay = `${index * 0.1}s`;
-        
-        // Efecto hover mejorado
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-8px)';
-            this.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.15)';
-            
-            // Animar el icono
-            const icon = this.querySelector('.service-icon');
-            if (icon) {
-                icon.style.transform = 'scale(1.1)';
-                icon.style.background = 'var(--color-white)';
-            }
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-            this.style.boxShadow = '';
-            
-            const icon = this.querySelector('.service-icon');
-            if (icon) {
-                icon.style.transform = 'scale(1)';
-                icon.style.background = 'var(--color-light-gray)';
-            }
-        });
-    });
-}
-
-// Animaciones mejoradas para portfolio
-function initPortfolioHoverAnimations() {
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
-    
-    portfolioItems.forEach(item => {
-        // Efecto hover elegante
-        item.addEventListener('mouseenter', function() {
-            const img = this.querySelector('img');
-            const overlay = this.querySelector('.portfolio-overlay');
-            
-            if (img) {
-                img.style.filter = 'grayscale(0%) brightness(1.1)';
-                img.style.transform = 'scale(1.05)';
-            }
-            
-            if (overlay) {
-                overlay.style.opacity = '1';
-                overlay.style.transform = 'translateY(0)';
-            }
-        });
-        
-        item.addEventListener('mouseleave', function() {
-            const img = this.querySelector('img');
-            const overlay = this.querySelector('.portfolio-overlay');
-            
-            if (img) {
-                img.style.filter = 'grayscale(100%)';
-                img.style.transform = 'scale(1)';
-            }
-            
-            if (overlay) {
-                overlay.style.opacity = '0';
-            }
-        });
-    });
-}
-
-// Efecto de escritura mejorado para el hero
+// Reusable animation and effect functions
 function initTypingEffect() {
     const heroTitle = document.getElementById('hero-title');
     if (heroTitle) {
-        // Obtener el texto actual
-        const text = heroTitle.textContent;
+        heroTitle.style.opacity = '0';
+        heroTitle.style.transform = 'translateY(20px)';
+        heroTitle.style.transition = 'all 1s ease-out';
         
-        // Si ya hay texto, no aplicar el efecto de typing para evitar duplicación
-        if (text && text.trim() !== '') {
-            // Solo aplicar fade-in effect en lugar de typing
-            heroTitle.style.opacity = '0';
-            heroTitle.style.transform = 'translateY(20px)';
-            heroTitle.style.transition = 'all 1s ease-out';
-            
-            setTimeout(() => {
-                heroTitle.style.opacity = '1';
-                heroTitle.style.transform = 'translateY(0)';
-            }, 2000);
-        }
+        setTimeout(() => {
+            heroTitle.style.opacity = '1';
+            heroTitle.style.transform = 'translateY(0)';
+        }, 2000);
     }
 }
 
-// Revelado suave de navegación
 function initNavReveal() {
     const nav = document.querySelector('.nav');
     if (nav) {
@@ -853,7 +878,6 @@ function initNavReveal() {
     }
 }
 
-// Efecto parallax suave para hero
 function initParallaxEffect() {
     const hero = document.querySelector('.hero');
     
@@ -873,7 +897,6 @@ function initParallaxEffect() {
     }
 }
 
-// Efecto de scroll para el header
 function initHeaderScrollEffect() {
     const header = document.querySelector('.header');
     
@@ -886,7 +909,6 @@ function initHeaderScrollEffect() {
     });
 }
 
-// Animaciones de aparición para elementos
 function initScrollAnimations() {
     const observerOptions = {
         threshold: 0.1,
@@ -901,20 +923,22 @@ function initScrollAnimations() {
         });
     }, observerOptions);
     
-    // Observar elementos con animaciones
+    // Add animation classes to elements
     const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
-    animatedElements.forEach(el => observer.observe(el));
+    animatedElements.forEach(el => {
+        el.classList.add('fade-in');
+        observer.observe(el);
+    });
     
-    // Añadir delay escalonado a elementos de grilla
+    // Add delay to grid items
     const gridItems = document.querySelectorAll('.service-card, .portfolio-item, .blog-card');
     gridItems.forEach((item, index) => {
         item.style.transitionDelay = `${index * 0.15}s`;
     });
 }
 
-// Efectos hover mejorados
 function initEnhancedHoverEffects() {
-    // Efectos para blog cards
+    // Blog cards
     const blogCards = document.querySelectorAll('.blog-card');
     blogCards.forEach(card => {
         card.addEventListener('mouseenter', function() {
@@ -943,364 +967,7 @@ function initEnhancedHoverEffects() {
 
 // Resize handler for responsive animations
 window.addEventListener('resize', () => {
-    // Reinitialize scroll animations on resize
     setTimeout(() => {
         initScrollAnimations();
     }, 100);
 });
-
-// Abrir galería de portfolio
-window.openGallery = function(title, images) {
-    console.log('🎨 Abriendo galería:', title);
-    console.log('🖼️ Imágenes:', images);
-    
-    // Cerrar galería existente si hay una
-    const existingModal = document.querySelector('.gallery-modal');
-    if (existingModal) {
-        document.body.removeChild(existingModal);
-    }
-    
-    // Crear modal con z-index muy alto
-    const modal = document.createElement('div');
-    modal.className = 'gallery-modal';
-    modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 99999;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    `;
-    
-    // Contenido del modal
-    modal.innerHTML = `
-        <div class="gallery-content" style="
-            position: relative;
-            width: 90vw;
-            max-width: 1200px;
-            height: 90vh;
-            background: #1a1a1a;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-        ">
-            <div class="gallery-header" style="
-                padding: 20px 30px;
-                background: linear-gradient(135deg, #333 0%, #2a2a2a 100%);
-                color: white;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                border-bottom: 1px solid #555;
-                z-index: 100;
-                position: relative;
-                min-height: 80px;
-                flex-shrink: 0;
-            ">
-                <h3 style="margin: 0; font-size: 1.4rem; font-weight: 600; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">${title}</h3>
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <span class="image-counter" style="
-                        font-size: 0.9rem;
-                        color: #ccc;
-                        background: rgba(255,255,255,0.1);
-                        padding: 5px 10px;
-                        border-radius: 15px;
-                        font-weight: 500;
-                    ">1 de 6</span>
-                    <button class="gallery-close" style="
-                        background: rgba(255, 255, 255, 0.1);
-                        border: 1px solid rgba(255, 255, 255, 0.2);
-                        color: white;
-                        font-size: 24px;
-                        cursor: pointer;
-                        padding: 8px;
-                        width: 40px;
-                        height: 40px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        border-radius: 50%;
-                        transition: all 0.3s ease;
-                        backdrop-filter: blur(10px);
-                    ">&times;</button>
-                </div>
-            </div>
-            <div class="gallery-body" style="
-                position: relative;
-                flex: 1;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: #1a1a1a;
-                padding: 20px;
-                min-height: 0;
-            ">
-                <img class="gallery-current" src="" alt="${title}" style="
-                    max-width: 100%;
-                    max-height: 100%;
-                    object-fit: contain;
-                    display: block;
-                    border-radius: 8px;
-                    z-index: 1;
-                ">
-                <button class="gallery-prev" style="
-                    position: absolute;
-                    left: 20px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    background: rgba(255, 255, 255, 0.15);
-                    border: 2px solid rgba(255, 255, 255, 0.25);
-                    color: white;
-                    font-size: 20px;
-                    cursor: pointer;
-                    border-radius: 50%;
-                    width: 50px;
-                    height: 50px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    transition: all 0.3s ease;
-                    backdrop-filter: blur(15px);
-                    z-index: 10;
-                ">‹</button>
-                <button class="gallery-next" style="
-                    position: absolute;
-                    right: 20px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    background: rgba(255, 255, 255, 0.15);
-                    border: 2px solid rgba(255, 255, 255, 0.25);
-                    color: white;
-                    font-size: 20px;
-                    cursor: pointer;
-                    border-radius: 50%;
-                    width: 50px;
-                    height: 50px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    transition: all 0.3s ease;
-                    backdrop-filter: blur(15px);
-                    z-index: 10;
-                ">›</button>
-            </div>
-        </div>
-    `;
-    
-    // Añadir al DOM
-    document.body.appendChild(modal);
-    
-    // Mostrar con animación
-    setTimeout(() => {
-        modal.style.opacity = '1';
-    }, 10);
-    
-    // Configurar navegación de imágenes
-    let currentIndex = 0;
-    // images ya es un array, no necesita parsing
-    const imageArray = Array.isArray(images) ? images : JSON.parse(images.replace(/&quot;/g, '"'));
-    console.log('🖼️ Array de imágenes procesado:', imageArray);
-    const currentImage = modal.querySelector('.gallery-current');
-    const imageCounter = modal.querySelector('.image-counter');
-    
-    function showImage(index) {
-        if (imageArray && imageArray[index]) {
-            currentImage.src = imageArray[index];
-            currentImage.alt = `${title} - Imagen ${index + 1}`;
-            imageCounter.textContent = `${index + 1} de ${imageArray.length}`;
-            console.log(`📸 Mostrando imagen ${index + 1} de ${imageArray.length}`);
-        }
-    }
-    
-    // Mostrar primera imagen
-    showImage(0);
-    
-    // Event listeners para navegación
-    const prevBtn = modal.querySelector('.gallery-prev');
-    const nextBtn = modal.querySelector('.gallery-next');
-    const closeBtn = modal.querySelector('.gallery-close');
-    
-    console.log('🛠️ Configurando event listeners - prevBtn:', prevBtn, 'nextBtn:', nextBtn, 'closeBtn:', closeBtn);
-    
-    if (prevBtn) {
-        prevBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentIndex = currentIndex > 0 ? currentIndex - 1 : imageArray.length - 1;
-            showImage(currentIndex);
-            console.log('⬅️ Navegando a imagen anterior:', currentIndex);
-        });
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentIndex = currentIndex < imageArray.length - 1 ? currentIndex + 1 : 0;
-            showImage(currentIndex);
-            console.log('➡️ Navegando a imagen siguiente:', currentIndex);
-        });
-    }
-    
-    if (closeBtn) {
-        closeBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            closeModal();
-            console.log('❌ Cerrando modal');
-        });
-        
-        // Hover effects para close button
-        closeBtn.addEventListener('mouseenter', () => {
-            closeBtn.style.background = 'rgba(255, 59, 48, 0.8)';
-            closeBtn.style.transform = 'scale(1.1)';
-        });
-        closeBtn.addEventListener('mouseleave', () => {
-            closeBtn.style.background = 'rgba(255, 255, 255, 0.1)';
-            closeBtn.style.transform = 'scale(1)';
-        });
-    }
-    
-    // Hover effects para botones de navegación
-    if (prevBtn) {
-        prevBtn.addEventListener('mouseenter', () => {
-            prevBtn.style.background = 'rgba(255, 255, 255, 0.25)';
-            prevBtn.style.transform = 'translateY(-50%) scale(1.15)';
-            prevBtn.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-            prevBtn.style.boxShadow = '0 0 20px rgba(255, 255, 255, 0.2)';
-        });
-        prevBtn.addEventListener('mouseleave', () => {
-            prevBtn.style.background = 'rgba(255, 255, 255, 0.15)';
-            prevBtn.style.transform = 'translateY(-50%) scale(1)';
-            prevBtn.style.borderColor = 'rgba(255, 255, 255, 0.25)';
-            prevBtn.style.boxShadow = 'none';
-        });
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('mouseenter', () => {
-            nextBtn.style.background = 'rgba(255, 255, 255, 0.25)';
-            nextBtn.style.transform = 'translateY(-50%) scale(1.15)';
-            nextBtn.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-            nextBtn.style.boxShadow = '0 0 20px rgba(255, 255, 255, 0.2)';
-        });
-        nextBtn.addEventListener('mouseleave', () => {
-            nextBtn.style.background = 'rgba(255, 255, 255, 0.15)';
-            nextBtn.style.transform = 'translateY(-50%) scale(1)';
-            nextBtn.style.borderColor = 'rgba(255, 255, 255, 0.25)';
-            nextBtn.style.boxShadow = 'none';
-        });
-    }
-    
-    // Cerrar modal
-    function closeModal() {
-        modal.style.opacity = '0';
-        setTimeout(() => {
-            if (document.body.contains(modal)) {
-                document.body.removeChild(modal);
-            }
-        }, 300);
-    }
-    
-
-    
-    // Cerrar al hacer clic fuera del contenido
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal || e.target.closest('.gallery-content') === null) {
-            closeModal();
-            console.log('🖱️ Cerrando modal por clic exterior');
-        }
-    });
-    
-    // No cerrar al hacer clic en el contenido
-    modal.querySelector('.gallery-content').addEventListener('click', (e) => {
-        e.stopPropagation();
-    });
-    
-    // Navegación con teclado
-    const keyHandler = function(e) {
-        console.log('⌨️ Tecla presionada:', e.key);
-        if (e.key === 'Escape') {
-            closeModal();
-            document.removeEventListener('keydown', keyHandler);
-            console.log('❌ Cerrando modal por ESC');
-        } else if (e.key === 'ArrowLeft') {
-            currentIndex = currentIndex > 0 ? currentIndex - 1 : imageArray.length - 1;
-            showImage(currentIndex);
-            console.log('⬅️ Tecla izquierda:', currentIndex);
-        } else if (e.key === 'ArrowRight') {
-            currentIndex = currentIndex < imageArray.length - 1 ? currentIndex + 1 : 0;
-            showImage(currentIndex);
-            console.log('➡️ Tecla derecha:', currentIndex);
-        }
-    };
-    
-    document.addEventListener('keydown', keyHandler);
-    
-    console.log('✅ Galería abierta correctamente');
-};
-
-// Mobile menu functionality
-function initMobileMenu() {
-    const navToggle = document.getElementById('nav-toggle');
-    const navMenu = document.getElementById('nav-menu');
-    
-    if (!navToggle || !navMenu) {
-        console.log('Mobile menu elements not found');
-        return;
-    }
-    
-    console.log('Initializing mobile menu...');
-    
-    // Toggle function
-    function toggleMenu() {
-        console.log('Toggle menu clicked');
-        navToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-        
-        // Prevent body scroll when menu is open
-        if (navMenu.classList.contains('active')) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'auto';
-        }
-    }
-    
-    // Add event listener for toggle button
-    navToggle.addEventListener('click', toggleMenu);
-    
-    // Close menu when clicking on a link
-    const navLinks = navMenu.querySelectorAll('a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!navToggle.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
-            navToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-    });
-    
-    // Close menu on window resize
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            navToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-    });
-    
-    console.log('Mobile menu initialized successfully');
-}

@@ -49,155 +49,122 @@
 
         #admin-panel {
             display: none;
-        }
-
-        .admin-container {
             min-height: 100vh;
-            background: #f5f6fa;
+            background: #f8fafc;
         }
 
         .admin-header {
             background: white;
-            padding: 20px;
+            padding: 1rem 2rem;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .admin-header h1 {
-            color: #667eea;
-            font-size: 1.8rem;
+            color: #2d3748;
+            font-size: 1.5rem;
         }
 
-        .admin-actions {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .user-info {
+        .admin-user {
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #666;
         }
 
-        .btn {
-            padding: 10px 20px;
+        .admin-user-email {
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .admin-logout {
+            background: #e53e3e;
+            color: white;
             border: none;
-            border-radius: 5px;
+            padding: 8px 16px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
+            font-size: 0.9rem;
+            transition: background 0.2s;
         }
 
-        .btn-primary {
+        .admin-logout:hover {
+            background: #c53030;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .admin-nav {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-nav-button {
+            background: #edf2f7;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4a5568;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .admin-nav-button:hover {
+            background: #e2e8f0;
+        }
+
+        .admin-nav-button.active {
             background: #667eea;
             color: white;
         }
 
-        .btn-primary:hover {
-            background: #5a6fd8;
-            transform: translateY(-1px);
-        }
-
-        .btn-danger {
-            background: #e74c3c;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #c0392b;
-            transform: translateY(-1px);
-        }
-
-        .btn-success {
-            background: #27ae60;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #229954;
-            transform: translateY(-1px);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .admin-content {
-            display: flex;
-            height: calc(100vh - 80px);
-        }
-
-        .admin-sidebar {
-            width: 280px;
-            background: white;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
-        }
-
-        .admin-nav {
-            padding: 20px 0;
-        }
-
-        .nav-item {
-            padding: 15px 25px;
-            cursor: pointer;
-            border-left: 3px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .nav-item:hover {
-            background: #f8f9fa;
-            border-left-color: #667eea;
-        }
-
-        .nav-item.active {
-            background: #f0f2ff;
-            border-left-color: #667eea;
-            color: #667eea;
-            font-weight: 600;
-        }
-
-        .admin-main {
-            flex: 1;
-            padding: 30px;
-            overflow-y: auto;
-        }
-
-        .section {
+        .admin-section {
             display: none;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            margin-bottom: 2rem;
         }
 
-        .section.active {
+        .admin-section.active {
             display: block;
         }
 
-        .section-title {
-            font-size: 2rem;
-            color: #333;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
+        .admin-section h2 {
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
             border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #555;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #4a5568;
         }
 
         .form-group input,
@@ -205,10 +172,10 @@
         .form-group select {
             width: 100%;
             padding: 12px;
-            border: 2px solid #e1e8ed;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s ease;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
         }
 
         .form-group input:focus,
@@ -223,205 +190,169 @@
             min-height: 100px;
         }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .section-description {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 6px;
-            margin-bottom: 30px;
-            border-left: 4px solid #667eea;
-        }
-
-        .section-description h3 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-
-        .section-description p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .image-upload-container {
-            border: 2px dashed #ccc;
-            border-radius: 6px;
-            padding: 40px;
+        .image-upload {
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 2rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 20px 0;
+            transition: border-color 0.2s;
         }
 
-        .image-upload-container:hover {
+        .image-upload:hover {
             border-color: #667eea;
-            background: #f0f2ff;
         }
 
-        .image-upload-container.dragover {
+        .image-upload.dragover {
             border-color: #667eea;
-            background: #f0f2ff;
+            background: #f7fafc;
         }
 
         .image-preview {
             max-width: 200px;
             max-height: 200px;
-            border-radius: 6px;
-            margin: 15px 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 1rem;
         }
 
-        .image-preview.large {
-            max-width: 400px;
-            max-height: 300px;
+        .items-list {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        .dynamic-list {
-            background: white;
-            border: 1px solid #e1e8ed;
-            border-radius: 6px;
-            margin-top: 15px;
-        }
-
-        .dynamic-item {
-            padding: 20px;
-            border-bottom: 1px solid #e1e8ed;
+        .item-row {
             display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 20px;
+            grid-template-columns: 1fr 2fr 1fr auto;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
             align-items: start;
         }
 
-        .dynamic-item:last-child {
+        .item-row:last-child {
             border-bottom: none;
         }
 
-        .dynamic-item-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+        .item-row input,
+        .item-row textarea {
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
         }
 
-        .dynamic-item-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .btn-small {
+        .item-row button {
+            background: #e53e3e;
+            color: white;
+            border: none;
             padding: 6px 12px;
-            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
         }
 
-        .add-item-btn {
-            background: #27ae60;
+        .add-item {
+            background: #38a169;
             color: white;
             border: none;
             padding: 12px 24px;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
-            margin-top: 15px;
-            transition: all 0.3s ease;
+            font-size: 1rem;
+            margin-top: 1rem;
+            transition: background 0.2s;
         }
 
-        .add-item-btn:hover {
-            background: #229954;
-            transform: translateY(-1px);
+        .add-item:hover {
+            background: #2f855a;
         }
 
-        .status-message {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: 6px;
-            color: white;
-            font-weight: 600;
-            z-index: 1000;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-        }
-
-        .status-message.show {
-            transform: translateX(0);
-        }
-
-        .status-message.success {
-            background: #27ae60;
-        }
-
-        .status-message.error {
-            background: #e74c3c;
-        }
-
-        .status-message.info {
-            background: #667eea;
-        }
-
-        .save-section {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .save-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .save-btn {
+        .admin-save {
             background: #667eea;
             color: white;
             border: none;
-            padding: 15px 40px;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
+            padding: 15px 30px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            transition: all 0.2s;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .save-btn:hover:not(:disabled) {
-            background: #5a6fd8;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        .admin-save:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
         }
 
-        .save-btn:disabled {
-            opacity: 0.6;
+        .admin-save:disabled {
+            background: #a0aec0;
             cursor: not-allowed;
             transform: none;
         }
 
+        .save-status {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .save-status.success {
+            color: #38a169;
+        }
+
+        .save-status.error {
+            color: #e53e3e;
+        }
+
+        .debug-info {
+            background: #1a202c;
+            color: #68d391;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            font-family: monospace;
+            font-size: 0.8rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .debug-info.error {
+            background: #742a2a;
+            color: #fc8181;
+        }
+
+        .social-links-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
         @media (max-width: 768px) {
-            .admin-content {
+            .item-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .social-links-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-nav {
                 flex-direction: column;
             }
-            
-            .admin-sidebar {
+
+            .admin-nav-button {
                 width: 100%;
-                height: auto;
             }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .dynamic-item {
-                grid-template-columns: 1fr;
-            }
-            
-            .dynamic-item-content {
-                grid-template-columns: 1fr;
-            }
+        }
+
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -429,1061 +360,860 @@
     <!-- Login Container -->
     <div id="login-container" class="login-container">
         <div class="login-box">
-            <h1>🎨 Panel de Administración</h1>
-            <p>Accede con tu cuenta de GitHub para gestionar el contenido de tu portfolio de fotografía</p>
-            <div data-netlify-identity-button="github" class="github-sign-in"></div>
-            <button onclick="forceLogin()" class="btn btn-primary" style="margin-top: 20px;">🚀 Iniciar Sesión</button>
+            <h1>Panel de Administración</h1>
+            <p>Accede con tu cuenta de GitHub para administrar tu portafolio</p>
+            <button onclick="initNetlifyIdentity()" class="admin-nav-button">
+                Iniciar Sesión
+            </button>
         </div>
     </div>
 
     <!-- Admin Panel -->
-    <div id="admin-panel" class="admin-container">
+    <div id="admin-panel">
+        <!-- Header -->
         <div class="admin-header">
-            <h1>🎨 Panel de Administración - Fotografía Portfolio</h1>
-            <div class="admin-actions">
-                <div class="user-info">
-                    <span id="user-email"></span>
-                </div>
-                <button onclick="logout()" class="btn btn-danger">Cerrar Sesión</button>
+            <h1>📸 Admin Panel - Fotografía Portfolio</h1>
+            <div class="admin-user">
+                <span class="admin-user-email" id="admin-user-email"></span>
+                <button class="admin-logout" onclick="logout()">Cerrar Sesión</button>
             </div>
         </div>
 
-        <div class="admin-content">
-            <div class="admin-sidebar">
-                <div class="admin-nav">
-                    <div class="nav-item active" onclick="switchSection('general')">
-                        <strong>⚙️ Configuración General</strong>
+        <!-- Main Content -->
+        <div class="admin-container">
+            <!-- Navigation -->
+            <div class="admin-nav">
+                <button class="admin-nav-button active" onclick="showSection('configuracion-general')">
+                    ⚙️ Configuración General
+                </button>
+                <button class="admin-nav-button" onclick="showSection('hero-section')">
+                    🏠 Hero Section
+                </button>
+                <button class="admin-nav-button" onclick="showSection('sobre-fotografo')">
+                    👤 Sobre el Fotógrafo
+                </button>
+                <button class="admin-nav-button" onclick="showSection('servicios')">
+                    🎯 Servicios
+                </button>
+                <button class="admin-nav-button" onclick="showSection('portfolio')">
+                    🖼️ Portfolio
+                </button>
+                <button class="admin-nav-button" onclick="showSection('blog')">
+                    📝 Blog
+                </button>
+                <button class="admin-nav-button" onclick="showSection('contacto')">
+                    📞 Contacto
+                </button>
+                <button class="admin-nav-button" onclick="showSection('footer')">
+                    📄 Footer
+                </button>
+                <button class="admin-nav-button" onclick="showSection('redes-sociales')">
+                    🌐 Redes Sociales
+                </button>
+                <button class="admin-nav-button" onclick="showSection('guardar')">
+                    💾 Guardar
+                </button>
+            </div>
+
+            <!-- Configuración General -->
+            <div id="configuracion-general" class="admin-section active">
+                <h2>⚙️ Configuración General</h2>
+                <div class="form-group">
+                    <label for="site-title">Título del Sitio</label>
+                    <input type="text" id="site-title" placeholder="Estudio de Fotografía">
+                </div>
+                <div class="form-group">
+                    <label for="page-title">Título de la Página</label>
+                    <input type="text" id="page-title" placeholder="Estudio de Fotografía">
+                </div>
+            </div>
+
+            <!-- Hero Section -->
+            <div id="hero-section" class="admin-section">
+                <h2>🏠 Hero Section</h2>
+                <div class="form-group">
+                    <label for="hero-title">Título Principal</label>
+                    <input type="text" id="hero-title" placeholder="Capturando Momentos Únicos">
+                </div>
+                <div class="form-group">
+                    <label for="hero-subtitle">Subtítulo</label>
+                    <textarea id="hero-subtitle" placeholder="Fotografía profesional que transforma tus momentos especiales..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="hero-cta">Texto del Botón</label>
+                    <input type="text" id="hero-cta" placeholder="Ver Mi Portfolio">
+                </div>
+                <div class="form-group">
+                    <label>Imagen de Hero</label>
+                    <div class="image-upload" onclick="document.getElementById('hero-image-input').click()">
+                        <input type="file" id="hero-image-input" accept="image/*" style="display: none;" onchange="handleImageUpload('hero-image', this)">
+                        <p>📷 Haz clic para subir imagen de Hero</p>
+                        <img id="hero-image-preview" class="image-preview" style="display: none;">
                     </div>
-                    <div class="nav-item" onclick="switchSection('hero')">
-                        <strong>🏠 Hero Section</strong>
+                    <input type="hidden" id="hero-image">
+                </div>
+            </div>
+
+            <!-- Sobre el Fotógrafo -->
+            <div id="sobre-fotografo" class="admin-section">
+                <h2>👤 Sobre el Fotógrafo</h2>
+                <div class="form-group">
+                    <label for="photographer-name">Nombre</label>
+                    <input type="text" id="photographer-name" placeholder="Carlos Martínez">
+                </div>
+                <div class="form-group">
+                    <label for="photographer-specialty">Especialidad</label>
+                    <input type="text" id="photographer-specialty" placeholder="Fotografía de Retratos y Eventos">
+                </div>
+                <div class="form-group">
+                    <label for="photographer-experience">Experiencia</label>
+                    <input type="text" id="photographer-experience" placeholder="8 años de experiencia">
+                </div>
+                <div class="form-group">
+                    <label for="photographer-bio">Biografía</label>
+                    <textarea id="photographer-bio" placeholder="Con más de 8 años de experiencia..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Foto del Fotógrafo</label>
+                    <div class="image-upload" onclick="document.getElementById('photographer-image-input').click()">
+                        <input type="file" id="photographer-image-input" accept="image/*" style="display: none;" onchange="handleImageUpload('photographer-image', this)">
+                        <p>📷 Haz clic para subir foto del fotógrafo</p>
+                        <img id="photographer-image-preview" class="image-preview" style="display: none;">
                     </div>
-                    <div class="nav-item" onclick="switchSection('photographer')">
-                        <strong>📷 Sobre el Fotógrafo</strong>
+                    <input type="hidden" id="photographer-image">
+                </div>
+            </div>
+
+            <!-- Servicios -->
+            <div id="servicios" class="admin-section">
+                <h2>🎯 Servicios</h2>
+                <div id="services-list" class="items-list">
+                    <!-- Services will be populated by JavaScript -->
+                </div>
+                <button class="add-item" onclick="addService()">+ Agregar Servicio</button>
+            </div>
+
+            <!-- Portfolio -->
+            <div id="portfolio" class="admin-section">
+                <h2>🖼️ Portfolio</h2>
+                <div id="portfolio-list" class="items-list">
+                    <!-- Portfolio items will be populated by JavaScript -->
+                </div>
+                <button class="add-item" onclick="addPortfolioItem()">+ Agregar Imagen al Portfolio</button>
+            </div>
+
+            <!-- Blog -->
+            <div id="blog" class="admin-section">
+                <h2>📝 Blog</h2>
+                <div id="blog-list" class="items-list">
+                    <!-- Blog posts will be populated by JavaScript -->
+                </div>
+                <button class="add-item" onclick="addBlogPost()">+ Agregar Post del Blog</button>
+            </div>
+
+            <!-- Contacto -->
+            <div id="contacto" class="admin-section">
+                <h2>📞 Contacto</h2>
+                <div class="form-group">
+                    <label for="contact-email">Email</label>
+                    <input type="email" id="contact-email" placeholder="carlos@fotografia-martinez.com">
+                </div>
+                <div class="form-group">
+                    <label for="contact-phone">Teléfono</label>
+                    <input type="text" id="contact-phone" placeholder="+34 678 123 456">
+                </div>
+                <div class="form-group">
+                    <label for="contact-address">Dirección</label>
+                    <input type="text" id="contact-address" placeholder="Calle Fotógrafos 15, Madrid 28001">
+                </div>
+                <div class="form-group">
+                    <label for="contact-studio">Estudio</label>
+                    <input type="text" id="contact-studio" placeholder="Estudio fotográfico con iluminación profesional">
+                </div>
+                <div class="form-group">
+                    <label for="contact-availability">Horario</label>
+                    <input type="text" id="contact-availability" placeholder="Lunes a Sábado - 9:00 a 20:00">
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div id="footer" class="admin-section">
+                <h2>📄 Footer</h2>
+                <div class="form-group">
+                    <label for="footer-title">Título del Footer</label>
+                    <input type="text" id="footer-title" placeholder="Estudio de Fotografía">
+                </div>
+                <div class="form-group">
+                    <label for="footer-copyright">Texto de Copyright</label>
+                    <input type="text" id="footer-copyright" placeholder="© 2025 Estudio de Fotografía Carlos Martínez. Todos los derechos reservados.">
+                </div>
+            </div>
+
+            <!-- Redes Sociales -->
+            <div id="redes-sociales" class="admin-section">
+                <h2>🌐 Redes Sociales</h2>
+                <div class="social-links-grid">
+                    <div class="form-group">
+                        <label for="instagram-link">Instagram</label>
+                        <input type="url" id="instagram-link" placeholder="https://instagram.com/carlos_fotografo">
                     </div>
-                    <div class="nav-item" onclick="switchSection('services')">
-                        <strong>⚡ Servicios</strong>
+                    <div class="form-group">
+                        <label for="facebook-link">Facebook</label>
+                        <input type="url" id="facebook-link" placeholder="https://facebook.com/carlos.fotografo">
                     </div>
-                    <div class="nav-item" onclick="switchSection('portfolio')">
-                        <strong>🎨 Portfolio</strong>
+                    <div class="form-group">
+                        <label for="twitter-link">Twitter</label>
+                        <input type="url" id="twitter-link" placeholder="https://twitter.com/carlos_fotografo">
                     </div>
-                    <div class="nav-item" onclick="switchSection('blog')">
-                        <strong>📝 Blog</strong>
+                    <div class="form-group">
+                        <label for="linkedin-link">LinkedIn</label>
+                        <input type="url" id="linkedin-link" placeholder="https://linkedin.com/in/carlos-martinez-fotografo">
                     </div>
-                    <div class="nav-item" onclick="switchSection('contact')">
-                        <strong>📧 Contacto</strong>
-                    </div>
-                    <div class="nav-item" onclick="switchSection('footer')">
-                        <strong>🦶 Footer</strong>
-                    </div>
-                    <div class="nav-item" onclick="switchSection('social')">
-                        <strong>🌐 Redes Sociales</strong>
-                    </div>
-                    <div class="nav-item" onclick="switchSection('save')">
-                        <strong>💾 Guardar</strong>
+                    <div class="form-group">
+                        <label for="website-link">Sitio Web</label>
+                        <input type="url" id="website-link" placeholder="https://carlosmartinez-fotografia.com">
                     </div>
                 </div>
             </div>
 
-            <div class="admin-main">
-                <!-- Configuración General -->
-                <div id="section-general" class="section active">
-                    <h2 class="section-title">⚙️ Configuración General</h2>
-                    <div class="section-description">
-                        <h3>Configuración del sitio web</h3>
-                        <p>Personaliza la información básica de tu sitio web de fotografía.</p>
-                    </div>
-                    <form id="general-form">
-                        <div class="form-group">
-                            <label for="site-title-input">Título del Sitio</label>
-                            <input type="text" id="site-title-input" placeholder="Estudio de Fotografía">
-                        </div>
-                        <div class="form-group">
-                            <label for="page-title-input">Título de la Página</label>
-                            <input type="text" id="page-title-input" placeholder="Estudio de Fotografía">
-                        </div>
-                        <div class="form-group">
-                            <label for="website-input">Sitio Web</label>
-                            <input type="url" id="website-input" placeholder="https://tu-sitio.com">
-                        </div>
-                    </form>
-                </div>
+            <!-- Guardar -->
+            <div id="guardar" class="admin-section">
+                <h2>💾 Guardar Cambios</h2>
+                <p>Haz clic en el botón de abajo para guardar todos los cambios en tu sitio web.</p>
+                <button id="save-button" class="admin-save" onclick="saveChanges()">
+                    💾 Guardar Todo
+                </button>
+                <div id="save-status" class="save-status"></div>
+            </div>
 
-                <!-- Hero Section -->
-                <div id="section-hero" class="section">
-                    <h2 class="section-title">🏠 Hero Section</h2>
-                    <div class="section-description">
-                        <h3>Página principal</h3>
-                        <p>Configura el mensaje principal que verán los visitantes al llegar a tu sitio.</p>
-                    </div>
-                    <form id="hero-form">
-                        <div class="form-group">
-                            <label for="hero-title-input">Título Principal</label>
-                            <input type="text" id="hero-title-input" placeholder="Capturando Momentos Únicos">
-                        </div>
-                        <div class="form-group">
-                            <label for="hero-subtitle-input">Subtítulo</label>
-                            <textarea id="hero-subtitle-input" placeholder="Fotografía profesional que transforma tus momentos especiales..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="hero-cta-input">Texto del Botón</label>
-                            <input type="text" id="hero-cta-input" placeholder="Ver Mi Portfolio">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Imagen del Hero</label>
-                            <div class="image-upload-container" onclick="document.getElementById('hero-image-input').click()">
-                                <div id="hero-image-preview">
-                                    <p>📷 Haz clic para subir una imagen del Hero</p>
-                                    <small>Se recomienda una imagen panorámica (1920x1080)</small>
-                                </div>
-                            </div>
-                            <input type="file" id="hero-image-input" accept="image/*" style="display: none;" onchange="handleImageUpload('hero-image-input', 'hero-image-preview')">
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Sobre el Fotógrafo -->
-                <div id="section-photographer" class="section">
-                    <h2 class="section-title">📷 Sobre el Fotógrafo</h2>
-                    <div class="section-description">
-                        <h3>Información personal</h3>
-                        <p>Comparte tu historia, experiencia y filosofía como fotógrafo.</p>
-                    </div>
-                    <form id="photographer-form">
-                        <div class="form-group">
-                            <label for="photographer-name-input">Nombre del Fotógrafo</label>
-                            <input type="text" id="photographer-name-input" placeholder="Carlos Martínez">
-                        </div>
-                        <div class="form-group">
-                            <label for="photographer-specialty-input">Especialidad</label>
-                            <input type="text" id="photographer-specialty-input" placeholder="Fotografía de Retratos y Eventos">
-                        </div>
-                        <div class="form-group">
-                            <label for="photographer-experience-input">Experiencia</label>
-                            <input type="text" id="photographer-experience-input" placeholder="8 años de experiencia">
-                        </div>
-                        <div class="form-group">
-                            <label for="photographer-bio-input">Biografía</label>
-                            <textarea id="photographer-bio-input" placeholder="Tu historia como fotógrafo, experiencia, logros..."></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Foto del Fotógrafo</label>
-                            <div class="image-upload-container" onclick="document.getElementById('photographer-image-input').click()">
-                                <div id="photographer-image-preview">
-                                    <p>📷 Haz clic para subir la foto del fotógrafo</p>
-                                    <small>Se recomienda una foto de perfil (400x400)</small>
-                                </div>
-                            </div>
-                            <input type="file" id="photographer-image-input" accept="image/*" style="display: none;" onchange="handleImageUpload('photographer-image-input', 'photographer-image-preview')">
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Servicios -->
-                <div id="section-services" class="section">
-                    <h2 class="section-title">⚡ Servicios</h2>
-                    <div class="section-description">
-                        <h3>Servicios fotográficos</h3>
-                        <p>Lista los servicios que ofreces con sus descripciones.</p>
-                    </div>
-                    <div id="services-list" class="dynamic-list">
-                        <!-- Servicios se cargarán dinámicamente -->
-                    </div>
-                    <button onclick="addService()" class="add-item-btn">➕ Añadir Servicio</button>
-                </div>
-
-                <!-- Portfolio -->
-                <div id="section-portfolio" class="section">
-                    <h2 class="section-title">🎨 Portfolio</h2>
-                    <div class="section-description">
-                        <h3>Trabajos destacados</h3>
-                        <p>Muestra tus mejores fotografías organizadas por categorías.</p>
-                    </div>
-                    <div id="portfolio-list" class="dynamic-list">
-                        <!-- Portfolio se cargará dinámicamente -->
-                    </div>
-                    <button onclick="addPortfolioItem()" class="add-item-btn">➕ Añadir Trabajo</button>
-                </div>
-
-                <!-- Blog -->
-                <div id="section-blog" class="section">
-                    <h2 class="section-title">📝 Blog</h2>
-                    <div class="section-description">
-                        <h3>Artículos y noticias</h3>
-                        <p>Comparte historias, consejos y noticias sobre fotografía.</p>
-                    </div>
-                    <div id="blog-list" class="dynamic-list">
-                        <!-- Blog se cargará dinámicamente -->
-                    </div>
-                    <button onclick="addBlogPost()" class="add-item-btn">➕ Añadir Artículo</button>
-                </div>
-
-                <!-- Contacto -->
-                <div id="section-contact" class="section">
-                    <h2 class="section-title">📧 Contacto</h2>
-                    <div class="section-description">
-                        <h3>Información de contacto</h3>
-                        <p>Proporciona formas para que los clientes puedan contactarte.</p>
-                    </div>
-                    <form id="contact-form">
-                        <div class="form-group">
-                            <label for="contact-email-input">Email</label>
-                            <input type="email" id="contact-email-input" placeholder="carlos@fotografia-martinez.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-phone-input">Teléfono</label>
-                            <input type="tel" id="contact-phone-input" placeholder="+34 678 123 456">
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-address-input">Dirección</label>
-                            <input type="text" id="contact-address-input" placeholder="Calle Fotógrafos 15, Madrid 28001">
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-studio-input">Estudio</label>
-                            <input type="text" id="contact-studio-input" placeholder="Estudio fotográfico con iluminación profesional">
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-availability-input">Horario</label>
-                            <input type="text" id="contact-availability-input" placeholder="Lunes a Sábado - 9:00 a 20:00">
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Footer -->
-                <div id="section-footer" class="section">
-                    <h2 class="section-title">🦶 Footer</h2>
-                    <div class="section-description">
-                        <h3>Información del pie de página</h3>
-                        <p>Personaliza el contenido del footer de tu sitio web.</p>
-                    </div>
-                    <form id="footer-form">
-                        <div class="form-group">
-                            <label for="footer-title-input">Título del Footer</label>
-                            <input type="text" id="footer-title-input" placeholder="Estudio de Fotografía">
-                        </div>
-                        <div class="form-group">
-                            <label for="footer-description-input">Descripción</label>
-                            <textarea id="footer-description-input" placeholder="Capturando momentos únicos con pasión y profesionalismo"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="copyright-input">Texto de Copyright</label>
-                            <textarea id="copyright-input" placeholder="&copy; 2025 Estudio de Fotografía Carlos Martínez. Todos los derechos reservados."></textarea>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Redes Sociales -->
-                <div id="section-social" class="section">
-                    <h2 class="section-title">🌐 Redes Sociales</h2>
-                    <div class="section-description">
-                        <h3>Enlaces de redes sociales</h3>
-                        <p>Configura los enlaces a tus perfiles en redes sociales.</p>
-                    </div>
-                    <form id="social-form">
-                        <div class="form-group">
-                            <label for="instagram-link-input">Instagram</label>
-                            <input type="url" id="instagram-link-input" placeholder="https://instagram.com/carlos_fotografo">
-                        </div>
-                        <div class="form-group">
-                            <label for="facebook-link-input">Facebook</label>
-                            <input type="url" id="facebook-link-input" placeholder="https://facebook.com/carlos.fotografo">
-                        </div>
-                        <div class="form-group">
-                            <label for="twitter-link-input">Twitter</label>
-                            <input type="url" id="twitter-link-input" placeholder="https://twitter.com/carlos_fotografo">
-                        </div>
-                        <div class="form-group">
-                            <label for="linkedin-link-input">LinkedIn</label>
-                            <input type="url" id="linkedin-link-input" placeholder="https://linkedin.com/in/carlos-martinez-fotografo">
-                        </div>
-                        <div class="form-group">
-                            <label for="website-link-input">Sitio Web</label>
-                            <input type="url" id="website-link-input" placeholder="https://carlosmartinez-fotografia.com">
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Guardar -->
-                <div id="section-save" class="section">
-                    <h2 class="section-title">💾 Guardar Cambios</h2>
-                    <div class="section-description">
-                        <h3>Guardar todos los cambios</h3>
-                        <p>Haz clic para guardar todos los cambios en tu sitio web.</p>
-                    </div>
-                    <div class="save-section">
-                        <h3>💾 Guardar Todos los Cambios</h3>
-                        <p>Esta acción guardará todos los datos en tu repositorio de GitHub.</p>
-                        <button id="save-btn" onclick="saveChanges()" class="save-btn">💾 Guardar Cambios</button>
-                    </div>
-                </div>
+            <!-- Debug Info -->
+            <div id="debug-info" class="debug-info" style="display: none;">
+                <!-- Debug information will be shown here -->
             </div>
         </div>
     </div>
 
-    <!-- Status Message -->
-    <div id="status-message" class="status-message"></div>
-
     <script>
-        // Variables globales
-        let currentUser = null;
-        let isInitialized = false;
+        // Global variables
         let siteData = {};
-        let imageUploads = {}; // Para manejar subida de imágenes
+        let currentUser = null;
+        let services = [];
+        let portfolioItems = [];
+        let blogPosts = [];
 
-        // Función para manejar subida de imágenes
-        function handleImageUpload(inputId, previewId) {
-            const input = document.getElementById(inputId);
-            const preview = document.getElementById(previewId);
-            const file = input.files[0];
-            
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    // Mostrar preview
-                    preview.innerHTML = `
-                        <img src="${e.target.result}" class="image-preview large" alt="Preview">
-                        <p>✅ Imagen cargada: ${file.name}</p>
-                    `;
-                    // Guardar la imagen en el objeto de uploads
-                    imageUploads[inputId] = {
-                        file: file,
-                        name: file.name,
-                        type: file.type
-                    };
-                    console.log('📷 Imagen seleccionada:', file.name);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // Función para subir imagen a Netlify
-        async function uploadImage(imageData) {
-            try {
-                const formData = new FormData();
-                formData.append('image', imageData.file, imageData.name);
-                
-                const response = await fetch('/.netlify/functions/upload-image', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                if (response.ok) {
-                    console.log('✅ Imagen subida:', result.url);
-                    return result.url;
-                } else {
-                    throw new Error(result.error || 'Error subiendo imagen');
-                }
-            } catch (error) {
-                console.error('❌ Error subiendo imagen:', error);
-                return null;
-            }
-        }
-
-        // Función para forzar login
-        function forceLogin() {
-            if (netlifyIdentity) {
-                netlifyIdentity.open();
-            } else {
-                console.error('Netlify Identity no está disponible');
-            }
-        }
-
-        // Función para logout
-        function logout() {
-            if (netlifyIdentity) {
-                netlifyIdentity.logout();
-            }
-        }
-
-        // Función para mostrar/ocultar secciones
-        function switchSection(sectionName) {
-            // Ocultar todas las secciones
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Mostrar sección seleccionada
-            document.getElementById(`section-${sectionName}`).classList.add('active');
-            
-            // Actualizar navegación
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            event.target.classList.add('active');
-        }
-
-        // Función para añadir un servicio
-        function addService() {
-            const container = document.getElementById('services-list');
-            const serviceId = Date.now();
-            const serviceHTML = `
-                <div class="dynamic-item" data-service-id="${serviceId}">
-                    <div class="dynamic-item-content">
-                        <div class="form-group">
-                            <label>Título del Servicio</label>
-                            <input type="text" id="service-title-${serviceId}" placeholder="Fotografía de Bodas">
-                        </div>
-                        <div class="form-group">
-                            <label>Descripción</label>
-                            <textarea id="service-description-${serviceId}" placeholder="Descripción del servicio..."></textarea>
-                        </div>
-                    </div>
-                    <div class="dynamic-item-actions">
-                        <button onclick="removeService(${serviceId})" class="btn btn-danger btn-small">Eliminar</button>
-                    </div>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', serviceHTML);
-        }
-
-        // Función para eliminar un servicio
-        function removeService(serviceId) {
-            const element = document.querySelector(`[data-service-id="${serviceId}"]`);
-            if (element) {
-                element.remove();
-            }
-        }
-
-        // Función para añadir un trabajo de portfolio
-        function addPortfolioItem() {
-            const container = document.getElementById('portfolio-list');
-            const portfolioId = Date.now();
-            const portfolioHTML = `
-                <div class="dynamic-item" data-portfolio-id="${portfolioId}">
-                    <div class="dynamic-item-content">
-                        <div class="form-group">
-                            <label>Título</label>
-                            <input type="text" id="portfolio-title-${portfolioId}" placeholder="Sesión en la playa">
-                        </div>
-                        <div class="form-group">
-                            <label>Descripción</label>
-                            <textarea id="portfolio-description-${portfolioId}" placeholder="Describe el proyecto..."></textarea>
-                        </div>
-                    </div>
-                    <div class="dynamic-item-content">
-                        <div class="form-group" style="grid-column: 1 / -1;">
-                            <label>Imagen</label>
-                            <div class="image-upload-container" onclick="document.getElementById('portfolio-image-${portfolioId}').click()">
-                                <div id="portfolio-image-preview-${portfolioId}">
-                                    <p>📷 Haz clic para subir imagen</p>
-                                </div>
-                            </div>
-                            <input type="file" id="portfolio-image-${portfolioId}" accept="image/*" style="display: none;" onchange="handleImageUpload('portfolio-image-${portfolioId}', 'portfolio-image-preview-${portfolioId}')">
-                        </div>
-                    </div>
-                    <div class="dynamic-item-actions">
-                        <button onclick="removePortfolioItem(${portfolioId})" class="btn btn-danger btn-small">Eliminar</button>
-                    </div>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', portfolioHTML);
-        }
-
-        // Función para eliminar un trabajo de portfolio
-        function removePortfolioItem(portfolioId) {
-            const element = document.querySelector(`[data-portfolio-id="${portfolioId}"]`);
-            if (element) {
-                element.remove();
-            }
-        }
-
-        // Función para añadir un artículo de blog
-        function addBlogPost() {
-            const container = document.getElementById('blog-list');
-            const blogId = Date.now();
-            const blogHTML = `
-                <div class="dynamic-item" data-blog-id="${blogId}">
-                    <div class="dynamic-item-content">
-                        <div class="form-group">
-                            <label>Título</label>
-                            <input type="text" id="blog-title-${blogId}" placeholder="Consejos para fotografía de retratos">
-                        </div>
-                        <div class="form-group">
-                            <label>Fecha</label>
-                            <input type="date" id="blog-date-${blogId}">
-                        </div>
-                    </div>
-                    <div class="dynamic-item-content">
-                        <div class="form-group" style="grid-column: 1 / -1;">
-                            <label>Contenido</label>
-                            <textarea id="blog-content-${blogId}" placeholder="Escribe tu artículo..." style="min-height: 120px;"></textarea>
-                        </div>
-                    </div>
-                    <div class="dynamic-item-actions">
-                        <button onclick="removeBlogPost(${blogId})" class="btn btn-danger btn-small">Eliminar</button>
-                    </div>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', blogHTML);
-        }
-
-        // Función para eliminar un artículo de blog
-        function removeBlogPost(blogId) {
-            const element = document.querySelector(`[data-blog-id="${blogId}"]`);
-            if (element) {
-                element.remove();
-            }
-        }
-
-        // Función para mostrar mensajes de estado
-        function showStatus(message, type = 'info') {
-            const statusElement = document.getElementById('status-message');
-            statusElement.textContent = message;
-            statusElement.className = `status-message ${type} show`;
-            
-            setTimeout(() => {
-                statusElement.classList.remove('show');
-            }, 5000);
-        }
-
-        // Función para obtener el token JWT
-        function getJWTToken(user) {
-            console.log('🔍 Analizando token del usuario...', user);
-            
-            if (!user) {
-                console.log('❌ No hay usuario logueado');
-                return null;
-            }
-
-            let token = null;
-
-            if (user.token && user.token.access_token) {
-                token = user.token.access_token;
-                console.log('✅ Token obtenido de user.token.access_token');
-            }
-            else if (user.jwt) {
-                token = user.jwt;
-                console.log('✅ Token obtenido de user.jwt');
-            }
-            else if (user.token && user.token.token) {
-                token = user.token.token;
-                console.log('✅ Token obtenido de user.token.token');
-            }
-            else if (user.access_token) {
-                token = user.access_token;
-                console.log('✅ Token obtenido de user.access_token');
-            }
-            else {
-                const identityData = localStorage.getItem('netlify-identity.user');
-                if (identityData) {
-                    try {
-                        const parsed = JSON.parse(identityData);
-                        if (parsed.token && parsed.token.access_token) {
-                            token = parsed.token.access_token;
-                            console.log('✅ Token obtenido de localStorage');
-                        }
-                    } catch (e) {
-                        console.log('❌ Error parseando localStorage:', e);
-                    }
-                }
-            }
-
-            if (token) {
-                console.log('🔑 Token encontrado. Longitud:', token.length);
-                console.log('🔑 Token (primeros 50 caracteres):', token.substring(0, 50) + '...');
-                return token;
-            } else {
-                console.log('❌ No se pudo obtener el token');
-                console.log('📋 Propiedades del usuario:', Object.keys(user));
-                return null;
-            }
-        }
-
-        // Función para recoger datos del formulario
-        function collectFormData() {
-            // Servicios
-            const services = [];
-            document.querySelectorAll('[data-service-id]').forEach(item => {
-                const serviceId = item.dataset.serviceId;
-                const title = document.getElementById(`service-title-${serviceId}`)?.value || '';
-                const description = document.getElementById(`service-description-${serviceId}`)?.value || '';
-                
-                if (title.trim()) {
-                    services.push({ title, description });
-                }
-            });
-
-            // Portfolio
-            const portfolio = [];
-            document.querySelectorAll('[data-portfolio-id]').forEach(item => {
-                const portfolioId = item.dataset.portfolioId;
-                const title = document.getElementById(`portfolio-title-${portfolioId}`)?.value || '';
-                const description = document.getElementById(`portfolio-description-${portfolioId}`)?.value || '';
-                
-                if (title.trim()) {
-                    portfolio.push({ title, description });
-                }
-            });
-
-            // Blog
-            const blog = [];
-            document.querySelectorAll('[data-blog-id]').forEach(item => {
-                const blogId = item.dataset.blogId;
-                const title = document.getElementById(`blog-title-${blogId}`)?.value || '';
-                const date = document.getElementById(`blog-date-${blogId}`)?.value || '';
-                const content = document.getElementById(`blog-content-${blogId}`)?.value || '';
-                
-                if (title.trim()) {
-                    blog.push({ title, date, content });
-                }
-            });
-
-            return {
-                site: {
-                    title: document.getElementById('site-title-input').value || '',
-                    page_title: document.getElementById('page-title-input').value || '',
-                    website: document.getElementById('website-input').value || ''
-                },
-                hero: {
-                    title: document.getElementById('hero-title-input').value || '',
-                    subtitle: document.getElementById('hero-subtitle-input').value || '',
-                    cta: document.getElementById('hero-cta-input').value || ''
-                },
-                photographer: {
-                    name: document.getElementById('photographer-name-input').value || '',
-                    specialty: document.getElementById('photographer-specialty-input').value || '',
-                    experience: document.getElementById('photographer-experience-input').value || '',
-                    bio: document.getElementById('photographer-bio-input').value || ''
-                },
-                services: services,
-                portfolio: portfolio,
-                blog: blog,
-                contact: {
-                    email: document.getElementById('contact-email-input').value || '',
-                    phone: document.getElementById('contact-phone-input').value || '',
-                    address: document.getElementById('contact-address-input').value || '',
-                    studio: document.getElementById('contact-studio-input').value || '',
-                    availability: document.getElementById('contact-availability-input').value || ''
-                },
-                footer: {
-                    title: document.getElementById('footer-title-input').value || '',
-                    description: document.getElementById('footer-description-input').value || '',
-                    copyright: document.getElementById('copyright-input').value || ''
-                },
-                social: {
-                    instagram: document.getElementById('instagram-link-input').value || '',
-                    facebook: document.getElementById('facebook-link-input').value || '',
-                    twitter: document.getElementById('twitter-link-input').value || '',
-                    linkedin: document.getElementById('linkedin-link-input').value || '',
-                    website: document.getElementById('website-link-input').value || ''
-                }
-            };
-        }
-
-        // Función para cargar datos en los formularios
-        function loadFormData(data) {
-            // Datos generales
-            document.getElementById('site-title-input').value = data.site?.title || '';
-            document.getElementById('page-title-input').value = data.site?.page_title || '';
-            document.getElementById('website-input').value = data.site?.website || '';
-
-            // Hero
-            document.getElementById('hero-title-input').value = data.hero?.title || '';
-            document.getElementById('hero-subtitle-input').value = data.hero?.subtitle || '';
-            document.getElementById('hero-cta-input').value = data.hero?.cta || '';
-
-            // Fotógrafo
-            document.getElementById('photographer-name-input').value = data.photographer?.name || '';
-            document.getElementById('photographer-specialty-input').value = data.photographer?.specialty || '';
-            document.getElementById('photographer-experience-input').value = data.photographer?.experience || '';
-            document.getElementById('photographer-bio-input').value = data.photographer?.bio || '';
-
-            // Contacto
-            document.getElementById('contact-email-input').value = data.contact?.email || '';
-            document.getElementById('contact-phone-input').value = data.contact?.phone || '';
-            document.getElementById('contact-address-input').value = data.contact?.address || '';
-            document.getElementById('contact-studio-input').value = data.contact?.studio || '';
-            document.getElementById('contact-availability-input').value = data.contact?.availability || '';
-
-            // Footer
-            document.getElementById('footer-title-input').value = data.footer?.title || '';
-            document.getElementById('footer-description-input').value = data.footer?.description || '';
-            document.getElementById('copyright-input').value = data.footer?.copyright || '';
-
-            // Social
-            document.getElementById('instagram-link-input').value = data.social?.instagram || '';
-            document.getElementById('facebook-link-input').value = data.social?.facebook || '';
-            document.getElementById('twitter-link-input').value = data.social?.twitter || '';
-            document.getElementById('linkedin-link-input').value = data.social?.linkedin || '';
-            document.getElementById('website-link-input').value = data.social?.website || '';
-
-            // Servicios
-            const servicesContainer = document.getElementById('services-list');
-            servicesContainer.innerHTML = '';
-            if (data.services && Array.isArray(data.services)) {
-                data.services.forEach(service => {
-                    const serviceId = Date.now() + Math.random();
-                    const serviceHTML = `
-                        <div class="dynamic-item" data-service-id="${serviceId}">
-                            <div class="dynamic-item-content">
-                                <div class="form-group">
-                                    <label>Título del Servicio</label>
-                                    <input type="text" id="service-title-${serviceId}" value="${service.title || ''}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Descripción</label>
-                                    <textarea id="service-description-${serviceId}">${service.description || ''}</textarea>
-                                </div>
-                            </div>
-                            <div class="dynamic-item-actions">
-                                <button onclick="removeService(${serviceId})" class="btn btn-danger btn-small">Eliminar</button>
-                            </div>
-                        </div>
-                    `;
-                    servicesContainer.insertAdjacentHTML('beforeend', serviceHTML);
-                });
-            }
-
-            // Portfolio
-            const portfolioContainer = document.getElementById('portfolio-list');
-            portfolioContainer.innerHTML = '';
-            if (data.portfolio && Array.isArray(data.portfolio)) {
-                data.portfolio.forEach(item => {
-                    const portfolioId = Date.now() + Math.random();
-                    const portfolioHTML = `
-                        <div class="dynamic-item" data-portfolio-id="${portfolioId}">
-                            <div class="dynamic-item-content">
-                                <div class="form-group">
-                                    <label>Título</label>
-                                    <input type="text" id="portfolio-title-${portfolioId}" value="${item.title || ''}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Descripción</label>
-                                    <textarea id="portfolio-description-${portfolioId}">${item.description || ''}</textarea>
-                                </div>
-                            </div>
-                            <div class="dynamic-item-content">
-                                <div class="form-group" style="grid-column: 1 / -1;">
-                                    <label>Imagen</label>
-                                    <div class="image-upload-container" onclick="document.getElementById('portfolio-image-${portfolioId}').click()">
-                                        <div id="portfolio-image-preview-${portfolioId}">
-                                            <p>📷 Haz clic para subir imagen</p>
-                                        </div>
-                                    </div>
-                                    <input type="file" id="portfolio-image-${portfolioId}" accept="image/*" style="display: none;" onchange="handleImageUpload('portfolio-image-${portfolioId}', 'portfolio-image-preview-${portfolioId}')">
-                                </div>
-                            </div>
-                            <div class="dynamic-item-actions">
-                                <button onclick="removePortfolioItem(${portfolioId})" class="btn btn-danger btn-small">Eliminar</button>
-                            </div>
-                        </div>
-                    `;
-                    portfolioContainer.insertAdjacentHTML('beforeend', portfolioHTML);
-                });
-            }
-
-            // Blog
-            const blogContainer = document.getElementById('blog-list');
-            blogContainer.innerHTML = '';
-            if (data.blog && Array.isArray(data.blog)) {
-                data.blog.forEach(post => {
-                    const blogId = Date.now() + Math.random();
-                    const blogHTML = `
-                        <div class="dynamic-item" data-blog-id="${blogId}">
-                            <div class="dynamic-item-content">
-                                <div class="form-group">
-                                    <label>Título</label>
-                                    <input type="text" id="blog-title-${blogId}" value="${post.title || ''}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Fecha</label>
-                                    <input type="date" id="blog-date-${blogId}" value="${post.date || ''}">
-                                </div>
-                            </div>
-                            <div class="dynamic-item-content">
-                                <div class="form-group" style="grid-column: 1 / -1;">
-                                    <label>Contenido</label>
-                                    <textarea id="blog-content-${blogId}" style="min-height: 120px;">${post.content || ''}</textarea>
-                                </div>
-                            </div>
-                            <div class="dynamic-item-actions">
-                                <button onclick="removeBlogPost(${blogId})" class="btn btn-danger btn-small">Eliminar</button>
-                            </div>
-                        </div>
-                    `;
-                    blogContainer.insertAdjacentHTML('beforeend', blogHTML);
-                });
-            }
-        }
-
-        // Función para guardar cambios (MEJORADA)
-        async function saveChanges() {
-            const saveBtn = document.getElementById('save-btn');
-            saveBtn.disabled = true;
-            saveBtn.textContent = '⏳ Guardando...';
-            
-            try {
-                console.log('💾 Iniciando proceso de guardado...');
-                
-                // Recoger datos del formulario
-                const formData = collectFormData();
-                console.log('📋 Datos recopilados:', Object.keys(formData));
-                
-                // Subir imágenes primero
-                console.log('📷 Subiendo imágenes...');
-                for (const [key, imageData] of Object.entries(imageUploads)) {
-                    if (imageData.file) {
-                        const imageUrl = await uploadImage(imageData);
-                        if (imageUrl) {
-                            // Asignar URL según el tipo de input
-                            if (key === 'hero-image-input') {
-                                formData.hero.image = imageUrl;
-                            } else if (key === 'photographer-image-input') {
-                                formData.photographer.image = imageUrl;
-                            } else if (key.startsWith('portfolio-image-')) {
-                                const portfolioId = key.replace('portfolio-image-', '');
-                                const portfolioItem = formData.portfolio.find(p => p.id === portfolioId);
-                                if (portfolioItem) {
-                                    portfolioItem.image = imageUrl;
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                // Obtener token
-                const token = getJWTToken(currentUser);
-                
-                if (!token) {
-                    throw new Error('No se pudo obtener el token de autenticación. Intenta cerrar sesión y volver a iniciar sesión.');
-                }
-                
-                console.log('🚀 Enviando solicitud a Netlify Function...');
-                
-                // Enviar a Netlify Function
-                const response = await fetch('/.netlify/functions/update-content', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ siteData: formData })
-                });
-                
-                console.log('📡 Respuesta recibida:', {
-                    status: response.status,
-                    statusText: response.statusText,
-                    headers: Object.fromEntries(response.headers.entries())
-                });
-                
-                // Parsear respuesta
-                const result = await response.json();
-                console.log('📦 Datos de respuesta:', result);
-                
-                if (!response.ok) {
-                    if (response.status === 401) {
-                        throw new Error('Token de autorización inválido o expirado. Cierra sesión y vuelve a iniciar sesión.');
-                    } else if (response.status === 403) {
-                        throw new Error('No tienes permisos para modificar el repositorio.');
-                    } else if (response.status === 404) {
-                        throw new Error('El endpoint de guardado no está disponible. Verifica la configuración de Netlify.');
-                    } else {
-                        throw new Error(result.error || `Error del servidor: ${response.status} - ${response.statusText}`);
-                    }
-                }
-                
-                // Éxito
-                console.log('✅ Guardado exitoso:', result);
-                showStatus('¡Cambios guardados exitosamente en GitHub!', 'success');
-                
-                // Actualizar datos locales
-                siteData = { ...siteData, ...formData };
-                
-                // Limpiar imágenes subidas
-                imageUploads = {};
-                
-            } catch (error) {
-                console.error('❌ Error detallado al guardar:', error);
-                
-                let errorMessage = 'Error desconocido al guardar.';
-                
-                if (error.name === 'TypeError' && error.message.includes('fetch')) {
-                    errorMessage = 'Error de conexión. Verifica tu conexión a internet y que el sitio esté funcionando.';
-                } else if (error.message.includes('401')) {
-                    errorMessage = 'Error de autenticación. Cierra sesión y vuelve a iniciar sesión.';
-                } else if (error.message.includes('403')) {
-                    errorMessage = 'Sin permisos. Verifica que el token tenga acceso al repositorio.';
-                } else if (error.message.includes('404')) {
-                    errorMessage = 'Endpoint no encontrado. Verifica la configuración de Netlify Functions.';
-                } else {
-                    errorMessage = error.message;
-                }
-                
-                showStatus(`❌ ${errorMessage}`, 'error');
-            } finally {
-                // Rehabilitar botón
-                saveBtn.disabled = false;
-                saveBtn.textContent = '💾 Guardar Cambios';
-            }
-        }
-
-        // Función para cargar datos del sitio
-        async function loadSiteData() {
-            try {
-                console.log('📊 Cargando datos del sitio...');
-                const response = await fetch('/data.json');
-                if (response.ok) {
-                    siteData = await response.json();
-                    loadFormData(siteData);
-                    console.log('✅ Datos cargados exitosamente');
-                } else {
-                    console.warn('⚠️ No se pudo cargar data.json, usando valores por defecto');
-                    loadFormData({});
-                }
-            } catch (error) {
-                console.error('❌ Error cargando datos:', error);
-                loadFormData({});
-            }
-        }
-
-        // Funciones de debug
-        window.debugAdmin = {
+        // Debug functions
+        const debugAdmin = {
             init: () => {
-                console.log('🚀 Admin Panel Completo cargado correctamente. Funciones disponibles:');
-                console.log('   - debugAdmin.init()');
-                console.log('   - debugAdmin.login()');
-                console.log('   - debugAdmin.logout()');
-                console.log('   - debugAdmin.switchSection("section")');
-                console.log('   - debugAdmin.checkIdentity()');
-                console.log('   - debugAdmin.reloadData()');
-                console.log('   - debugAdmin.testSave() - Para probar guardado');
-                console.log('   - debugAdmin.reset()');
-                console.log('');
-                console.log('📋 Secciones disponibles:');
-                console.log('   - Configuración General');
-                console.log('   - Hero Section');
-                console.log('   - Sobre el Fotógrafo');
-                console.log('   - Servicios');
-                console.log('   - Portfolio');
-                console.log('   - Blog');
-                console.log('   - Contacto');
-                console.log('   - Footer');
-                console.log('   - Redes Sociales');
-                console.log('   - Guardar');
-                console.log('');
-                console.log('🚀 Funcionalidades incluidas:');
-                console.log('   - Gestión de imágenes (Hero, Fotógrafo, Portfolio)');
-                console.log('   - Edición completa del footer y copyright');
-                console.log('   - Enlaces sociales completos');
-                console.log('   - Compatible con index.html original');
+                console.log('✅ Debug Admin Panel Inicializado');
+                console.log('Funciones disponibles:');
+                console.log('- debugAdmin.login() - Login manual');
+                console.log('- debugAdmin.logout() - Logout');
+                console.log('- debugAdmin.switchSection("section") - Cambiar sección');
+                console.log('- debugAdmin.checkIdentity() - Verificar identidad');
+                console.log('- debugAdmin.reloadData() - Recargar datos');
+                console.log('- debugAdmin.testSave() - Probar guardado');
             },
-            
-            login: () => forceLogin(),
-            
-            logout: () => logout(),
-            
-            switchSection: (section) => {
-                const navItem = document.querySelector(`[onclick="switchSection('${section}')"]`);
-                if (navItem) navItem.click();
-            },
-            
-            checkIdentity: () => {
-                console.log('🔍 Estado de Netlify Identity:');
-                console.log('- Usuario actual:', currentUser);
-                console.log('- Inicializado:', isInitialized);
-                if (currentUser) {
-                    console.log('- Token disponible:', !!getJWTToken(currentUser));
+            login: () => {
+                console.log('🔐 Forzando login manual...');
+                if (window.netlifyIdentity) {
+                    window.netlifyIdentity.on('login', (user) => {
+                        console.log('🔓 Usuario logueado:', user);
+                    });
+                    window.netlifyIdentity.open();
                 }
             },
-            
-            reloadData: () => loadSiteData(),
-            
-            testSave: async () => {
-                console.log('🧪 Probando función de guardado...');
-                await saveChanges();
+            logout: () => {
+                console.log('🔒 Cerrando sesión...');
+                logout();
             },
-            
+            switchSection: (section) => {
+                console.log('📄 Cambiando a sección:', section);
+                showSection(section);
+            },
+            checkIdentity: () => {
+                console.log('🔍 Verificando identidad:', currentUser);
+                return currentUser;
+            },
+            reloadData: () => {
+                console.log('🔄 Recargando datos...');
+                loadSiteData();
+            },
+            testSave: () => {
+                console.log('🧪 Probando guardado...');
+                saveChanges();
+            },
             reset: () => {
-                localStorage.clear();
-                sessionStorage.clear();
+                console.log('🔄 Reseteando panel...');
                 location.reload();
             }
         };
 
-        // Inicializar cuando se carga la página
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Inicializando Admin Panel Completo Compatible...');
+        // Initialize Netlify Identity
+        function initNetlifyIdentity() {
+            console.log('🚀 Inicializando Netlify Identity...');
             
-            if (typeof netlifyIdentity !== 'undefined') {
+            if (window.netlifyIdentity) {
                 console.log('✅ Netlify Identity disponible');
                 
-                // Evento de login
-                netlifyIdentity.on('login', function(user) {
-                    console.log('🔐 Usuario logueado:', user.email);
-                    currentUser = user;
-                    document.getElementById('login-container').style.display = 'none';
-                    document.getElementById('admin-panel').style.display = 'block';
-                    document.getElementById('user-email').textContent = user.email;
-                    
-                    if (!isInitialized) {
-                        console.log('🔄 Inicializando panel de administración...');
-                        loadSiteData();
-                        isInitialized = true;
-                    }
-                });
-
-                // Evento de logout
-                netlifyIdentity.on('logout', function() {
-                    console.log('🚪 Usuario deslogueado');
-                    currentUser = null;
-                    isInitialized = false;
-                    document.getElementById('login-container').style.display = 'flex';
-                    document.getElementById('admin-panel').style.display = 'none';
-                });
-
-                // Verificar si ya hay un usuario logueado
-                netlifyIdentity.on('init', function(user) {
-                    console.log('🔧 Netlify Identity inicializado:', user ? 'Usuario autenticado' : 'No autenticado');
-                    
+                netlifyIdentity.on('init', (user) => {
+                    console.log('🔐 Netlify Identity inicializado:', user ? 'Usuario autenticado' : 'Sin usuario');
                     if (user) {
-                        console.log('🔓 Mostrando panel de administración para:', user.email);
-                        currentUser = user;
-                        document.getElementById('login-container').style.display = 'none';
-                        document.getElementById('admin-panel').style.display = 'block';
-                        document.getElementById('user-email').textContent = user.email;
-                        
-                        if (!isInitialized) {
-                            loadSiteData();
-                            isInitialized = true;
-                        }
+                        showAdminPanel(user);
+                    } else {
+                        showLoginContainer();
                     }
                 });
-            } else {
-                console.error('❌ Netlify Identity no está disponible');
-            }
-        });
 
-        console.log('✅ Admin Panel Compatible con index.html cargado correctamente. Funciones disponibles:');
-        console.log('   - debugAdmin.init()');
-        console.log('   - debugAdmin.login()');
-        console.log('   - debugAdmin.logout()');
-        console.log('   - debugAdmin.switchSection("section")');
-        console.log('   - debugAdmin.checkIdentity()');
-        console.log('   - debugAdmin.reloadData()');
-        console.log('   - debugAdmin.testSave() - Para probar guardado');
-        console.log('   - debugAdmin.reset()');
-        console.log('');
-        console.log('📋 Secciones disponibles:');
-        console.log('   - Configuración General');
-        console.log('   - Hero Section');
-        console.log('   - Sobre el Fotógrafo');
-        console.log('   - Servicios');
-        console.log('   - Portfolio');
-        console.log('   - Blog');
-        console.log('   - Contacto');
-        console.log('   - Footer');
-        console.log('   - Redes Sociales');
-        console.log('   - Guardar');
-        console.log('');
-        console.log('🚀 Funcionalidades incluidas:');
-        console.log('   - Gestión de imágenes (Hero, Fotógrafo, Portfolio)');
-        console.log('   - Edición completa del footer y copyright');
-        console.log('   - Enlaces sociales completos');
-        console.log('   - Compatible con index.html original');
+                netlifyIdentity.on('login', (user) => {
+                    console.log('🔓 Usuario logueado:', user);
+                    netlifyIdentity.close();
+                    showAdminPanel(user);
+                });
+
+                netlifyIdentity.on('logout', () => {
+                    console.log('🔒 Usuario deslogueado');
+                    showLoginContainer();
+                });
+
+                netlifyIdentity.init();
+            } else {
+                console.error('❌ Netlify Identity no disponible');
+            }
+        }
+
+        function showLoginContainer() {
+            document.getElementById('login-container').style.display = 'flex';
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+
+        function showAdminPanel(user) {
+            console.log('🎯 Mostrando panel de administración...');
+            currentUser = user;
+            
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+            document.getElementById('admin-user-email').textContent = user.email;
+            
+            console.log('🔓 Mostrando panel de administración para:', user.email);
+            
+            loadSiteData();
+        }
+
+        function logout() {
+            if (window.netlifyIdentity) {
+                netlifyIdentity.logout();
+            }
+        }
+
+        // Load site data
+        async function loadSiteData() {
+            console.log('📊 Cargando datos del sitio...');
+            
+            try {
+                const response = await fetch('data.json');
+                if (response.ok) {
+                    siteData = await response.json();
+                    console.log('✅ Datos cargados exitosamente');
+                    populateForm();
+                } else {
+                    console.error('❌ Error cargando datos:', response.status);
+                }
+            } catch (error) {
+                console.error('❌ Error de red cargando datos:', error);
+            }
+        }
+
+        // Populate form with current data
+        function populateForm() {
+            // Configuración General
+            document.getElementById('site-title').value = siteData.site?.title || '';
+            document.getElementById('page-title').value = siteData.site?.pageTitle || '';
+
+            // Hero Section
+            document.getElementById('hero-title').value = siteData.hero?.title || '';
+            document.getElementById('hero-subtitle').value = siteData.hero?.subtitle || '';
+            document.getElementById('hero-cta').value = siteData.hero?.cta || '';
+            document.getElementById('hero-image').value = siteData.hero?.image || '';
+
+            // Sobre el Fotógrafo
+            document.getElementById('photographer-name').value = siteData.photographer?.name || '';
+            document.getElementById('photographer-specialty').value = siteData.photographer?.specialty || '';
+            document.getElementById('photographer-experience').value = siteData.photographer?.experience || '';
+            document.getElementById('photographer-bio').value = siteData.photographer?.bio || '';
+            document.getElementById('photographer-image').value = siteData.photographer?.image || '';
+
+            // Servicios
+            services = siteData.services || [];
+            renderServices();
+
+            // Portfolio
+            portfolioItems = siteData.portfolio || [];
+            renderPortfolio();
+
+            // Blog
+            blogPosts = siteData.blog || [];
+            renderBlog();
+
+            // Contacto
+            document.getElementById('contact-email').value = siteData.contact?.email || '';
+            document.getElementById('contact-phone').value = siteData.contact?.phone || '';
+            document.getElementById('contact-address').value = siteData.contact?.address || '';
+            document.getElementById('contact-studio').value = siteData.contact?.studio || '';
+            document.getElementById('contact-availability').value = siteData.contact?.availability || '';
+
+            // Footer
+            document.getElementById('footer-title').value = siteData.footer?.title || '';
+            document.getElementById('footer-copyright').value = siteData.footer?.copyright || '';
+
+            // Redes Sociales
+            document.getElementById('instagram-link').value = siteData.social?.instagram || '';
+            document.getElementById('facebook-link').value = siteData.social?.facebook || '';
+            document.getElementById('twitter-link').value = siteData.social?.twitter || '';
+            document.getElementById('linkedin-link').value = siteData.social?.linkedin || '';
+            document.getElementById('website-link').value = siteData.social?.website || '';
+        }
+
+        // Show specific section
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.admin-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update navigation buttons
+            const navButtons = document.querySelectorAll('.admin-nav-button');
+            navButtons.forEach(button => button.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Add service
+        function addService() {
+            services.push({
+                title: 'Nuevo Servicio',
+                description: 'Descripción del servicio',
+                icon: '📸'
+            });
+            renderServices();
+        }
+
+        // Render services
+        function renderServices() {
+            const container = document.getElementById('services-list');
+            container.innerHTML = '';
+            
+            services.forEach((service, index) => {
+                const row = document.createElement('div');
+                row.className = 'item-row';
+                row.innerHTML = `
+                    <input type="text" value="${service.icon}" placeholder="Icono" onchange="updateService(${index}, 'icon', this.value)">
+                    <input type="text" value="${service.title}" placeholder="Título" onchange="updateService(${index}, 'title', this.value)">
+                    <textarea placeholder="Descripción" onchange="updateService(${index}, 'description', this.value)">${service.description}</textarea>
+                    <button onclick="removeService(${index})">Eliminar</button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        // Update service
+        function updateService(index, field, value) {
+            services[index][field] = value;
+        }
+
+        // Remove service
+        function removeService(index) {
+            services.splice(index, 1);
+            renderServices();
+        }
+
+        // Add portfolio item
+        function addPortfolioItem() {
+            portfolioItems.push({
+                title: 'Nueva Imagen',
+                description: 'Descripción de la imagen',
+                image: '',
+                category: 'Retratos'
+            });
+            renderPortfolio();
+        }
+
+        // Render portfolio
+        function renderPortfolio() {
+            const container = document.getElementById('portfolio-list');
+            container.innerHTML = '';
+            
+            portfolioItems.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'item-row';
+                row.style.gridTemplateColumns = '1fr 2fr 1fr 1fr auto';
+                row.innerHTML = `
+                    <input type="text" value="${item.title}" placeholder="Título" onchange="updatePortfolioItem(${index}, 'title', this.value)">
+                    <textarea placeholder="Descripción" onchange="updatePortfolioItem(${index}, 'description', this.value)">${item.description}</textarea>
+                    <input type="text" value="${item.category}" placeholder="Categoría" onchange="updatePortfolioItem(${index}, 'category', this.value)">
+                    <input type="text" value="${item.image}" placeholder="URL de imagen" onchange="updatePortfolioItem(${index}, 'image', this.value)">
+                    <button onclick="removePortfolioItem(${index})">Eliminar</button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        // Update portfolio item
+        function updatePortfolioItem(index, field, value) {
+            portfolioItems[index][field] = value;
+        }
+
+        // Remove portfolio item
+        function removePortfolioItem(index) {
+            portfolioItems.splice(index, 1);
+            renderPortfolio();
+        }
+
+        // Add blog post
+        function addBlogPost() {
+            blogPosts.push({
+                title: 'Nueva Entrada',
+                excerpt: 'Resumen del artículo',
+                content: 'Contenido completo del artículo',
+                image: '',
+                date: new Date().toISOString().split('T')[0]
+            });
+            renderBlog();
+        }
+
+        // Render blog
+        function renderBlog() {
+            const container = document.getElementById('blog-list');
+            container.innerHTML = '';
+            
+            blogPosts.forEach((post, index) => {
+                const row = document.createElement('div');
+                row.className = 'item-row';
+                row.style.gridTemplateColumns = '1fr 2fr 1fr 1fr auto';
+                row.innerHTML = `
+                    <input type="text" value="${post.title}" placeholder="Título" onchange="updateBlogPost(${index}, 'title', this.value)">
+                    <textarea placeholder="Resumen" onchange="updateBlogPost(${index}, 'excerpt', this.value)">${post.excerpt}</textarea>
+                    <input type="date" value="${post.date}" onchange="updateBlogPost(${index}, 'date', this.value)">
+                    <input type="text" value="${post.image}" placeholder="URL de imagen" onchange="updateBlogPost(${index}, 'image', this.value)">
+                    <button onclick="removeBlogPost(${index})">Eliminar</button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        // Update blog post
+        function updateBlogPost(index, field, value) {
+            blogPosts[index][field] = value;
+        }
+
+        // Remove blog post
+        function removeBlogPost(index) {
+            blogPosts.splice(index, 1);
+            renderBlog();
+        }
+
+        // Handle image upload
+        async function handleImageUpload(fieldId, input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            console.log('📷 Iniciando subida de imagen:', file.name);
+            
+            // Create FormData
+            const formData = new FormData();
+            
+            // Convert file to base64
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    // Upload to Netlify Function
+                    const uploadFormData = new FormData();
+                    uploadFormData.append('image', e.target.result.split(',')[1]); // Remove data:image/jpeg;base64, prefix
+                    
+                    const response = await fetch('/.netlify/functions/upload-image', {
+                        method: 'POST',
+                        body: uploadFormData,
+                        headers: {
+                            'Authorization': `Bearer ${currentUser.token.access_token}`
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        console.log('✅ Imagen subida exitosamente:', result.url);
+                        document.getElementById(fieldId).value = result.url;
+                        
+                        // Show preview if it's a preview field
+                        const previewId = fieldId + '-preview';
+                        const previewImg = document.getElementById(previewId);
+                        if (previewImg) {
+                            previewImg.src = result.url;
+                            previewImg.style.display = 'block';
+                        }
+                    } else {
+                        console.error('❌ Error subiendo imagen:', response.status);
+                        alert('Error subiendo imagen. Verifica que tengas permisos.');
+                    }
+                } catch (error) {
+                    console.error('❌ Error de red subiendo imagen:', error);
+                    alert('Error de conexión subiendo imagen.');
+                }
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        // Collect form data
+        function collectFormData() {
+            return {
+                site: {
+                    title: document.getElementById('site-title').value,
+                    pageTitle: document.getElementById('page-title').value
+                },
+                hero: {
+                    title: document.getElementById('hero-title').value,
+                    subtitle: document.getElementById('hero-subtitle').value,
+                    cta: document.getElementById('hero-cta').value,
+                    image: document.getElementById('hero-image').value
+                },
+                photographer: {
+                    name: document.getElementById('photographer-name').value,
+                    specialty: document.getElementById('photographer-specialty').value,
+                    experience: document.getElementById('photographer-experience').value,
+                    bio: document.getElementById('photographer-bio').value,
+                    image: document.getElementById('photographer-image').value
+                },
+                services: services,
+                portfolio: portfolioItems,
+                blog: blogPosts,
+                contact: {
+                    email: document.getElementById('contact-email').value,
+                    phone: document.getElementById('contact-phone').value,
+                    address: document.getElementById('contact-address').value,
+                    studio: document.getElementById('contact-studio').value,
+                    availability: document.getElementById('contact-availability').value
+                },
+                footer: {
+                    title: document.getElementById('footer-title').value,
+                    copyright: document.getElementById('footer-copyright').value
+                },
+                social: {
+                    instagram: document.getElementById('instagram-link').value,
+                    facebook: document.getElementById('facebook-link').value,
+                    twitter: document.getElementById('twitter-link').value,
+                    linkedin: document.getElementById('linkedin-link').value,
+                    website: document.getElementById('website-link').value
+                }
+            };
+        }
+
+        // Save changes
+        async function saveChanges() {
+            console.log('💾 Iniciando proceso de guardado...');
+            
+            const saveButton = document.getElementById('save-button');
+            const saveStatus = document.getElementById('save-status');
+            
+            // Disable button and show loading
+            saveButton.disabled = true;
+            saveButton.textContent = '⏳ Guardando...';
+            saveStatus.textContent = 'Guardando cambios...';
+            saveStatus.className = 'save-status';
+            
+            // Collect form data
+            const formData = collectFormData();
+            console.log('📋 Datos recopilados:', Object.keys(formData));
+            
+            try {
+                console.log('📷 Subiendo imágenes...');
+                
+                // Upload images if needed
+                if (formData.hero.image && !formData.hero.image.startsWith('http')) {
+                    // Handle hero image upload
+                }
+                
+                if (formData.photographer.image && !formData.photographer.image.startsWith('http')) {
+                    // Handle photographer image upload
+                }
+                
+                console.log('🔑 Analizando token del usuario...');
+                console.log('🔍 Current user object:', currentUser);
+                console.log('🔍 Token object:', currentUser ? currentUser.token : null);
+                console.log('🔍 Access token:', currentUser ? currentUser.token?.access_token : null);
+                
+                // Get JWT token
+                let jwtToken = null;
+                
+                // Method 1: Try user.token.access_token
+                if (currentUser && currentUser.token && currentUser.token.access_token) {
+                    jwtToken = currentUser.token.access_token;
+                    console.log('✅ Token obtenido de user.token.access_token');
+                }
+                // Method 2: Try currentUser.jwt
+                else if (currentUser && currentUser.jwt) {
+                    jwtToken = currentUser.jwt;
+                    console.log('✅ Token obtenido de currentUser.jwt');
+                }
+                // Method 3: Try netlifyIdentity.currentUser()
+                else if (window.netlifyIdentity && netlifyIdentity.currentUser()) {
+                    const user = netlifyIdentity.currentUser();
+                    if (user && user.token && user.token.access_token) {
+                        jwtToken = user.token.access_token;
+                        console.log('✅ Token obtenido de netlifyIdentity.currentUser().token.access_token');
+                    } else if (user && user.jwt) {
+                        jwtToken = user.jwt;
+                        console.log('✅ Token obtenido de netlifyIdentity.currentUser().jwt');
+                    }
+                }
+                // Method 4: Try token() method
+                else if (currentUser && typeof currentUser.token === 'function') {
+                    try {
+                        jwtToken = await currentUser.token();
+                        console.log('✅ Token obtenido de currentUser.token() method');
+                    } catch (error) {
+                        console.log('❌ Error obteniendo token de method:', error);
+                    }
+                }
+                // Method 5: Try refreshToken()
+                else if (currentUser && typeof currentUser.refreshToken === 'function') {
+                    try {
+                        const newUser = await currentUser.refreshToken();
+                        if (newUser && newUser.token && newUser.token.access_token) {
+                            jwtToken = newUser.token.access_token;
+                            console.log('✅ Token obtenido de refreshToken().token.access_token');
+                        }
+                    } catch (error) {
+                        console.log('❌ Error obteniendo token de refreshToken():', error);
+                    }
+                }
+                
+                if (!jwtToken) {
+                    throw new Error('No se pudo obtener el token JWT del usuario');
+                }
+                
+                console.log('🔑 Token encontrado. Longitud:', jwtToken.length);
+                console.log('🔑 Token (primeros 50 caracteres):', jwtToken.substring(0, 50));
+                
+                console.log('🚀 Enviando solicitud a Netlify Function...');
+                
+                // Send data to Netlify Function
+                const response = await fetch('/.netlify/functions/update-content', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${jwtToken}`
+                    },
+                    body: JSON.stringify({ siteData: formData })
+                });
+                
+                console.log('📡 Respuesta recibida:', response.status);
+                console.log('📡 Status text:', response.statusText);
+                
+                // Log response headers for debugging
+                console.log('📡 Response headers:');
+                response.headers.forEach((value, key) => {
+                    console.log(`  ${key}: ${value}`);
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('✅ Guardado exitoso:', result);
+                    
+                    saveStatus.textContent = '✅ ¡Cambios guardados exitosamente!';
+                    saveStatus.className = 'save-status success';
+                    
+                    // Show debug info
+                    showDebugInfo('✅ Guardado exitoso: ' + JSON.stringify(result, null, 2));
+                    
+                } else {
+                    const errorText = await response.text();
+                    console.error('❌ Error en respuesta:', response.status, errorText);
+                    
+                    saveStatus.textContent = '❌ Error al guardar. Código: ' + response.status;
+                    saveStatus.className = 'save-status error';
+                    
+                    // Show detailed error
+                    showDebugInfo('❌ Error detallado al guardar: ' + errorText, true);
+                    
+                    throw new Error(`Error ${response.status}: ${errorText}`);
+                }
+                
+            } catch (error) {
+                console.error('❌ Error detallado al guardar:', error);
+                
+                let errorMessage = 'Error desconocido';
+                if (error.message.includes('401')) {
+                    errorMessage = 'Error de autenticación. Cierra sesión y vuelve a iniciar sesión.';
+                } else if (error.message.includes('403')) {
+                    errorMessage = 'Sin permisos para guardar. Verifica tu configuración de Netlify.';
+                } else if (error.message.includes('404')) {
+                    errorMessage = 'Función no encontrada. Verifica la configuración de Netlify.';
+                } else if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
+                    errorMessage = 'Error de red. Verifica tu conexión a internet.';
+                } else {
+                    errorMessage = error.message;
+                }
+                
+                saveStatus.textContent = '❌ ' + errorMessage;
+                saveStatus.className = 'save-status error';
+                
+                showDebugInfo('❌ Error detallado al guardar: ' + error.message, true);
+            } finally {
+                // Re-enable button
+                saveButton.disabled = false;
+                saveButton.textContent = '💾 Guardar Todo';
+            }
+        }
+
+        // Show debug information
+        function showDebugInfo(message, isError = false) {
+            const debugDiv = document.getElementById('debug-info');
+            debugDiv.style.display = 'block';
+            debugDiv.className = isError ? 'debug-info error' : 'debug-info';
+            debugDiv.innerHTML += '<div>' + new Date().toLocaleTimeString() + ': ' + message + '</div>';
+            debugDiv.scrollTop = debugDiv.scrollHeight;
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎯 Inicializando Admin Panel Completo Compatible...');
+            
+            if (window.netlifyIdentity) {
+                console.log('✅ Netlify Identity disponible');
+                initNetlifyIdentity();
+            } else {
+                console.error('❌ Netlify Identity no disponible');
+            }
+            
+            console.log('✅ Admin Panel Compatible con index.html cargado correctamente.');
+            console.log('Funciones disponibles:');
+            console.log('- debugAdmin.init()');
+            console.log('- debugAdmin.login()');
+            console.log('- debugAdmin.logout()');
+            console.log('- debugAdmin.switchSection("section")');
+            console.log('- debugAdmin.checkIdentity()');
+            console.log('- debugAdmin.reloadData()');
+            console.log('- debugAdmin.testSave() - Para probar guardado');
+            console.log('- debugAdmin.reset()');
+            console.log('');
+            console.log('📋 Secciones disponibles:');
+            console.log('- Configuración General');
+            console.log('- Hero Section');
+            console.log('- Sobre el Fotógrafo');
+            console.log('- Servicios');
+            console.log('- Portfolio');
+            console.log('- Blog');
+            console.log('- Contacto');
+            console.log('- Footer');
+            console.log('- Redes Sociales');
+            console.log('- Guardar');
+            console.log('');
+            console.log('🚀 Funcionalidades incluidas:');
+            console.log('- Gestión de imágenes (Hero, Fotógrafo, Portfolio)');
+            console.log('- Edición completa del footer y copyright');
+            console.log('- Enlaces sociales completos');
+            console.log('- Compatible con index.html original');
+        });
     </script>
 </body>
 </html>
