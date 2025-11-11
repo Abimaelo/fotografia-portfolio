@@ -9,9 +9,6 @@
     
     <!-- Netlify Identity Widget - OAuth 2.0 -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    
-    <!-- OAuth Verification Script -->
-    <script src="oauth-verification.js"></script>
     <style>
         /* Variables CSS para el admin - compatibles con el diseño monocromático */
         :root {
@@ -24,7 +21,7 @@
             --color-black: #1a1a1a;
             --color-true-black: #000000;
             
-            /* Admin specific colors (for compatibility) */
+            /* Admin specific colors */
             --primary-color: var(--color-black);
             --primary-hover: var(--color-dark-gray);
             --secondary-color: var(--color-medium-gray);
@@ -64,13 +61,13 @@
             letter-spacing: -0.01em;
         }
         
-        /* Solo UN botón de login - sin duplicación */
-        .auth-wrapper {
+        /* Authentication Screen */
+        .auth-screen {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 70vh;
-            flex-direction: column;
+            min-height: 80vh;
+            background: var(--color-off-white);
         }
         
         .login-card {
@@ -79,7 +76,7 @@
             border-radius: 8px;
             box-shadow: var(--shadow);
             text-align: center;
-            max-width: 400px;
+            max-width: 500px;
             width: 100%;
         }
         
@@ -87,44 +84,51 @@
             font-family: 'Playfair Display', serif;
             color: var(--color-black);
             margin-bottom: 1rem;
-            font-size: 1.8rem;
+            font-size: 2rem;
         }
         
         .login-card p {
             color: var(--color-dark-gray);
             margin-bottom: 2rem;
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
         
         .login-btn {
             background: var(--color-black);
             color: var(--color-white);
             border: none;
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            font-weight: 500;
-            border-radius: 4px;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         
         .login-btn:hover {
             background: var(--color-dark-gray);
+            transform: translateY(-2px);
         }
         
         .security-info {
             background: var(--color-light-gray);
-            padding: 1rem;
-            border-radius: 4px;
+            padding: 1.5rem;
+            border-radius: 6px;
             margin-top: 1.5rem;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--color-dark-gray);
+            border-left: 4px solid var(--color-black);
         }
         
+        /* Admin Panel */
         .admin-panel {
             display: none;
+        }
+        
+        .admin-panel.show {
+            display: block;
         }
         
         .admin-nav {
@@ -150,21 +154,20 @@
             border: none;
             color: var(--color-dark-gray);
             font-family: 'DM Sans', sans-serif;
-            font-weight: 400;
-            font-size: 0.9rem;
+            font-weight: 500;
+            font-size: 0.95rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.05em;
             cursor: pointer;
-            padding: 0.75rem 1rem;
-            border-radius: 2px;
+            padding: 0.8rem 1.2rem;
+            border-radius: 4px;
             transition: all 0.3s ease;
-            position: relative;
         }
         
         .admin-nav button:hover,
         .admin-nav button.active {
-            color: var(--color-black);
-            background: var(--color-light-gray);
+            color: var(--color-white);
+            background: var(--color-black);
         }
         
         .admin-content {
@@ -189,17 +192,17 @@
         
         .form-group label {
             display: block;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--color-black);
             margin-bottom: 0.5rem;
+            font-size: 0.95rem;
         }
         
         .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group textarea {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid var(--color-light-gray);
+            border: 1px solid var(--color-medium-gray);
             border-radius: 4px;
             font-size: 1rem;
             font-family: 'Inter', sans-serif;
@@ -207,16 +210,9 @@
         }
         
         .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--color-black);
-        }
-        
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
         }
         
         .save-btn {
@@ -225,7 +221,7 @@
             border: none;
             padding: 1rem 2rem;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -234,73 +230,6 @@
         
         .save-btn:hover {
             background: var(--color-dark-gray);
-        }
-        
-        .upload-btn {
-            background: var(--color-medium-gray);
-            color: var(--color-white);
-            border: none;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .upload-btn:hover {
-            background: var(--color-dark-gray);
-        }
-        
-        .image-preview {
-            max-width: 200px;
-            max-height: 200px;
-            border-radius: 4px;
-            margin-top: 0.5rem;
-        }
-        
-        .list-item {
-            background: var(--color-light-gray);
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 4px;
-            border: 1px solid var(--color-medium-gray);
-        }
-        
-        .list-item h4 {
-            margin: 0 0 0.5rem 0;
-            color: var(--color-black);
-        }
-        
-        .remove-btn {
-            background: var(--error-color);
-            color: var(--color-white);
-            border: none;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 0.5rem;
-        }
-        
-        .add-btn {
-            background: var(--success-color);
-            color: var(--color-white);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 1rem 0;
-        }
-        
-        .logout-btn {
-            background: var(--error-color);
-            color: var(--color-white);
-            border: none;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            border-radius: 4px;
-            cursor: pointer;
         }
         
         .user-info {
@@ -312,31 +241,22 @@
         .user-email {
             color: var(--color-white);
             font-size: 0.9rem;
+            opacity: 0.9;
         }
         
-        .success-message,
-        .error-message {
-            padding: 1rem;
+        .logout-btn {
+            background: var(--error-color);
+            color: var(--color-white);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
             border-radius: 4px;
-            margin-bottom: 1rem;
-            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
         
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .loading {
-            opacity: 0.6;
-            pointer-events: none;
+        .logout-btn:hover {
+            background: #c82333;
         }
         
         @media (max-width: 768px) {
@@ -353,57 +273,47 @@
             .admin-nav ul {
                 justify-content: center;
             }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Authentication Wrapper - Solo UN sistema de autenticación -->
-    <div id="auth-wrapper" class="auth-wrapper">
+    <!-- Authentication Screen -->
+    <div id="auth-screen" class="auth-screen">
         <div class="login-card">
-            <h2>Acceso Seguro</h2>
-            <p>Autentícate con GitHub para acceder al panel de administración</p>
+            <h2>🔐 Acceso Seguro</h2>
+            <p>Panel de Administración OAuth 2.0</p>
             
-            <!-- Único botón de login -->
-            <button class="login-btn" id="login-btn">
-                🔐 Iniciar Sesión con GitHub
+            <!-- Single Login Button -->
+            <button id="login-btn" class="login-btn">
+                Iniciar Sesión con GitHub
             </button>
             
             <div class="security-info">
-                <strong>Seguridad OAuth 2.0</strong><br>
-                ✅ Autenticación segura con GitHub<br>
+                <strong>Seguridad Empresarial</strong><br>
+                ✅ Autenticación OAuth 2.0 con GitHub<br>
+                ✅ Tokens JWT encriptados de tiempo limitado<br>
                 ✅ Sin almacenamiento de contraseñas<br>
-                ✅ Tokens JWT de tiempo limitado<br>
-                ✅ Auditoría completa de actividades
+                ✅ Auditoría completa de acceso
             </div>
         </div>
     </div>
 
-    <!-- Admin Panel (Hidden until login) -->
+    <!-- Admin Panel -->
     <div id="admin-panel" class="admin-panel">
         <div class="admin-container">
             <div class="admin-header">
                 <h1>Panel de Administración</h1>
                 <div class="user-info">
-                    <span class="user-email" id="user-email"></span>
-                    <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+                    <span class="user-email" id="user-email">Cargando...</span>
+                    <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
                 </div>
             </div>
             
             <nav class="admin-nav">
                 <ul>
-                    <li><button onclick="showSection('general')" class="active">Configuración General</button></li>
-                    <li><button onclick="showSection('photographer')">Sobre el Fotógrafo</button></li>
-                    <li><button onclick="showSection('hero')">Hero Section</button></li>
-                    <li><button onclick="showSection('social')">Redes Sociales</button></li>
-                    <li><button onclick="showSection('services')">Servicios</button></li>
-                    <li><button onclick="showSection('portfolio')">Portfolio</button></li>
-                    <li><button onclick="showSection('blog')">Blog</button></li>
-                    <li><button onclick="showSection('contact')">Contacto</button></li>
-                    <li><button onclick="showSection('preview')">Vista Previa</button></li>
+                    <li><button onclick="switchSection('general')" id="btn-general" class="active">Configuración General</button></li>
+                    <li><button onclick="switchSection('about')" id="btn-about">Sobre Mí</button></li>
+                    <li><button onclick="switchSection('contact')" id="btn-contact">Contacto</button></li>
                 </ul>
             </nav>
             
@@ -413,99 +323,36 @@
                     <h2>Configuración General</h2>
                     <div class="form-group">
                         <label>Título del Sitio</label>
-                        <input type="text" id="site-title" placeholder="Nombre de tu sitio web">
+                        <input type="text" id="site-title" placeholder="Mi Portfolio Fotográfico">
                     </div>
                     <div class="form-group">
                         <label>Descripción</label>
-                        <textarea id="site-description" rows="4" placeholder="Descripción breve de tu sitio"></textarea>
+                        <textarea id="site-description" rows="4" placeholder="Descripción de tu trabajo fotográfico"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Palabras Clave</label>
+                        <input type="text" id="site-keywords" placeholder="fotografía, portfolio, retratos, bodas">
                     </div>
                 </section>
 
-                <!-- Sobre el Fotógrafo -->
-                <section id="photographer" class="admin-section">
-                    <h2>Sobre el Fotógrafo</h2>
+                <!-- Sobre Mí -->
+                <section id="about" class="admin-section">
+                    <h2>Sobre Mí</h2>
                     <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" id="photographer-name" placeholder="Tu nombre completo">
+                        <label>Nombre Completo</label>
+                        <input type="text" id="about-name" placeholder="Tu nombre completo">
                     </div>
                     <div class="form-group">
                         <label>Biografía</label>
-                        <textarea id="photographer-bio" rows="6" placeholder="Cuéntanos tu historia como fotógrafo"></textarea>
+                        <textarea id="about-bio" rows="6" placeholder="Cuéntanos tu historia como fotógrafo"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Foto de Perfil</label>
-                        <input type="file" id="photographer-photo" accept="image/*" onchange="uploadImage('photographer-photo')">
-                        <img id="photographer-photo-preview" class="image-preview" style="display: none;">
+                        <label>Años de Experiencia</label>
+                        <input type="number" id="about-experience" min="0" placeholder="5">
                     </div>
                     <div class="form-group">
-                        <label>Experiencia (años)</label>
-                        <input type="number" id="photographer-experience" min="0" placeholder="Número de años de experiencia">
-                    </div>
-                </section>
-
-                <!-- Hero Section -->
-                <section id="hero" class="admin-section">
-                    <h2>Hero Section</h2>
-                    <div class="form-group">
-                        <label>Título Principal</label>
-                        <input type="text" id="hero-title" placeholder="Título impactante">
-                    </div>
-                    <div class="form-group">
-                        <label>Subtítulo</label>
-                        <input type="text" id="hero-subtitle" placeholder="Descripción que complemente el título">
-                    </div>
-                    <div class="form-group">
-                        <label>Imagen Hero</label>
-                        <input type="file" id="hero-image" accept="image/*" onchange="uploadImage('hero-image')">
-                        <img id="hero-image-preview" class="image-preview" style="display: none;">
-                    </div>
-                    <div class="form-group">
-                        <label>Texto del Botón</label>
-                        <input type="text" id="hero-button-text" placeholder="Ver Galería">
-                    </div>
-                </section>
-
-                <!-- Servicios -->
-                <section id="services" class="admin-section">
-                    <h2>Servicios</h2>
-                    <button class="add-btn" onclick="addService()">+ Agregar Servicio</button>
-                    <div id="services-list">
-                        <!-- Los servicios se cargarán aquí dinámicamente -->
-                    </div>
-                </section>
-
-                <!-- Portfolio -->
-                <section id="portfolio" class="admin-section">
-                    <h2>Portfolio</h2>
-                    <button class="add-btn" onclick="addPortfolioItem()">+ Agregar Proyecto</button>
-                    <div id="portfolio-list">
-                        <!-- Los proyectos se cargarán aquí dinámicamente -->
-                    </div>
-                </section>
-
-                <!-- Blog -->
-                <section id="blog" class="admin-section">
-                    <h2>Blog</h2>
-                    <button class="add-btn" onclick="addBlogPost()">+ Agregar Post</button>
-                    <div id="blog-list">
-                        <!-- Los posts se cargarán aquí dinámicamente -->
-                    </div>
-                </section>
-
-                <!-- Redes Sociales -->
-                <section id="social" class="admin-section">
-                    <h2>Redes Sociales</h2>
-                    <div class="form-group">
-                        <label>Instagram</label>
-                        <input type="url" id="social-instagram" placeholder="URL de tu Instagram">
-                    </div>
-                    <div class="form-group">
-                        <label>Facebook</label>
-                        <input type="url" id="social-facebook" placeholder="URL de tu Facebook">
-                    </div>
-                    <div class="form-group">
-                        <label>Twitter</label>
-                        <input type="url" id="social-twitter" placeholder="URL de tu Twitter">
+                        <label>Especialidades</label>
+                        <input type="text" id="about-specialties" placeholder="Retratos, Bodas, Eventos">
                     </div>
                 </section>
 
@@ -521,102 +368,147 @@
                         <input type="tel" id="contact-phone" placeholder="+1 234 567 8900">
                     </div>
                     <div class="form-group">
+                        <label>Instagram</label>
+                        <input type="url" id="contact-instagram" placeholder="https://instagram.com/tuusuario">
+                    </div>
+                    <div class="form-group">
                         <label>Dirección</label>
-                        <textarea id="contact-address" rows="3" placeholder="Tu dirección"></textarea>
+                        <textarea id="contact-address" rows="3" placeholder="Tu dirección profesional"></textarea>
                     </div>
                 </section>
-
-                <!-- Vista Previa -->
-                <section id="preview" class="admin-section">
-                    <h2>Vista Previa</h2>
-                    <p>Haz clic en el botón para ver cómo se ve tu sitio web:</p>
-                    <button class="add-btn" onclick="window.open('/', '_blank')">🔗 Ver Sitio Web</button>
-                </section>
-
-                <button class="save-btn" onclick="saveChanges()">💾 Guardar Cambios</button>
             </div>
         </div>
     </div>
 
     <script>
         // ===============================
-        // SISTEMA DE AUTENTICACIÓN SIMPLIFICADO
+        // SISTEMA ANTI-LOOP ULTRA-ESTABILIZADO
         // ===============================
 
-        // Configurar Netlify Identity
+        // Variables globales
+        let isInitialized = false;
+        let currentUser = null;
+
+        // Función principal de inicialización - SOLO SE EJECUTA UNA VEZ
+        function initAdmin() {
+            if (isInitialized) {
+                console.log('🔄 Admin ya inicializado');
+                return;
+            }
+            
+            console.log('🚀 Inicializando Admin Panel...');
+            isInitialized = true;
+            
+            // Configurar eventos
+            setupEventListeners();
+            
+            // Configurar Netlify Identity
+            setupNetlifyIdentity();
+        }
+
+        // Configurar event listeners UNA SOLA VEZ
+        function setupEventListeners() {
+            const loginBtn = document.getElementById('login-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            
+            if (loginBtn && !loginBtn.dataset.initialized) {
+                loginBtn.addEventListener('click', handleLogin);
+                loginBtn.dataset.initialized = 'true';
+            }
+            
+            if (logoutBtn && !logoutBtn.dataset.initialized) {
+                logoutBtn.addEventListener('click', handleLogout);
+                logoutBtn.dataset.initialized = 'true';
+            }
+        }
+
+        // Configurar Netlify Identity - MÉTODO ULTRA-SIMPLIFICADO
         function setupNetlifyIdentity() {
             if (typeof window.netlifyIdentity !== 'undefined') {
-                // Limpiar listeners previos para evitar duplicación
-                window.netlifyIdentity.off('init');
-                window.netlifyIdentity.off('login');
-                window.netlifyIdentity.off('logout');
-
-                window.netlifyIdentity.on('init', (user) => {
-                    console.log('🔐 Netlify Identity inicializado');
-                    if (user) {
-                        console.log('✅ Usuario ya autenticado:', user.email);
-                        showAdminPanel(user);
-                    } else {
-                        console.log('👤 No hay usuario autenticado - mostrando login');
-                        showLoginScreen();
-                    }
-                });
-
-                window.netlifyIdentity.on('login', (user) => {
-                    console.log('✅ Login exitoso:', user.email);
-                    showAdminPanel(user);
-                });
-
-                window.netlifyIdentity.on('logout', () => {
-                    console.log('🚪 Usuario cerró sesión');
-                    showLoginScreen();
-                });
-
+                console.log('✅ Netlify Identity disponible');
+                
+                // Configurar SOLO UN handler para cada evento
+                window.netlifyIdentity.on('init', handleIdentityInit);
+                window.netlifyIdentity.on('login', handleIdentityLogin);
+                window.netlifyIdentity.on('logout', handleIdentityLogout);
+                
                 // Inicializar widget
                 window.netlifyIdentity.init();
+                
             } else {
-                console.error('❌ Netlify Identity widget no está disponible');
+                console.error('❌ Netlify Identity no está disponible');
+                // Reintentar después de 2 segundos si falla
+                setTimeout(() => {
+                    if (!isInitialized) {
+                        setupNetlifyIdentity();
+                    }
+                }, 2000);
             }
+        }
+
+        // Manejar inicialización de Netlify Identity
+        function handleIdentityInit(user) {
+            console.log('🔐 Netlify Identity inicializado:', user ? 'Usuario autenticado' : 'Sin usuario');
+            
+            if (user) {
+                currentUser = user;
+                showAdminPanel(user);
+            } else {
+                showLoginScreen();
+            }
+        }
+
+        // Manejar login exitoso
+        function handleIdentityLogin(user) {
+            console.log('✅ Login exitoso:', user.email);
+            currentUser = user;
+            showAdminPanel(user);
+        }
+
+        // Manejar logout
+        function handleIdentityLogout() {
+            console.log('🚪 Logout exitoso');
+            currentUser = null;
+            showLoginScreen();
         }
 
         // Mostrar panel de administración
         function showAdminPanel(user) {
-            document.getElementById('auth-wrapper').style.display = 'none';
-            document.getElementById('admin-panel').style.display = 'block';
-            document.getElementById('user-email').textContent = user.email;
+            console.log('🔓 Mostrando panel de administración para:', user.email);
             
-            // Ejecutar OAuth verification una sola vez
-            if (window.runOAuthVerification) {
-                window.runOAuthVerification();
-            }
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('admin-panel').classList.add('show');
+            document.getElementById('user-email').textContent = user.email;
         }
 
         // Mostrar pantalla de login
         function showLoginScreen() {
-            document.getElementById('admin-panel').style.display = 'none';
-            document.getElementById('auth-wrapper').style.display = 'flex';
+            console.log('🔒 Mostrando pantalla de login');
+            
+            document.getElementById('admin-panel').classList.remove('show');
+            document.getElementById('auth-screen').style.display = 'flex';
         }
 
-        // Función de login
+        // Manejar login manual
         function handleLogin() {
+            console.log('🚀 Iniciando proceso de login');
             if (window.netlifyIdentity) {
                 window.netlifyIdentity.open('login');
             }
         }
 
-        // Función de logout
-        function logout() {
+        // Manejar logout manual
+        function handleLogout() {
+            console.log('🔓 Cerrando sesión');
             if (window.netlifyIdentity) {
                 window.netlifyIdentity.logout();
             }
         }
 
-        // ===============================
-        // FUNCIONES DEL ADMIN PANEL
-        // ===============================
-
-        // Navegación entre secciones
-        function showSection(sectionId) {
+        // Cambiar entre secciones del admin
+        function switchSection(sectionId) {
+            console.log('🔄 Cambiando a sección:', sectionId);
+            
             // Ocultar todas las secciones
             document.querySelectorAll('.admin-section').forEach(section => {
                 section.classList.remove('active');
@@ -631,151 +523,49 @@
             document.getElementById(sectionId).classList.add('active');
             
             // Activar botón correspondiente
-            event.target.classList.add('active');
+            document.getElementById('btn-' + sectionId).classList.add('active');
         }
 
-        // Agregar servicio
-        function addService() {
-            const servicesList = document.getElementById('services-list');
-            const serviceIndex = servicesList.children.length;
-            
-            const serviceDiv = document.createElement('div');
-            serviceDiv.className = 'list-item';
-            serviceDiv.innerHTML = `
-                <h4>Servicio ${serviceIndex + 1}</h4>
-                <div class="form-group">
-                    <label>Nombre del Servicio</label>
-                    <input type="text" id="service-name-${serviceIndex}" placeholder="Nombre del servicio">
-                </div>
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <textarea id="service-description-${serviceIndex}" rows="3" placeholder="Descripción del servicio"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Precio</label>
-                    <input type="text" id="service-price-${serviceIndex}" placeholder="Precio del servicio">
-                </div>
-                <button class="remove-btn" onclick="removeService(${serviceIndex})">Eliminar</button>
-            `;
-            
-            servicesList.appendChild(serviceDiv);
+        // ===============================
+        // INICIALIZACIÓN COMPLETAMENTE CONTROLADA
+        // ===============================
+
+        // Solo inicializar cuando la página esté completamente cargada
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initAdmin);
+        } else {
+            // DOM ya está cargado
+            setTimeout(initAdmin, 100);
         }
 
-        // Eliminar servicio
-        function removeService(index) {
-            document.getElementById('services-list').children[index].remove();
-        }
-
-        // Agregar proyecto de portfolio
-        function addPortfolioItem() {
-            const portfolioList = document.getElementById('portfolio-list');
-            const itemIndex = portfolioList.children.length;
-            
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'list-item';
-            itemDiv.innerHTML = `
-                <h4>Proyecto ${itemIndex + 1}</h4>
-                <div class="form-group">
-                    <label>Título del Proyecto</label>
-                    <input type="text" id="portfolio-title-${itemIndex}" placeholder="Título del proyecto">
-                </div>
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <textarea id="portfolio-description-${itemIndex}" rows="3" placeholder="Descripción del proyecto"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Imagen del Proyecto</label>
-                    <input type="file" id="portfolio-image-${itemIndex}" accept="image/*" onchange="uploadImage('portfolio-image-${itemIndex}', ${itemIndex}, 'portfolio')">
-                    <img id="portfolio-image-${itemIndex}-preview" class="image-preview" style="display: none;">
-                </div>
-                <div class="form-group">
-                    <label>URL del Proyecto (opcional)</label>
-                    <input type="url" id="portfolio-url-${itemIndex}" placeholder="https://ejemplo.com">
-                </div>
-                <button class="remove-btn" onclick="removePortfolioItem(${itemIndex})">Eliminar</button>
-            `;
-            
-            portfolioList.appendChild(itemDiv);
-        }
-
-        // Eliminar proyecto de portfolio
-        function removePortfolioItem(index) {
-            document.getElementById('portfolio-list').children[index].remove();
-        }
-
-        // Agregar post de blog
-        function addBlogPost() {
-            const blogList = document.getElementById('blog-list');
-            const postIndex = blogList.children.length;
-            
-            const postDiv = document.createElement('div');
-            postDiv.className = 'list-item';
-            postDiv.innerHTML = `
-                <h4>Post ${postIndex + 1}</h4>
-                <div class="form-group">
-                    <label>Título del Post</label>
-                    <input type="text" id="blog-title-${postIndex}" placeholder="Título del artículo">
-                </div>
-                <div class="form-group">
-                    <label>Contenido</label>
-                    <textarea id="blog-content-${postIndex}" rows="6" placeholder="Contenido del artículo"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Imagen del Post</label>
-                    <input type="file" id="blog-image-${postIndex}" accept="image/*" onchange="uploadImage('blog-image-${postIndex}', ${postIndex}, 'blog')">
-                    <img id="blog-image-${postIndex}-preview" class="image-preview" style="display: none;">
-                </div>
-                <div class="form-group">
-                    <label>Fecha de Publicación</label>
-                    <input type="date" id="blog-date-${postIndex}">
-                </div>
-                <button class="remove-btn" onclick="removeBlogPost(${postIndex})">Eliminar</button>
-            `;
-            
-            blogList.appendChild(postDiv);
-        }
-
-        // Eliminar post de blog
-        function removeBlogPost(index) {
-            document.getElementById('blog-list').children[index].remove();
-        }
-
-        // Subir imagen (placeholder - implementar según necesidades)
-        function uploadImage(inputId) {
-            const input = document.getElementById(inputId);
-            const preview = document.getElementById(inputId + '-preview');
-            
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(input.files[0]);
+        // Prevenir que múltiples inicializaciones se ejecuten
+        window.addEventListener('load', () => {
+            if (!isInitialized) {
+                setTimeout(initAdmin, 500);
             }
-        }
-
-        // Guardar cambios (placeholder - implementar lógica de guardado)
-        function saveChanges() {
-            // Aquí iría la lógica para guardar los datos
-            // Por ahora, solo muestra un mensaje
-            alert('Los cambios se guardarían aquí. Implementar según necesidades.');
-        }
-
-        // ===============================
-        // INICIALIZACIÓN
-        // ===============================
-
-        // Configurar Netlify Identity cuando la página esté lista
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Inicializando admin panel...');
-            
-            // Configurar botón de login
-            document.getElementById('login-btn').addEventListener('click', handleLogin);
-            
-            // Configurar Netlify Identity
-            setTimeout(setupNetlifyIdentity, 1000);
         });
+
+        // Funciones globales disponibles en consola para debugging
+        window.debugAdmin = {
+            init: initAdmin,
+            login: handleLogin,
+            logout: handleLogout,
+            switchSection: switchSection,
+            checkIdentity: () => console.log('Current user:', currentUser),
+            reset: () => {
+                isInitialized = false;
+                currentUser = null;
+                location.reload();
+            }
+        };
+
+        console.log('✅ Admin Panel carg correctamente. Funciones disponibles:');
+        console.log('   - debugAdmin.init()');
+        console.log('   - debugAdmin.login()');
+        console.log('   - debugAdmin.logout()');
+        console.log('   - debugAdmin.switchSection("section")');
+        console.log('   - debugAdmin.checkIdentity()');
+        console.log('   - debugAdmin.reset()');
     </script>
 </body>
 </html>
