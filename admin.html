@@ -138,7 +138,7 @@
         }
 
         .admin-sidebar {
-            width: 250px;
+            width: 280px;
             background: white;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
@@ -247,6 +247,39 @@
             line-height: 1.6;
         }
 
+        .image-upload-container {
+            border: 2px dashed #ccc;
+            border-radius: 6px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px 0;
+        }
+
+        .image-upload-container:hover {
+            border-color: #667eea;
+            background: #f0f2ff;
+        }
+
+        .image-upload-container.dragover {
+            border-color: #667eea;
+            background: #f0f2ff;
+        }
+
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 6px;
+            margin: 15px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-preview.large {
+            max-width: 400px;
+            max-height: 300px;
+        }
+
         .dynamic-list {
             background: white;
             border: 1px solid #e1e8ed;
@@ -328,65 +361,6 @@
 
         .status-message.info {
             background: #667eea;
-        }
-
-        .image-upload-container {
-            border: 2px dashed #ccc;
-            border-radius: 6px;
-            padding: 40px;
-            text-align: center;
-            cursor: pointer;
-            transition: border-color 0.3s ease;
-        }
-
-        .image-upload-container:hover {
-            border-color: #667eea;
-        }
-
-        .image-upload-container.dragover {
-            border-color: #667eea;
-            background: #f0f2ff;
-        }
-
-        .image-preview {
-            max-width: 200px;
-            max-height: 200px;
-            border-radius: 6px;
-            margin: 15px 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .preview-section {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-        }
-
-        .preview-section h3 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-        }
-
-        .hero-preview {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 60px 30px;
-            text-align: center;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .hero-preview h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .hero-preview p {
-            font-size: 1.2rem;
-            opacity: 0.9;
         }
 
         .save-section {
@@ -480,14 +454,11 @@
                     <div class="nav-item active" onclick="switchSection('general')">
                         <strong>⚙️ Configuración General</strong>
                     </div>
-                    <div class="nav-item" onclick="switchSection('photographer')">
-                        <strong>📷 Sobre el Fotógrafo</strong>
-                    </div>
                     <div class="nav-item" onclick="switchSection('hero')">
                         <strong>🏠 Hero Section</strong>
                     </div>
-                    <div class="nav-item" onclick="switchSection('social')">
-                        <strong>🌐 Redes Sociales</strong>
+                    <div class="nav-item" onclick="switchSection('photographer')">
+                        <strong>📷 Sobre el Fotógrafo</strong>
                     </div>
                     <div class="nav-item" onclick="switchSection('services')">
                         <strong>⚡ Servicios</strong>
@@ -501,8 +472,14 @@
                     <div class="nav-item" onclick="switchSection('contact')">
                         <strong>📧 Contacto</strong>
                     </div>
-                    <div class="nav-item" onclick="switchSection('preview')">
-                        <strong>👁️ Vista Previa</strong>
+                    <div class="nav-item" onclick="switchSection('footer')">
+                        <strong>🦶 Footer</strong>
+                    </div>
+                    <div class="nav-item" onclick="switchSection('social')">
+                        <strong>🌐 Redes Sociales</strong>
+                    </div>
+                    <div class="nav-item" onclick="switchSection('save')">
+                        <strong>💾 Guardar</strong>
                     </div>
                 </div>
             </div>
@@ -518,42 +495,15 @@
                     <form id="general-form">
                         <div class="form-group">
                             <label for="site-title-input">Título del Sitio</label>
-                            <input type="text" id="site-title-input" placeholder="Mi Portfolio de Fotografía">
+                            <input type="text" id="site-title-input" placeholder="Estudio de Fotografía">
                         </div>
                         <div class="form-group">
-                            <label for="site-description-input">Descripción del Sitio</label>
-                            <textarea id="site-description-input" placeholder="Describe tu trabajo fotográfico y estilo..."></textarea>
+                            <label for="page-title-input">Título de la Página</label>
+                            <input type="text" id="page-title-input" placeholder="Estudio de Fotografía">
                         </div>
                         <div class="form-group">
                             <label for="website-input">Sitio Web</label>
                             <input type="url" id="website-input" placeholder="https://tu-sitio.com">
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Sobre el Fotógrafo -->
-                <div id="section-photographer" class="section">
-                    <h2 class="section-title">📷 Sobre el Fotógrafo</h2>
-                    <div class="section-description">
-                        <h3>Información personal</h3>
-                        <p>Comparte tu historia, experiencia y filosofía como fotógrafo.</p>
-                    </div>
-                    <form id="photographer-form">
-                        <div class="form-group">
-                            <label for="photographer-name-input">Nombre del Fotógrafo</label>
-                            <input type="text" id="photographer-name-input" placeholder="Tu nombre completo">
-                        </div>
-                        <div class="form-group">
-                            <label for="photographer-bio-input">Biografía</label>
-                            <textarea id="photographer-bio-input" placeholder="Tu historia como fotógrafo, experiencia, logros..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="photographer-experience-input">Años de Experiencia</label>
-                            <input type="number" id="photographer-experience-input" placeholder="5" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="photographer-specialties-input">Especialidades</label>
-                            <textarea id="photographer-specialties-input" placeholder="Boda, Retratos, Paisajes..."></textarea>
                         </div>
                     </form>
                 </div>
@@ -568,44 +518,64 @@
                     <form id="hero-form">
                         <div class="form-group">
                             <label for="hero-title-input">Título Principal</label>
-                            <input type="text" id="hero-title-input" placeholder="Capturando momentos únicos">
+                            <input type="text" id="hero-title-input" placeholder="Capturando Momentos Únicos">
                         </div>
                         <div class="form-group">
                             <label for="hero-subtitle-input">Subtítulo</label>
-                            <input type="text" id="hero-subtitle-input" placeholder="Fotografía profesional con pasión">
+                            <textarea id="hero-subtitle-input" placeholder="Fotografía profesional que transforma tus momentos especiales..."></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="hero-description-input">Descripción</label>
-                            <textarea id="hero-description-input" placeholder="Más texto descriptivo sobre tu trabajo..."></textarea>
+                            <label for="hero-cta-input">Texto del Botón</label>
+                            <input type="text" id="hero-cta-input" placeholder="Ver Mi Portfolio">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Imagen del Hero</label>
+                            <div class="image-upload-container" onclick="document.getElementById('hero-image-input').click()">
+                                <div id="hero-image-preview">
+                                    <p>📷 Haz clic para subir una imagen del Hero</p>
+                                    <small>Se recomienda una imagen panorámica (1920x1080)</small>
+                                </div>
+                            </div>
+                            <input type="file" id="hero-image-input" accept="image/*" style="display: none;" onchange="handleImageUpload('hero-image-input', 'hero-image-preview')">
                         </div>
                     </form>
                 </div>
 
-                <!-- Redes Sociales -->
-                <div id="section-social" class="section">
-                    <h2 class="section-title">🌐 Redes Sociales</h2>
+                <!-- Sobre el Fotógrafo -->
+                <div id="section-photographer" class="section">
+                    <h2 class="section-title">📷 Sobre el Fotógrafo</h2>
                     <div class="section-description">
-                        <h3>Conecta con tus redes</h3>
-                        <p>Comparte los enlaces a tus perfiles en redes sociales.</p>
+                        <h3>Información personal</h3>
+                        <p>Comparte tu historia, experiencia y filosofía como fotógrafo.</p>
                     </div>
-                    <form id="social-form">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="instagram-input">Instagram</label>
-                                <input type="url" id="instagram-input" placeholder="https://instagram.com/tu-perfil">
+                    <form id="photographer-form">
+                        <div class="form-group">
+                            <label for="photographer-name-input">Nombre del Fotógrafo</label>
+                            <input type="text" id="photographer-name-input" placeholder="Carlos Martínez">
+                        </div>
+                        <div class="form-group">
+                            <label for="photographer-specialty-input">Especialidad</label>
+                            <input type="text" id="photographer-specialty-input" placeholder="Fotografía de Retratos y Eventos">
+                        </div>
+                        <div class="form-group">
+                            <label for="photographer-experience-input">Experiencia</label>
+                            <input type="text" id="photographer-experience-input" placeholder="8 años de experiencia">
+                        </div>
+                        <div class="form-group">
+                            <label for="photographer-bio-input">Biografía</label>
+                            <textarea id="photographer-bio-input" placeholder="Tu historia como fotógrafo, experiencia, logros..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Foto del Fotógrafo</label>
+                            <div class="image-upload-container" onclick="document.getElementById('photographer-image-input').click()">
+                                <div id="photographer-image-preview">
+                                    <p>📷 Haz clic para subir la foto del fotógrafo</p>
+                                    <small>Se recomienda una foto de perfil (400x400)</small>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="facebook-input">Facebook</label>
-                                <input type="url" id="facebook-input" placeholder="https://facebook.com/tu-página">
-                            </div>
-                            <div class="form-group">
-                                <label for="twitter-input">Twitter</label>
-                                <input type="url" id="twitter-input" placeholder="https://twitter.com/tu-perfil">
-                            </div>
-                            <div class="form-group">
-                                <label for="linkedin-input">LinkedIn</label>
-                                <input type="url" id="linkedin-input" placeholder="https://linkedin.com/in/tu-perfil">
-                            </div>
+                            <input type="file" id="photographer-image-input" accept="image/*" style="display: none;" onchange="handleImageUpload('photographer-image-input', 'photographer-image-preview')">
                         </div>
                     </form>
                 </div>
@@ -615,7 +585,7 @@
                     <h2 class="section-title">⚡ Servicios</h2>
                     <div class="section-description">
                         <h3>Servicios fotográficos</h3>
-                        <p>Lista los servicios que ofreces con sus descripciones y precios.</p>
+                        <p>Lista los servicios que ofreces con sus descripciones.</p>
                     </div>
                     <div id="services-list" class="dynamic-list">
                         <!-- Servicios se cargarán dinámicamente -->
@@ -657,72 +627,93 @@
                         <p>Proporciona formas para que los clientes puedan contactarte.</p>
                     </div>
                     <form id="contact-form">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="contact-email-input">Email</label>
-                                <input type="email" id="contact-email-input" placeholder="tu@email.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="contact-phone-input">Teléfono</label>
-                                <input type="tel" id="contact-phone-input" placeholder="+34 123 456 789">
-                            </div>
+                        <div class="form-group">
+                            <label for="contact-email-input">Email</label>
+                            <input type="email" id="contact-email-input" placeholder="carlos@fotografia-martinez.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-phone-input">Teléfono</label>
+                            <input type="tel" id="contact-phone-input" placeholder="+34 678 123 456">
                         </div>
                         <div class="form-group">
                             <label for="contact-address-input">Dirección</label>
-                            <input type="text" id="contact-address-input" placeholder="Tu dirección">
+                            <input type="text" id="contact-address-input" placeholder="Calle Fotógrafos 15, Madrid 28001">
                         </div>
                         <div class="form-group">
                             <label for="contact-studio-input">Estudio</label>
-                            <input type="text" id="contact-studio-input" placeholder="Nombre del estudio (opcional)">
+                            <input type="text" id="contact-studio-input" placeholder="Estudio fotográfico con iluminación profesional">
                         </div>
                         <div class="form-group">
-                            <label for="contact-availability-input">Disponibilidad</label>
-                            <textarea id="contact-availability-input" placeholder="Horarios, disponibilidad para eventos..."></textarea>
+                            <label for="contact-availability-input">Horario</label>
+                            <input type="text" id="contact-availability-input" placeholder="Lunes a Sábado - 9:00 a 20:00">
                         </div>
                     </form>
                 </div>
 
-                <!-- Vista Previa -->
-                <div id="section-preview" class="section">
-                    <h2 class="section-title">👁️ Vista Previa</h2>
+                <!-- Footer -->
+                <div id="section-footer" class="section">
+                    <h2 class="section-title">🦶 Footer</h2>
                     <div class="section-description">
-                        <h3>Previsualización en tiempo real</h3>
-                        <p>Ve cómo se verá tu sitio con los cambios actuales antes de guardarlos.</p>
+                        <h3>Información del pie de página</h3>
+                        <p>Personaliza el contenido del footer de tu sitio web.</p>
                     </div>
-
-                    <div class="preview-section">
-                        <h3>🏠 Hero Section</h3>
-                        <div class="hero-preview">
-                            <h1 id="preview-hero-title">Título Principal</h1>
-                            <p id="preview-hero-subtitle">Subtítulo</p>
+                    <form id="footer-form">
+                        <div class="form-group">
+                            <label for="footer-title-input">Título del Footer</label>
+                            <input type="text" id="footer-title-input" placeholder="Estudio de Fotografía">
                         </div>
-                    </div>
-
-                    <div class="preview-section">
-                        <h3>📷 Sobre el Fotógrafo</h3>
-                        <div style="padding: 20px; background: #f8f9fa; border-radius: 6px;">
-                            <h4 id="preview-photographer-name">Nombre del Fotógrafo</h4>
-                            <p id="preview-photographer-bio">Biografía del fotógrafo...</p>
-                            <p><strong>Experiencia:</strong> <span id="preview-photographer-experience">0</span> años</p>
-                            <p><strong>Especialidades:</strong> <span id="preview-photographer-specialties">Especialidades</span></p>
+                        <div class="form-group">
+                            <label for="footer-description-input">Descripción</label>
+                            <textarea id="footer-description-input" placeholder="Capturando momentos únicos con pasión y profesionalismo"></textarea>
                         </div>
-                    </div>
-
-                    <div class="preview-section">
-                        <h3>📊 Resumen del Sitio</h3>
-                        <div style="padding: 20px; background: #f8f9fa; border-radius: 6px;">
-                            <p><strong>Título:</strong> <span id="preview-site-title">Mi Portfolio de Fotografía</span></p>
-                            <p><strong>Descripción:</strong> <span id="preview-site-description">Descripción del sitio...</span></p>
-                            <p><strong>Email:</strong> <span id="preview-contact-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1e6a6b5e7b737f7772307d7173">[email&#160;protected]</a></span></p>
-                            <p><strong>Servicios:</strong> <span id="preview-services-count">0</span></p>
-                            <p><strong>Trabajos:</strong> <span id="preview-portfolio-count">0</span></p>
-                            <p><strong>Artículos:</strong> <span id="preview-blog-count">0</span></p>
+                        <div class="form-group">
+                            <label for="copyright-input">Texto de Copyright</label>
+                            <textarea id="copyright-input" placeholder="&copy; 2025 Estudio de Fotografía Carlos Martínez. Todos los derechos reservados."></textarea>
                         </div>
-                    </div>
+                    </form>
+                </div>
 
+                <!-- Redes Sociales -->
+                <div id="section-social" class="section">
+                    <h2 class="section-title">🌐 Redes Sociales</h2>
+                    <div class="section-description">
+                        <h3>Enlaces de redes sociales</h3>
+                        <p>Configura los enlaces a tus perfiles en redes sociales.</p>
+                    </div>
+                    <form id="social-form">
+                        <div class="form-group">
+                            <label for="instagram-link-input">Instagram</label>
+                            <input type="url" id="instagram-link-input" placeholder="https://instagram.com/carlos_fotografo">
+                        </div>
+                        <div class="form-group">
+                            <label for="facebook-link-input">Facebook</label>
+                            <input type="url" id="facebook-link-input" placeholder="https://facebook.com/carlos.fotografo">
+                        </div>
+                        <div class="form-group">
+                            <label for="twitter-link-input">Twitter</label>
+                            <input type="url" id="twitter-link-input" placeholder="https://twitter.com/carlos_fotografo">
+                        </div>
+                        <div class="form-group">
+                            <label for="linkedin-link-input">LinkedIn</label>
+                            <input type="url" id="linkedin-link-input" placeholder="https://linkedin.com/in/carlos-martinez-fotografo">
+                        </div>
+                        <div class="form-group">
+                            <label for="website-link-input">Sitio Web</label>
+                            <input type="url" id="website-link-input" placeholder="https://carlosmartinez-fotografia.com">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Guardar -->
+                <div id="section-save" class="section">
+                    <h2 class="section-title">💾 Guardar Cambios</h2>
+                    <div class="section-description">
+                        <h3>Guardar todos los cambios</h3>
+                        <p>Haz clic para guardar todos los cambios en tu sitio web.</p>
+                    </div>
                     <div class="save-section">
-                        <h3>💾 Guardar Cambios</h3>
-                        <p>Haz clic en el botón para guardar todos los cambios en tu sitio web.</p>
+                        <h3>💾 Guardar Todos los Cambios</h3>
+                        <p>Esta acción guardará todos los datos en tu repositorio de GitHub.</p>
                         <button id="save-btn" onclick="saveChanges()" class="save-btn">💾 Guardar Cambios</button>
                     </div>
                 </div>
@@ -733,11 +724,63 @@
     <!-- Status Message -->
     <div id="status-message" class="status-message"></div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Variables globales
         let currentUser = null;
         let isInitialized = false;
         let siteData = {};
+        let imageUploads = {}; // Para manejar subida de imágenes
+
+        // Función para manejar subida de imágenes
+        function handleImageUpload(inputId, previewId) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            const file = input.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Mostrar preview
+                    preview.innerHTML = `
+                        <img src="${e.target.result}" class="image-preview large" alt="Preview">
+                        <p>✅ Imagen cargada: ${file.name}</p>
+                    `;
+                    // Guardar la imagen en el objeto de uploads
+                    imageUploads[inputId] = {
+                        file: file,
+                        name: file.name,
+                        type: file.type
+                    };
+                    console.log('📷 Imagen seleccionada:', file.name);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Función para subir imagen a Netlify
+        async function uploadImage(imageData) {
+            try {
+                const formData = new FormData();
+                formData.append('image', imageData.file, imageData.name);
+                
+                const response = await fetch('/.netlify/functions/upload-image', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    console.log('✅ Imagen subida:', result.url);
+                    return result.url;
+                } else {
+                    throw new Error(result.error || 'Error subiendo imagen');
+                }
+            } catch (error) {
+                console.error('❌ Error subiendo imagen:', error);
+                return null;
+            }
+        }
 
         // Función para forzar login
         function forceLogin() {
@@ -771,11 +814,6 @@
             });
             
             event.target.classList.add('active');
-            
-            // Actualizar vista previa si es necesario
-            if (sectionName === 'preview') {
-                updatePreview();
-            }
         }
 
         // Función para añadir un servicio
@@ -786,18 +824,12 @@
                 <div class="dynamic-item" data-service-id="${serviceId}">
                     <div class="dynamic-item-content">
                         <div class="form-group">
-                            <label>Nombre del Servicio</label>
-                            <input type="text" id="service-name-${serviceId}" placeholder="Fotografía de Bodas">
+                            <label>Título del Servicio</label>
+                            <input type="text" id="service-title-${serviceId}" placeholder="Fotografía de Bodas">
                         </div>
                         <div class="form-group">
-                            <label>Precio</label>
-                            <input type="text" id="service-price-${serviceId}" placeholder="Desde €500">
-                        </div>
-                    </div>
-                    <div class="dynamic-item-content">
-                        <div class="form-group" style="grid-column: 1 / -1;">
                             <label>Descripción</label>
-                            <textarea id="service-description-${serviceId}" placeholder="Descripción detallada del servicio..."></textarea>
+                            <textarea id="service-description-${serviceId}" placeholder="Descripción del servicio..."></textarea>
                         </div>
                     </div>
                     <div class="dynamic-item-actions">
@@ -825,34 +857,22 @@
                     <div class="dynamic-item-content">
                         <div class="form-group">
                             <label>Título</label>
-                            <input type="text" id="portfolio-title-${portfolioId}" placeholder="Sesión de fotos en la playa">
+                            <input type="text" id="portfolio-title-${portfolioId}" placeholder="Sesión en la playa">
                         </div>
                         <div class="form-group">
-                            <label>Categoría</label>
-                            <select id="portfolio-category-${portfolioId}">
-                                <option value="">Seleccionar categoría</option>
-                                <option value="boda">Boda</option>
-                                <option value="retrato">Retrato</option>
-                                <option value="paisaje">Paisaje</option>
-                                <option value="evento">Evento</option>
-                                <option value="producto">Producto</option>
-                            </select>
+                            <label>Descripción</label>
+                            <textarea id="portfolio-description-${portfolioId}" placeholder="Describe el proyecto..."></textarea>
                         </div>
                     </div>
                     <div class="dynamic-item-content">
                         <div class="form-group" style="grid-column: 1 / -1;">
-                            <label>Descripción</label>
-                            <textarea id="portfolio-description-${portfolioId}" placeholder="Describe el proyecto y la experiencia..."></textarea>
-                        </div>
-                    </div>
-                    <div class="dynamic-item-content">
-                        <div class="form-group">
-                            <label>URL de la Imagen</label>
-                            <input type="url" id="portfolio-image-${portfolioId}" placeholder="https://ejemplo.com/imagen.jpg">
-                        </div>
-                        <div class="form-group">
-                            <label>Cliente</label>
-                            <input type="text" id="portfolio-client-${portfolioId}" placeholder="Nombre del cliente (opcional)">
+                            <label>Imagen</label>
+                            <div class="image-upload-container" onclick="document.getElementById('portfolio-image-${portfolioId}').click()">
+                                <div id="portfolio-image-preview-${portfolioId}">
+                                    <p>📷 Haz clic para subir imagen</p>
+                                </div>
+                            </div>
+                            <input type="file" id="portfolio-image-${portfolioId}" accept="image/*" style="display: none;" onchange="handleImageUpload('portfolio-image-${portfolioId}', 'portfolio-image-preview-${portfolioId}')">
                         </div>
                     </div>
                     <div class="dynamic-item-actions">
@@ -879,34 +899,18 @@
                 <div class="dynamic-item" data-blog-id="${blogId}">
                     <div class="dynamic-item-content">
                         <div class="form-group">
-                            <label>Título del Artículo</label>
+                            <label>Título</label>
                             <input type="text" id="blog-title-${blogId}" placeholder="Consejos para fotografía de retratos">
                         </div>
                         <div class="form-group">
-                            <label>Autor</label>
-                            <input type="text" id="blog-author-${blogId}" placeholder="Tu nombre">
+                            <label>Fecha</label>
+                            <input type="date" id="blog-date-${blogId}">
                         </div>
                     </div>
                     <div class="dynamic-item-content">
                         <div class="form-group" style="grid-column: 1 / -1;">
                             <label>Contenido</label>
-                            <textarea id="blog-content-${blogId}" placeholder="Escribe tu artículo aquí..." style="min-height: 150px;"></textarea>
-                        </div>
-                    </div>
-                    <div class="dynamic-item-content">
-                        <div class="form-group">
-                            <label>Fecha de Publicación</label>
-                            <input type="date" id="blog-date-${blogId}">
-                        </div>
-                        <div class="form-group">
-                            <label>Categoría</label>
-                            <select id="blog-category-${blogId}">
-                                <option value="">Seleccionar categoría</option>
-                                <option value="consejos">Consejos</option>
-                                <option value="tutorial">Tutorial</option>
-                                <option value="noticias">Noticias</option>
-                                <option value="historias">Historias</option>
-                            </select>
+                            <textarea id="blog-content-${blogId}" placeholder="Escribe tu artículo..." style="min-height: 120px;"></textarea>
                         </div>
                     </div>
                     <div class="dynamic-item-actions">
@@ -936,42 +940,57 @@
             }, 5000);
         }
 
-        // Función para actualizar vista previa
-        function updatePreview() {
-            // Actualizar hero
-            document.getElementById('preview-hero-title').textContent = 
-                document.getElementById('hero-title-input').value || 'Título Principal';
-            document.getElementById('preview-hero-subtitle').textContent = 
-                document.getElementById('hero-subtitle-input').value || 'Subtítulo';
+        // Función para obtener el token JWT
+        function getJWTToken(user) {
+            console.log('🔍 Analizando token del usuario...', user);
+            
+            if (!user) {
+                console.log('❌ No hay usuario logueado');
+                return null;
+            }
 
-            // Actualizar fotógrafo
-            document.getElementById('preview-photographer-name').textContent = 
-                document.getElementById('photographer-name-input').value || 'Nombre del Fotógrafo';
-            document.getElementById('preview-photographer-bio').textContent = 
-                document.getElementById('photographer-bio-input').value || 'Biografía del fotógrafo...';
-            document.getElementById('preview-photographer-experience').textContent = 
-                document.getElementById('photographer-experience-input').value || '0';
-            document.getElementById('preview-photographer-specialties').textContent = 
-                document.getElementById('photographer-specialties-input').value || 'Especialidades';
+            let token = null;
 
-            // Actualizar información general
-            document.getElementById('preview-site-title').textContent = 
-                document.getElementById('site-title-input').value || 'Mi Portfolio de Fotografía';
-            document.getElementById('preview-site-description').textContent = 
-                document.getElementById('site-description-input').value || 'Descripción del sitio...';
+            if (user.token && user.token.access_token) {
+                token = user.token.access_token;
+                console.log('✅ Token obtenido de user.token.access_token');
+            }
+            else if (user.jwt) {
+                token = user.jwt;
+                console.log('✅ Token obtenido de user.jwt');
+            }
+            else if (user.token && user.token.token) {
+                token = user.token.token;
+                console.log('✅ Token obtenido de user.token.token');
+            }
+            else if (user.access_token) {
+                token = user.access_token;
+                console.log('✅ Token obtenido de user.access_token');
+            }
+            else {
+                const identityData = localStorage.getItem('netlify-identity.user');
+                if (identityData) {
+                    try {
+                        const parsed = JSON.parse(identityData);
+                        if (parsed.token && parsed.token.access_token) {
+                            token = parsed.token.access_token;
+                            console.log('✅ Token obtenido de localStorage');
+                        }
+                    } catch (e) {
+                        console.log('❌ Error parseando localStorage:', e);
+                    }
+                }
+            }
 
-            // Actualizar contacto
-            document.getElementById('preview-contact-email').textContent = 
-                document.getElementById('contact-email-input').value || 'tu@email.com';
-
-            // Contar elementos dinámicos
-            const serviceItems = document.querySelectorAll('[data-service-id]').length;
-            const portfolioItems = document.querySelectorAll('[data-portfolio-id]').length;
-            const blogItems = document.querySelectorAll('[data-blog-id]').length;
-
-            document.getElementById('preview-services-count').textContent = serviceItems;
-            document.getElementById('preview-portfolio-count').textContent = portfolioItems;
-            document.getElementById('preview-blog-count').textContent = blogItems;
+            if (token) {
+                console.log('🔑 Token encontrado. Longitud:', token.length);
+                console.log('🔑 Token (primeros 50 caracteres):', token.substring(0, 50) + '...');
+                return token;
+            } else {
+                console.log('❌ No se pudo obtener el token');
+                console.log('📋 Propiedades del usuario:', Object.keys(user));
+                return null;
+            }
         }
 
         // Función para recoger datos del formulario
@@ -980,12 +999,11 @@
             const services = [];
             document.querySelectorAll('[data-service-id]').forEach(item => {
                 const serviceId = item.dataset.serviceId;
-                const name = document.getElementById(`service-name-${serviceId}`)?.value || '';
-                const price = document.getElementById(`service-price-${serviceId}`)?.value || '';
+                const title = document.getElementById(`service-title-${serviceId}`)?.value || '';
                 const description = document.getElementById(`service-description-${serviceId}`)?.value || '';
                 
-                if (name.trim()) {
-                    services.push({ name, price, description });
+                if (title.trim()) {
+                    services.push({ title, description });
                 }
             });
 
@@ -994,13 +1012,10 @@
             document.querySelectorAll('[data-portfolio-id]').forEach(item => {
                 const portfolioId = item.dataset.portfolioId;
                 const title = document.getElementById(`portfolio-title-${portfolioId}`)?.value || '';
-                const category = document.getElementById(`portfolio-category-${portfolioId}`)?.value || '';
                 const description = document.getElementById(`portfolio-description-${portfolioId}`)?.value || '';
-                const image = document.getElementById(`portfolio-image-${portfolioId}`)?.value || '';
-                const client = document.getElementById(`portfolio-client-${portfolioId}`)?.value || '';
                 
                 if (title.trim()) {
-                    portfolio.push({ title, category, description, image, client });
+                    portfolio.push({ title, description });
                 }
             });
 
@@ -1009,38 +1024,30 @@
             document.querySelectorAll('[data-blog-id]').forEach(item => {
                 const blogId = item.dataset.blogId;
                 const title = document.getElementById(`blog-title-${blogId}`)?.value || '';
-                const author = document.getElementById(`blog-author-${blogId}`)?.value || '';
-                const content = document.getElementById(`blog-content-${blogId}`)?.value || '';
                 const date = document.getElementById(`blog-date-${blogId}`)?.value || '';
-                const category = document.getElementById(`blog-category-${blogId}`)?.value || '';
+                const content = document.getElementById(`blog-content-${blogId}`)?.value || '';
                 
                 if (title.trim()) {
-                    blog.push({ title, author, content, date, category });
+                    blog.push({ title, date, content });
                 }
             });
 
             return {
                 site: {
                     title: document.getElementById('site-title-input').value || '',
-                    description: document.getElementById('site-description-input').value || '',
+                    page_title: document.getElementById('page-title-input').value || '',
                     website: document.getElementById('website-input').value || ''
-                },
-                photographer: {
-                    name: document.getElementById('photographer-name-input').value || '',
-                    bio: document.getElementById('photographer-bio-input').value || '',
-                    experience: document.getElementById('photographer-experience-input').value || '',
-                    specialties: document.getElementById('photographer-specialties-input').value || ''
                 },
                 hero: {
                     title: document.getElementById('hero-title-input').value || '',
                     subtitle: document.getElementById('hero-subtitle-input').value || '',
-                    description: document.getElementById('hero-description-input').value || ''
+                    cta: document.getElementById('hero-cta-input').value || ''
                 },
-                social: {
-                    instagram: document.getElementById('instagram-input').value || '',
-                    facebook: document.getElementById('facebook-input').value || '',
-                    twitter: document.getElementById('twitter-input').value || '',
-                    linkedin: document.getElementById('linkedin-input').value || ''
+                photographer: {
+                    name: document.getElementById('photographer-name-input').value || '',
+                    specialty: document.getElementById('photographer-specialty-input').value || '',
+                    experience: document.getElementById('photographer-experience-input').value || '',
+                    bio: document.getElementById('photographer-bio-input').value || ''
                 },
                 services: services,
                 portfolio: portfolio,
@@ -1051,6 +1058,18 @@
                     address: document.getElementById('contact-address-input').value || '',
                     studio: document.getElementById('contact-studio-input').value || '',
                     availability: document.getElementById('contact-availability-input').value || ''
+                },
+                footer: {
+                    title: document.getElementById('footer-title-input').value || '',
+                    description: document.getElementById('footer-description-input').value || '',
+                    copyright: document.getElementById('copyright-input').value || ''
+                },
+                social: {
+                    instagram: document.getElementById('instagram-link-input').value || '',
+                    facebook: document.getElementById('facebook-link-input').value || '',
+                    twitter: document.getElementById('twitter-link-input').value || '',
+                    linkedin: document.getElementById('linkedin-link-input').value || '',
+                    website: document.getElementById('website-link-input').value || ''
                 }
             };
         }
@@ -1059,25 +1078,19 @@
         function loadFormData(data) {
             // Datos generales
             document.getElementById('site-title-input').value = data.site?.title || '';
-            document.getElementById('site-description-input').value = data.site?.description || '';
+            document.getElementById('page-title-input').value = data.site?.page_title || '';
             document.getElementById('website-input').value = data.site?.website || '';
-
-            // Fotógrafo
-            document.getElementById('photographer-name-input').value = data.photographer?.name || '';
-            document.getElementById('photographer-bio-input').value = data.photographer?.bio || '';
-            document.getElementById('photographer-experience-input').value = data.photographer?.experience || '';
-            document.getElementById('photographer-specialties-input').value = data.photographer?.specialties || '';
 
             // Hero
             document.getElementById('hero-title-input').value = data.hero?.title || '';
             document.getElementById('hero-subtitle-input').value = data.hero?.subtitle || '';
-            document.getElementById('hero-description-input').value = data.hero?.description || '';
+            document.getElementById('hero-cta-input').value = data.hero?.cta || '';
 
-            // Social
-            document.getElementById('instagram-input').value = data.social?.instagram || '';
-            document.getElementById('facebook-input').value = data.social?.facebook || '';
-            document.getElementById('twitter-input').value = data.social?.twitter || '';
-            document.getElementById('linkedin-input').value = data.social?.linkedin || '';
+            // Fotógrafo
+            document.getElementById('photographer-name-input').value = data.photographer?.name || '';
+            document.getElementById('photographer-specialty-input').value = data.photographer?.specialty || '';
+            document.getElementById('photographer-experience-input').value = data.photographer?.experience || '';
+            document.getElementById('photographer-bio-input').value = data.photographer?.bio || '';
 
             // Contacto
             document.getElementById('contact-email-input').value = data.contact?.email || '';
@@ -1085,6 +1098,18 @@
             document.getElementById('contact-address-input').value = data.contact?.address || '';
             document.getElementById('contact-studio-input').value = data.contact?.studio || '';
             document.getElementById('contact-availability-input').value = data.contact?.availability || '';
+
+            // Footer
+            document.getElementById('footer-title-input').value = data.footer?.title || '';
+            document.getElementById('footer-description-input').value = data.footer?.description || '';
+            document.getElementById('copyright-input').value = data.footer?.copyright || '';
+
+            // Social
+            document.getElementById('instagram-link-input').value = data.social?.instagram || '';
+            document.getElementById('facebook-link-input').value = data.social?.facebook || '';
+            document.getElementById('twitter-link-input').value = data.social?.twitter || '';
+            document.getElementById('linkedin-link-input').value = data.social?.linkedin || '';
+            document.getElementById('website-link-input').value = data.social?.website || '';
 
             // Servicios
             const servicesContainer = document.getElementById('services-list');
@@ -1096,16 +1121,10 @@
                         <div class="dynamic-item" data-service-id="${serviceId}">
                             <div class="dynamic-item-content">
                                 <div class="form-group">
-                                    <label>Nombre del Servicio</label>
-                                    <input type="text" id="service-name-${serviceId}" value="${service.name || ''}">
+                                    <label>Título del Servicio</label>
+                                    <input type="text" id="service-title-${serviceId}" value="${service.title || ''}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Precio</label>
-                                    <input type="text" id="service-price-${serviceId}" value="${service.price || ''}">
-                                </div>
-                            </div>
-                            <div class="dynamic-item-content">
-                                <div class="form-group" style="grid-column: 1 / -1;">
                                     <label>Descripción</label>
                                     <textarea id="service-description-${serviceId}">${service.description || ''}</textarea>
                                 </div>
@@ -1133,31 +1152,19 @@
                                     <input type="text" id="portfolio-title-${portfolioId}" value="${item.title || ''}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Categoría</label>
-                                    <select id="portfolio-category-${portfolioId}">
-                                        <option value="">Seleccionar categoría</option>
-                                        <option value="boda" ${item.category === 'boda' ? 'selected' : ''}>Boda</option>
-                                        <option value="retrato" ${item.category === 'retrato' ? 'selected' : ''}>Retrato</option>
-                                        <option value="paisaje" ${item.category === 'paisaje' ? 'selected' : ''}>Paisaje</option>
-                                        <option value="evento" ${item.category === 'evento' ? 'selected' : ''}>Evento</option>
-                                        <option value="producto" ${item.category === 'producto' ? 'selected' : ''}>Producto</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="dynamic-item-content">
-                                <div class="form-group" style="grid-column: 1 / -1;">
                                     <label>Descripción</label>
                                     <textarea id="portfolio-description-${portfolioId}">${item.description || ''}</textarea>
                                 </div>
                             </div>
                             <div class="dynamic-item-content">
-                                <div class="form-group">
-                                    <label>URL de la Imagen</label>
-                                    <input type="url" id="portfolio-image-${portfolioId}" value="${item.image || ''}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Cliente</label>
-                                    <input type="text" id="portfolio-client-${portfolioId}" value="${item.client || ''}">
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label>Imagen</label>
+                                    <div class="image-upload-container" onclick="document.getElementById('portfolio-image-${portfolioId}').click()">
+                                        <div id="portfolio-image-preview-${portfolioId}">
+                                            <p>📷 Haz clic para subir imagen</p>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="portfolio-image-${portfolioId}" accept="image/*" style="display: none;" onchange="handleImageUpload('portfolio-image-${portfolioId}', 'portfolio-image-preview-${portfolioId}')">
                                 </div>
                             </div>
                             <div class="dynamic-item-actions">
@@ -1179,34 +1186,18 @@
                         <div class="dynamic-item" data-blog-id="${blogId}">
                             <div class="dynamic-item-content">
                                 <div class="form-group">
-                                    <label>Título del Artículo</label>
+                                    <label>Título</label>
                                     <input type="text" id="blog-title-${blogId}" value="${post.title || ''}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Autor</label>
-                                    <input type="text" id="blog-author-${blogId}" value="${post.author || ''}">
+                                    <label>Fecha</label>
+                                    <input type="date" id="blog-date-${blogId}" value="${post.date || ''}">
                                 </div>
                             </div>
                             <div class="dynamic-item-content">
                                 <div class="form-group" style="grid-column: 1 / -1;">
                                     <label>Contenido</label>
-                                    <textarea id="blog-content-${blogId}" style="min-height: 150px;">${post.content || ''}</textarea>
-                                </div>
-                            </div>
-                            <div class="dynamic-item-content">
-                                <div class="form-group">
-                                    <label>Fecha de Publicación</label>
-                                    <input type="date" id="blog-date-${blogId}" value="${post.date || ''}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Categoría</label>
-                                    <select id="blog-category-${blogId}">
-                                        <option value="">Seleccionar categoría</option>
-                                        <option value="consejos" ${post.category === 'consejos' ? 'selected' : ''}>Consejos</option>
-                                        <option value="tutorial" ${post.category === 'tutorial' ? 'selected' : ''}>Tutorial</option>
-                                        <option value="noticias" ${post.category === 'noticias' ? 'selected' : ''}>Noticias</option>
-                                        <option value="historias" ${post.category === 'historias' ? 'selected' : ''}>Historias</option>
-                                    </select>
+                                    <textarea id="blog-content-${blogId}" style="min-height: 120px;">${post.content || ''}</textarea>
                                 </div>
                             </div>
                             <div class="dynamic-item-actions">
@@ -1216,69 +1207,6 @@
                     `;
                     blogContainer.insertAdjacentHTML('beforeend', blogHTML);
                 });
-            }
-
-            // Actualizar vista previa
-            updatePreview();
-        }
-
-        // Función mejorada para obtener el token JWT
-        function getJWTToken(user) {
-            console.log('🔍 Analizando token del usuario...', user);
-            
-            if (!user) {
-                console.log('❌ No hay usuario logueado');
-                return null;
-            }
-
-            // Intentar múltiples formas de obtener el token
-            let token = null;
-
-            // Método 1: token.access_token (más común)
-            if (user.token && user.token.access_token) {
-                token = user.token.access_token;
-                console.log('✅ Token obtenido de user.token.access_token');
-            }
-            // Método 2: jwt directo
-            else if (user.jwt) {
-                token = user.jwt;
-                console.log('✅ Token obtenido de user.jwt');
-            }
-            // Método 3: token.token (alternativa)
-            else if (user.token && user.token.token) {
-                token = user.token.token;
-                console.log('✅ Token obtenido de user.token.token');
-            }
-            // Método 4: access_token directo
-            else if (user.access_token) {
-                token = user.access_token;
-                console.log('✅ Token obtenido de user.access_token');
-            }
-            // Método 5: Obtener del localStorage
-            else {
-                // Buscar tokens en localStorage
-                const identityData = localStorage.getItem('netlify-identity.user');
-                if (identityData) {
-                    try {
-                        const parsed = JSON.parse(identityData);
-                        if (parsed.token && parsed.token.access_token) {
-                            token = parsed.token.access_token;
-                            console.log('✅ Token obtenido de localStorage');
-                        }
-                    } catch (e) {
-                        console.log('❌ Error parseando localStorage:', e);
-                    }
-                }
-            }
-
-            if (token) {
-                console.log('🔑 Token encontrado. Longitud:', token.length);
-                console.log('🔑 Token (primeros 50 caracteres):', token.substring(0, 50) + '...');
-                return token;
-            } else {
-                console.log('❌ No se pudo obtener el token');
-                console.log('📋 Propiedades del usuario:', Object.keys(user));
-                return null;
             }
         }
 
@@ -1295,7 +1223,29 @@
                 const formData = collectFormData();
                 console.log('📋 Datos recopilados:', Object.keys(formData));
                 
-                // Obtener token con mejor logging
+                // Subir imágenes primero
+                console.log('📷 Subiendo imágenes...');
+                for (const [key, imageData] of Object.entries(imageUploads)) {
+                    if (imageData.file) {
+                        const imageUrl = await uploadImage(imageData);
+                        if (imageUrl) {
+                            // Asignar URL según el tipo de input
+                            if (key === 'hero-image-input') {
+                                formData.hero.image = imageUrl;
+                            } else if (key === 'photographer-image-input') {
+                                formData.photographer.image = imageUrl;
+                            } else if (key.startsWith('portfolio-image-')) {
+                                const portfolioId = key.replace('portfolio-image-', '');
+                                const portfolioItem = formData.portfolio.find(p => p.id === portfolioId);
+                                if (portfolioItem) {
+                                    portfolioItem.image = imageUrl;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                // Obtener token
                 const token = getJWTToken(currentUser);
                 
                 if (!token) {
@@ -1304,7 +1254,7 @@
                 
                 console.log('🚀 Enviando solicitud a Netlify Function...');
                 
-                // Enviar a Netlify Function con mejor manejo de errores
+                // Enviar a Netlify Function
                 const response = await fetch('/.netlify/functions/update-content', {
                     method: 'POST',
                     headers: {
@@ -1325,7 +1275,6 @@
                 console.log('📦 Datos de respuesta:', result);
                 
                 if (!response.ok) {
-                    // Manejar errores específicos
                     if (response.status === 401) {
                         throw new Error('Token de autorización inválido o expirado. Cierra sesión y vuelve a iniciar sesión.');
                     } else if (response.status === 403) {
@@ -1344,13 +1293,12 @@
                 // Actualizar datos locales
                 siteData = { ...siteData, ...formData };
                 
-                // Actualizar vista previa
-                updatePreview();
+                // Limpiar imágenes subidas
+                imageUploads = {};
                 
             } catch (error) {
                 console.error('❌ Error detallado al guardar:', error);
                 
-                // Mostrar mensaje de error más detallado
                 let errorMessage = 'Error desconocido al guardar.';
                 
                 if (error.name === 'TypeError' && error.message.includes('fetch')) {
@@ -1392,7 +1340,7 @@
             }
         }
 
-        // Funciones de debug (SOLO PARA DESARROLLO)
+        // Funciones de debug
         window.debugAdmin = {
             init: () => {
                 console.log('🚀 Admin Panel Completo cargado correctamente. Funciones disponibles:');
@@ -1407,16 +1355,21 @@
                 console.log('');
                 console.log('📋 Secciones disponibles:');
                 console.log('   - Configuración General');
-                console.log('   - Sobre el Fotógrafo');
                 console.log('   - Hero Section');
-                console.log('   - Redes Sociales');
+                console.log('   - Sobre el Fotógrafo');
                 console.log('   - Servicios');
                 console.log('   - Portfolio');
                 console.log('   - Blog');
                 console.log('   - Contacto');
-                console.log('   - Vista Previa');
+                console.log('   - Footer');
+                console.log('   - Redes Sociales');
+                console.log('   - Guardar');
                 console.log('');
-                console.log('🚀 Función saveChanges() mejorada con mejor autenticación');
+                console.log('🚀 Funcionalidades incluidas:');
+                console.log('   - Gestión de imágenes (Hero, Fotógrafo, Portfolio)');
+                console.log('   - Edición completa del footer y copyright');
+                console.log('   - Enlaces sociales completos');
+                console.log('   - Compatible con index.html original');
             },
             
             login: () => forceLogin(),
@@ -1453,7 +1406,7 @@
 
         // Inicializar cuando se carga la página
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Inicializando Admin Panel Completo...');
+            console.log('🚀 Inicializando Admin Panel Completo Compatible...');
             
             if (typeof netlifyIdentity !== 'undefined') {
                 console.log('✅ Netlify Identity disponible');
@@ -1504,7 +1457,7 @@
             }
         });
 
-        console.log('✅ Admin Panel Completo cargado correctamente. Funciones disponibles:');
+        console.log('✅ Admin Panel Compatible con index.html cargado correctamente. Funciones disponibles:');
         console.log('   - debugAdmin.init()');
         console.log('   - debugAdmin.login()');
         console.log('   - debugAdmin.logout()');
@@ -1516,16 +1469,21 @@
         console.log('');
         console.log('📋 Secciones disponibles:');
         console.log('   - Configuración General');
-        console.log('   - Sobre el Fotógrafo');
         console.log('   - Hero Section');
-        console.log('   - Redes Sociales');
+        console.log('   - Sobre el Fotógrafo');
         console.log('   - Servicios');
         console.log('   - Portfolio');
         console.log('   - Blog');
         console.log('   - Contacto');
-        console.log('   - Vista Previa');
+        console.log('   - Footer');
+        console.log('   - Redes Sociales');
+        console.log('   - Guardar');
         console.log('');
-        console.log('🚀 Función saveChanges() mejorada con mejor autenticación');
+        console.log('🚀 Funcionalidades incluidas:');
+        console.log('   - Gestión de imágenes (Hero, Fotógrafo, Portfolio)');
+        console.log('   - Edición completa del footer y copyright');
+        console.log('   - Enlaces sociales completos');
+        console.log('   - Compatible con index.html original');
     </script>
 </body>
 </html>
