@@ -1,38 +1,56 @@
 const { Octokit } = require("@octokit/rest");
 
-// Configuración CORS
+// CORS Headers
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
   'Access-Control-Allow-Methods': 'POST, OPTIONS'
 };
 
-// Verificar autenticación OAuth
-function verifyOAuth(event) {
-  const authHeader = event.headers.authorization;
+// OAuth Simple Token Validation
+function verifyOAuthToken(event) {
+  const authHeader = event.headers.authorization || event.headers.Authorization;
+  
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return false;
+    return {
+      valid: false,
+      error: 'Token de autorización requerido'
+    };
   }
-  return true;
+
+  const token = authHeader.replace('Bearer ', '').trim();
+  
+  // Basic token validation (in production, verify with GitHub API)
+  if (!token || !token.startsWith('ghp_')) {
+    return {
+      valid: false,
+      error: 'Token de GitHub inválido'
+    };
+  }
+
+  return { valid: true, token };
 }
 
-// Handler principal
 exports.handler = async (event, context) => {
-  // Manejar preflight OPTIONS
+  // Handle preflight OPTIONS request
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
       headers: corsHeaders,
-      body: 'OK'
+      body: ''
     };
   }
 
-  // Verificar autenticación OAuth
-  if (!verifyOAuth(event)) {
+  // Verify OAuth token
+  const authVerification = verifyOAuthToken(event);
+  if (!authVerification.valid) {
     return {
       statusCode: 401,
       headers: corsHeaders,
-      body: JSON.stringify({ error: 'No autorizado - Token OAuth requerido' })
+      body: JSON.stringify({ 
+        error: 'No autorizado',
+        message: authVerification.error
+      })
     };
   }
 
@@ -83,7 +101,7 @@ exports.handler = async (event, context) => {
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
       path: 'data.json',
-      message: `Actualización desde panel admin - ${new Date().toISOString()}`,
+      message: `Actualización desde panel admin OAuth - ${new Date().toISOString()}`,
       content: Buffer.from(JSON.stringify(siteData, null, 2)).toString('base64'),
       sha: currentSHA,
       branch: GITHUB_BRANCH

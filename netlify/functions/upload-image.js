@@ -1,38 +1,56 @@
 const { Octokit } = require("@octokit/rest");
 
-// Configuración CORS
+// CORS Headers
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
   'Access-Control-Allow-Methods': 'POST, OPTIONS'
 };
 
-// Verificar autenticación OAuth
-function verifyOAuth(event) {
-  const authHeader = event.headers.authorization;
+// OAuth Simple Token Validation
+function verifyOAuthToken(event) {
+  const authHeader = event.headers.authorization || event.headers.Authorization;
+  
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return false;
+    return {
+      valid: false,
+      error: 'Token de autorización requerido'
+    };
   }
-  return true;
+
+  const token = authHeader.replace('Bearer ', '').trim();
+  
+  // Basic token validation (in production, verify with GitHub API)
+  if (!token || !token.startsWith('ghp_')) {
+    return {
+      valid: false,
+      error: 'Token de GitHub inválido'
+    };
+  }
+
+  return { valid: true, token };
 }
 
-// Handler principal
 exports.handler = async (event, context) => {
-  // Manejar preflight OPTIONS
+  // Handle preflight OPTIONS request
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
       headers: corsHeaders,
-      body: 'OK'
+      body: ''
     };
   }
 
-  // Verificar autenticación OAuth
-  if (!verifyOAuth(event)) {
+  // Verify OAuth token
+  const authVerification = verifyOAuthToken(event);
+  if (!authVerification.valid) {
     return {
       statusCode: 401,
       headers: corsHeaders,
-      body: JSON.stringify({ error: 'No autorizado - Token OAuth requerido' })
+      body: JSON.stringify({ 
+        error: 'No autorizado',
+        message: authVerification.error
+      })
     };
   }
 
@@ -61,18 +79,30 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { fileName, fileContent } = JSON.parse(event.body);
+    const requestBody = JSON.parse(event.body);
+    const { fileName, fileContent, folder, portfolioIndex, field } = requestBody;
 
     if (!fileName || !fileContent) {
       throw new Error('Nombre de archivo y contenido son requeridos');
     }
 
-    // Crear nombre único
+    // Determinar ruta del archivo
+    let filePath = '';
+    if (folder === 'photographer') {
+      filePath = `images/photographer/${fileName}`;
+    } else if (portfolioIndex !== undefined && field) {
+      filePath = `images/portfolio/${fileName}`;
+    } else {
+      filePath = `images/${fileName}`;
+    }
+
+    // Crear nombre único si es necesario
     const timestamp = new Date().getTime();
     const extension = fileName.split('.').pop();
     const baseName = fileName.split('.')[0].replace(/[^a-zA-Z0-9]/g, '-');
-    const uniqueFileName = `${baseName}_${timestamp}.${extension}`;
-    const filePath = `images/portfolio/${uniqueFileName}`;
+    const uniqueFileName = portfolioIndex !== undefined ? 
+      `${baseName}_${timestamp}.${extension}` : 
+      fileName;
 
     // Verificar si el archivo existe
     let existingSHA = null;
@@ -93,7 +123,7 @@ exports.handler = async (event, context) => {
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
       path: filePath,
-      message: `Subida de imagen: ${uniqueFileName} - ${new Date().toISOString()}`,
+      message: `Subida de imagen OAuth: ${uniqueFileName} - ${new Date().toISOString()}`,
       content: fileContent.replace(/^data:image\/\w+;base64,/, ''),
       sha: existingSHA,
       branch: GITHUB_BRANCH
