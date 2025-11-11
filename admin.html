@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración - CMS</title>
+    <title>Panel de Administración - CMS (FIXED)</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     
@@ -374,6 +374,12 @@
             transform: translateY(-2px);
         }
         
+        .save-btn:disabled {
+            background: var(--color-medium-gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
         .status-message {
             padding: 1rem;
             border-radius: 4px;
@@ -395,6 +401,12 @@
             background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
+        }
+        
+        .status-message.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
         }
         
         /* Responsive */
@@ -655,13 +667,13 @@
                 <!-- Vista Previa -->
                 <section id="preview" class="admin-section">
                     <h2>Vista Previa</h2>
-                    <p>Esta es una vista previa de cómo se verá tu sitio web:</p>
+                    <p><strong>Nota:</strong> La vista previa puede mostrar un error debido a las políticas de seguridad de Netlify. Esto es normal.</p>
                     <iframe id="preview-frame" class="preview-frame" src="index.html"></iframe>
                 </section>
             </div>
             
             <!-- Save Button -->
-            <button class="save-btn" onclick="saveChanges()">💾 Guardar Cambios</button>
+            <button class="save-btn" onclick="saveChanges()" id="save-btn">💾 Guardar Cambios</button>
         </div>
     </div>
 
@@ -977,7 +989,7 @@
         }
 
         // ===============================
-        // FUNCIONES DE SUBIDA Y GUARDADO
+        // FUNCIONES DE SUBIDA Y GUARDADO - ARREGLADAS
         // ===============================
 
         // Upload functions (placeholder implementations)
@@ -991,8 +1003,13 @@
             console.log('📤 Subir imagen del hero');
         }
 
-        // Save changes
+        // Save changes - ARREGLADA PARA CONECTAR CON NETLIFY FUNCTIONS
         async function saveChanges() {
+            const saveBtn = document.getElementById('save-btn');
+            
+            // Deshabilitar botón durante el guardado
+            saveBtn.disabled = true;
+            saveBtn.textContent = '💾 Guardando...';
             showStatus('Guardando cambios...', 'info');
             
             try {
@@ -1031,14 +1048,44 @@
                     }
                 };
 
-                // TODO: Call Netlify function to save data
-                console.log('💾 Guardando datos:', formData);
+                console.log('💾 Enviando datos a Netlify Function:', formData);
                 
-                showStatus('Cambios guardados exitosamente', 'success');
+                // Obtener token del usuario actual
+                const token = currentUser && currentUser.jwt ? currentUser.jwt : null;
+                
+                if (!token) {
+                    throw new Error('No hay token de autenticación válido');
+                }
+                
+                // Llamar a la Netlify Function update-content
+                const response = await fetch('/.netlify/functions/update-content', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || `Error HTTP: ${response.status}`);
+                }
+                
+                console.log('✅ Guardado exitoso:', result);
+                showStatus('Cambios guardados exitosamente en GitHub', 'success');
+                
+                // Actualizar datos locales
+                siteData = { ...siteData, ...formData };
                 
             } catch (error) {
-                console.error('Error saving:', error);
-                showStatus('Error al guardar los cambios', 'error');
+                console.error('❌ Error al guardar:', error);
+                showStatus(`Error al guardar: ${error.message}`, 'error');
+            } finally {
+                // Rehabilitar botón
+                saveBtn.disabled = false;
+                saveBtn.textContent = '💾 Guardar Cambios';
             }
         }
 
@@ -1082,6 +1129,7 @@
                 loadData();
                 populateForms();
             },
+            testSave: () => saveChanges(),
             reset: () => {
                 isInitialized = false;
                 currentUser = null;
@@ -1096,6 +1144,7 @@
         console.log('   - debugAdmin.switchSection("section")');
         console.log('   - debugAdmin.checkIdentity()');
         console.log('   - debugAdmin.reloadData()');
+        console.log('   - debugAdmin.testSave() - Para probar guardado');
         console.log('   - debugAdmin.reset()');
         console.log('');
         console.log('📋 Secciones disponibles:');
@@ -1108,6 +1157,8 @@
         console.log('   - Blog');
         console.log('   - Contacto');
         console.log('   - Vista Previa');
+        console.log('');
+        console.log('🚀 Función saveChanges() corregida - ahora conecta con Netlify Functions');
     </script>
 </body>
 </html>
