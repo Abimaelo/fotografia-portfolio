@@ -6,6 +6,7 @@
     <title>Panel de Administración - CMS</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
         /* Variables CSS para el admin - compatibles con el diseño monocromático */
         :root {
@@ -552,16 +553,91 @@
             border-radius: 2px;
             border: 1px solid var(--color-light-gray);
         }
+
+        /* Netlify Identity Login Modal */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 26, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .login-modal {
+            background: var(--color-white);
+            padding: 3rem;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-modal h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1.5rem;
+            color: var(--color-black);
+        }
+
+        .login-modal p {
+            margin-bottom: 2rem;
+            color: var(--color-dark-gray);
+        }
+
+        .netlify-identity-button {
+            background: var(--color-black);
+            color: var(--color-white);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .netlify-identity-button:hover {
+            background: var(--color-dark-gray);
+            transform: translateY(-1px);
+        }
+
+        .login-hidden {
+            display: none !important;
+        }
+
+        .admin-content {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .admin-content.authenticated {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
-    <div class="admin-container">
-        <div class="admin-header">
+    <!-- Netlify Identity Login Modal -->
+    <div id="login-modal" class="login-overlay">
+        <div class="login-modal">
+            <h2>Panel de Administración</h2>
+            <p>Debes iniciar sesión para acceder al panel de administración</p>
+            <div data-netlify-identity-button></div>
+        </div>
+    </div>
+
+    <div class="admin-container admin-content">
+        <div class="admin-header admin-content">
             <h1>Panel de Administración CMS</h1>
             <a href="index.html" style="color: white; text-decoration: none;">Ver Sitio</a>
         </div>
         
-        <div class="admin-nav">
+        <div class="admin-nav admin-content">
             <ul>
                 <li><button onclick="showSection('general')" class="active">Configuración General</button></li>
                 <li><button onclick="showSection('photographer')">Sobre el Fotógrafo</button></li>
@@ -575,10 +651,10 @@
             </ul>
         </div>
         
-        <div id="status-message" class="status-message"></div>
+        <div id="status-message" class="status-message admin-content"></div>
         
         <!-- General Settings -->
-        <div id="general" class="admin-section active">
+        <div id="general" class="admin-section active admin-content">
             <h2>Configuración General</h2>
             <div class="form-group">
                 <label for="site-title-input">Título del Sitio</label>
@@ -595,7 +671,7 @@
         </div>
         
         <!-- Photographer Info -->
-        <div id="photographer" class="admin-section">
+        <div id="photographer" class="admin-section admin-content">
             <h2>Información del Fotógrafo</h2>
             <div class="form-group">
                 <label for="photographer-name-input">Nombre del Fotógrafo</label>
@@ -631,7 +707,7 @@
         </div>
 
         <!-- Hero Section -->
-        <div id="hero" class="admin-section">
+        <div id="hero" class="admin-section admin-content">
             <h2>Hero Section</h2>
             <div class="form-group">
                 <label for="hero-title-input">Título Principal</label>
@@ -656,7 +732,7 @@
         </div>
         
         <!-- Services Section -->
-        <div id="services" class="admin-section">
+        <div id="services" class="admin-section admin-content">
             <h2>Servicios</h2>
             <div id="services-container">
                 <!-- Services will be dynamically added here -->
@@ -665,7 +741,7 @@
         </div>
         
         <!-- Portfolio Section -->
-        <div id="portfolio" class="admin-section">
+        <div id="portfolio" class="admin-section admin-content">
             <h2>Portfolio</h2>
             <div id="portfolio-container">
                 <!-- Portfolio items will be dynamically added here -->
@@ -674,7 +750,7 @@
         </div>
         
         <!-- Blog Section -->
-        <div id="blog" class="admin-section">
+        <div id="blog" class="admin-section admin-content">
             <h2>Posts del Blog</h2>
             <div id="blog-container">
                 <!-- Blog posts will be dynamically added here -->
@@ -683,7 +759,7 @@
         </div>
         
         <!-- Social Media Section -->
-        <div id="social" class="admin-section">
+        <div id="social" class="admin-section admin-content">
             <h2>Redes Sociales</h2>
             <div class="social-controls">
                 <h3>Mostrar/Ocultar Redes Sociales</h3>
@@ -743,7 +819,7 @@
         </div>
         
         <!-- Contact Section -->
-        <div id="contact" class="admin-section">
+        <div id="contact" class="admin-section admin-content">
             <h2>Información de Contacto</h2>
             <div class="two-column">
                 <div class="form-group">
@@ -772,7 +848,7 @@
         </div>
         
         <!-- Preview Section -->
-        <div id="preview" class="admin-section">
+        <div id="preview" class="admin-section admin-content">
             <h2>Vista Previa</h2>
             <p>Abre tu sitio web para ver los cambios en tiempo real:</p>
             <div class="preview-links">
@@ -1113,10 +1189,21 @@
                 };
                 
                 // Send to Netlify Function
+                // Get Netlify Identity token
+                const getAuthToken = () => {
+                    return localStorage.getItem('netlify_token') || '';
+                };
+
+                const authToken = getAuthToken();
+                if (!authToken) {
+                    throw new Error('Token de autenticación requerido');
+                }
+
                 const response = await fetch('/.netlify/functions/update-content', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + authToken,
                     },
                     body: JSON.stringify(siteData)
                 });
@@ -1158,10 +1245,16 @@
                         const fileName = generateFileName(file.name);
                         
                         // Upload to GitHub via Netlify Function
+                        const authToken = getAuthToken();
+                        if (!authToken) {
+                            throw new Error('Token de autenticación requerido');
+                        }
+
                         const response = await fetch('/.netlify/functions/upload-image', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + authToken,
                             },
                             body: JSON.stringify({
                                 fileName: fileName,
@@ -1211,10 +1304,16 @@
                         const fileName = generateFileName(file.name);
                         
                         // Upload to GitHub via Netlify Function
+                        const authToken = getAuthToken();
+                        if (!authToken) {
+                            throw new Error('Token de autenticación requerido');
+                        }
+
                         const response = await fetch('/.netlify/functions/upload-image', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + authToken,
                             },
                             body: JSON.stringify({
                                 fileName: fileName,
@@ -1336,10 +1435,16 @@
                         const fileName = generateFileName(file.name);
                         
                         // Upload to GitHub via Netlify Function
+                        const authToken = getAuthToken();
+                        if (!authToken) {
+                            throw new Error('Token de autenticación requerido');
+                        }
+
                         const response = await fetch('/.netlify/functions/upload-image', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + authToken,
                             },
                             body: JSON.stringify({
                                 fileName: fileName,
@@ -1380,6 +1485,77 @@
                 statusDiv.style.display = 'none';
             }, 5000);
         }
+    </script>
+
+    <!-- Netlify Identity Authentication Script -->
+    <script>
+        // Initialize Netlify Identity
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on('init', (user) => {
+                if (user) {
+                    showAdminPanel();
+                } else {
+                    showLoginModal();
+                }
+            });
+
+            window.netlifyIdentity.on('login', () => {
+                showAdminPanel();
+            });
+
+            window.netlifyIdentity.on('logout', () => {
+                showLoginModal();
+            });
+        }
+
+        function showLoginModal() {
+            const loginModal = document.getElementById('login-modal');
+            const adminContent = document.querySelector('.admin-content');
+            
+            if (loginModal) {
+                loginModal.classList.remove('login-hidden');
+            }
+            
+            if (adminContent) {
+                adminContent.classList.remove('authenticated');
+            }
+        }
+
+        function showAdminPanel() {
+            const loginModal = document.getElementById('login-modal');
+            const adminContent = document.querySelectorAll('.admin-content');
+            
+            if (loginModal) {
+                loginModal.classList.add('login-hidden');
+            }
+            
+            adminContent.forEach(element => {
+                element.classList.add('authenticated');
+            });
+
+            // Load existing token for API calls
+            if (window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
+                const user = window.netlifyIdentity.currentUser();
+                if (user && user.token && user.token.access_token) {
+                    localStorage.setItem('netlify_token', user.token.access_token);
+                }
+            }
+        }
+
+        // Check authentication status on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.netlifyIdentity) {
+                const user = window.netlifyIdentity.currentUser();
+                if (user) {
+                    showAdminPanel();
+                } else {
+                    showLoginModal();
+                }
+            } else {
+                // If Netlify Identity is not available, show admin by default
+                showAdminPanel();
+            }
+        });
     </script>
 </body>
 </html>
