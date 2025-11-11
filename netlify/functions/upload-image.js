@@ -1,22 +1,6 @@
 const { Octokit } = require("@octokit/rest");
 
 exports.handler = async (event, context) => {
-  // Headers CORS para permitir solicitudes desde el admin panel
-  const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  };
-
-  // Manejar preflight OPTIONS
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 200,
-      headers: corsHeaders,
-      body: ''
-    };
-  }
-
   // Configuración
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
   const GITHUB_OWNER = process.env.GITHUB_OWNER;
@@ -24,124 +8,88 @@ exports.handler = async (event, context) => {
   const GITHUB_BRANCH = process.env.GITHUB_BRANCH || 'main';
 
   if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
-    console.error('Variables de entorno no configuradas');
     return {
       statusCode: 500,
-      headers: corsHeaders,
       body: JSON.stringify({ error: 'Variables de entorno no configuradas' })
     };
   }
 
+  const octokit = new Octokit({ auth: GITHUB_TOKEN });
+
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
-      headers: corsHeaders,
       body: JSON.stringify({ error: 'Method not allowed' })
     };
   }
 
   try {
-    console.log('📷 Iniciando subida de imagen...');
-    
-    // Parsear FormData
-    const formData = new URLSearchParams(event.body);
-    const imageFile = formData.get('image');
-    
-    if (!imageFile) {
-      return {
-        statusCode: 400,
-        headers: corsHeaders,
-        body: JSON.stringify({ error: 'No se proporcionó imagen' })
-      };
+    const { fileName, fileContent } = JSON.parse(event.body);
+
+    if (!fileName || !fileContent) {
+      throw new Error('Nombre de archivo y contenido son requeridos');
     }
 
-    // Convertir base64 a Buffer
-    const imageBuffer = Buffer.from(imageFile, 'base64');
-    
-    // Generar nombre único para la imagen
-    const timestamp = Date.now();
-    const randomId = Math.random().toString(36).substring(2, 15);
-    const imageName = `image_${timestamp}_${randomId}.jpg`;
-    const imagePath = `images/${imageName}`;
+    // Crear nombre único
+    const timestamp = new Date().getTime();
+    const extension = fileName.split('.').pop();
+    const baseName = fileName.split('.')[0].replace(/[^a-zA-Z0-9]/g, '-');
+    const uniqueFileName = `${baseName}_${timestamp}.${extension}`;
+    const filePath = `images/portfolio/${uniqueFileName}`;
 
-    console.log('📁 Subiendo imagen:', imagePath);
-
-    const octokit = new Octokit({ auth: GITHUB_TOKEN });
-
-    // Verificar si ya existe una imagen con el mismo nombre
-    let currentSHA = null;
+    // Verificar si el archivo existe
+    let existingSHA = null;
     try {
       const { data: existingFile } = await octokit.repos.getContent({
         owner: GITHUB_OWNER,
         repo: GITHUB_REPO,
-        path: imagePath,
+        path: filePath,
         ref: GITHUB_BRANCH
       });
-      currentSHA = existingFile.sha;
-      console.log('🗑️ Imagen existente encontrada, será reemplazada');
+      existingSHA = existingFile.sha;
     } catch (error) {
-      if (error.status !== 404) {
-        throw error;
-      }
+      // El archivo no existe, es normal
     }
 
-    // Subir la imagen a GitHub
-    const { data: uploadedFile } = await octokit.repos.createOrUpdateFileContents({
+    // Subir la imagen
+    const { data: uploadResult } = await octokit.repos.createOrUpdateFileContents({
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
-      path: imagePath,
-      message: `Subida de imagen: ${imageName} - ${new Date().toISOString()}`,
-      content: imageBuffer.toString('base64'),
-      sha: currentSHA,
+      path: filePath,
+      message: `Subida de imagen: ${uniqueFileName} - ${new Date().toISOString()}`,
+      content: fileContent.replace(/^data:image\/\w+;base64,/, ''),
+      sha: existingSHA,
       branch: GITHUB_BRANCH
     });
 
-    // Generar URL de la imagen
-    const imageUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${imagePath}`;
-
-    console.log('✅ Imagen subida exitosamente:', imageUrl);
+    // URL de la imagen
+    const imageUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${filePath}`;
 
     return {
       statusCode: 200,
       headers: {
-        ...corsHeaders,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify({
-        success: true,
+      body: JSON.stringify({ 
+        success: true, 
         url: imageUrl,
-        path: imagePath,
-        filename: imageName,
-        message: 'Imagen subida exitosamente',
-        commit: uploadedFile.commit.sha
+        fileName: uniqueFileName,
+        commit: uploadResult.commit.sha
       })
     };
 
   } catch (error) {
-    console.error('❌ Error subiendo imagen:', error);
-    
-    let statusCode = 500;
-    let errorMessage = 'Error interno del servidor';
-    
-    if (error.status === 401) {
-      statusCode = 401;
-      errorMessage = 'Error de autenticación con GitHub';
-    } else if (error.status === 403) {
-      statusCode = 403;
-      errorMessage = 'Sin permisos para subir archivos al repositorio';
-    } else if (error.status === 413) {
-      statusCode = 413;
-      errorMessage = 'Archivo demasiado grande (máximo 1MB)';
-    }
+    console.error('Error uploading image:', error);
     
     return {
-      statusCode,
+      statusCode: 500,
       headers: {
-        ...corsHeaders,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify({
-        error: errorMessage,
+      body: JSON.stringify({ 
+        error: 'Error al subir la imagen',
         details: error.message
       })
     };
