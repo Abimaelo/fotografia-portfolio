@@ -64,6 +64,69 @@
             letter-spacing: -0.01em;
         }
         
+        /* Solo UN botón de login - sin duplicación */
+        .auth-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+            flex-direction: column;
+        }
+        
+        .login-card {
+            background: var(--color-white);
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .login-card h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--color-black);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .login-card p {
+            color: var(--color-dark-gray);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+        
+        .login-btn {
+            background: var(--color-black);
+            color: var(--color-white);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .login-btn:hover {
+            background: var(--color-dark-gray);
+        }
+        
+        .security-info {
+            background: var(--color-light-gray);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--color-dark-gray);
+        }
+        
+        .admin-panel {
+            display: none;
+        }
+        
         .admin-nav {
             background: var(--color-white);
             padding: 1.5rem;
@@ -100,382 +163,180 @@
         
         .admin-nav button:hover,
         .admin-nav button.active {
-            background: var(--color-black);
-            color: var(--color-white);
+            color: var(--color-black);
+            background: var(--color-light-gray);
+        }
+        
+        .admin-content {
+            background: var(--color-white);
+            padding: 2rem;
+            border-radius: 4px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--color-light-gray);
         }
         
         .admin-section {
-            background: var(--color-white);
-            padding: 2.5rem;
-            border-radius: 4px;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
             display: none;
-            border: 1px solid var(--color-light-gray);
         }
         
         .admin-section.active {
             display: block;
         }
         
-        .admin-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 300;
-            margin-bottom: 2rem;
-            color: var(--color-black);
-            letter-spacing: -0.01em;
-        }
-        
         .form-group {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 0.75rem;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 400;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--color-dark-gray);
+            font-weight: 500;
+            color: var(--color-black);
+            margin-bottom: 0.5rem;
         }
         
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             width: 100%;
-            padding: 1rem;
+            padding: 0.75rem;
             border: 1px solid var(--color-light-gray);
-            border-radius: 2px;
+            border-radius: 4px;
             font-size: 1rem;
             font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
-            background: var(--color-white);
-            color: var(--color-black);
+            transition: border-color 0.3s ease;
         }
         
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group textarea:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--color-black);
-            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
         }
         
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-        
-        .service-item,
-        .blog-item {
-            background: var(--color-off-white);
-            padding: 2rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-            position: relative;
-            border: 1px solid var(--color-light-gray);
-        }
-        
-        .portfolio-item {
-            background: var(--color-off-white);
-            padding: 2rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-            position: relative;
-            border: 1px solid var(--color-light-gray);
-        }
-        
-        .remove-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--error-color);
-            color: var(--color-white);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 2px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-family: 'DM Sans', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.3s ease;
-        }
-        
-        .remove-btn:hover {
-            background: #c82333;
-            transform: translateY(-1px);
-        }
-        
-        .add-btn {
-            background: var(--color-black);
-            color: var(--color-white);
-            border: 1px solid var(--color-black);
-            padding: 1rem 2rem;
-            border-radius: 2px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-family: 'DM Sans', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-top: 2rem;
-            transition: all 0.3s ease;
-        }
-        
-        .add-btn:hover {
-            background: transparent;
-            color: var(--color-black);
-            transform: translateY(-2px);
-        }
-        
-        .save-btn {
-            background: var(--color-white);
-            color: var(--color-black);
-            border: 2px solid var(--color-black);
-            padding: 1.25rem 2.5rem;
-            border-radius: 2px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-family: 'DM Sans', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-top: 3rem;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-        
-        .save-btn:hover {
-            background: var(--color-black);
-            color: var(--color-white);
-            transform: translateY(-2px);
-        }
-        
-        .save-btn:disabled {
-            background: var(--color-medium-gray);
-            color: var(--color-light-gray);
-            border-color: var(--color-medium-gray);
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        /* Social Media Toggles */
-        .social-controls {
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: var(--color-off-white);
-            border-radius: 4px;
-            border: 1px solid var(--color-light-gray);
-        }
-        
-        .social-controls h3 {
-            margin: 0 0 1rem 0;
-            color: var(--color-black);
-            font-size: 1.1rem;
-        }
-        
-        .social-toggles {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-        
-        .toggle-label {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-            font-size: 0.95rem;
-            color: var(--color-dark-gray);
-            padding: 0.75rem;
-            border-radius: 4px;
-            transition: background-color 0.2s ease;
-        }
-        
-        .toggle-label:hover {
-            background: var(--color-white);
-        }
-        
-        .toggle-label input[type="checkbox"] {
-            display: none;
-        }
-        
-        .toggle-slider {
-            position: relative;
-            width: 44px;
-            height: 24px;
-            background: var(--color-medium-gray);
-            border-radius: 12px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .toggle-slider::before {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 20px;
-            height: 20px;
-            background: var(--color-white);
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        .toggle-label input[type="checkbox"]:checked + .toggle-slider {
-            background: var(--color-black);
-        }
-        
-        .toggle-label input[type="checkbox"]:checked + .toggle-slider::before {
-            transform: translateX(20px);
-        }
-        
-        .social-urls h3 {
-            margin: 0 0 1rem 0;
-            color: var(--color-black);
-            font-size: 1.1rem;
-        }
-        }
-        
-        .status-message {
-            padding: 1rem 1.5rem;
-            border-radius: 2px;
-            margin-bottom: 2rem;
-            display: none;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-        
-        .status-message.success {
-            background: rgba(40, 167, 69, 0.1);
-            color: #155724;
-            border: 1px solid rgba(40, 167, 69, 0.3);
-        }
-        
-        .status-message.error {
-            background: rgba(220, 53, 69, 0.1);
-            color: #721c24;
-            border: 1px solid rgba(220, 53, 69, 0.3);
-        }
-        
-        .status-message.info {
-            background: rgba(23, 162, 184, 0.1);
-            color: #0c5460;
-            border: 1px solid rgba(23, 162, 184, 0.3);
-        }
-        
-        .preview-links {
-            margin-top: 1rem;
-        }
-        
-        .preview-link {
-            display: inline-block;
-            background: var(--color-primary);
-            color: white;
-            padding: 1rem 2rem;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-            margin-bottom: 1rem;
-        }
-        
-        .preview-link:hover {
-            background: var(--color-dark-gray);
-        }
-        
-        .preview-note {
-            font-size: 0.9rem;
-            color: var(--color-medium-gray);
-            margin-top: 0.5rem;
-        }
-        
-        /* Image upload styles */
-        .image-upload-container,
-        .gallery-upload-container {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-        }
-        
-        .image-upload-container input,
-        .gallery-upload-container textarea {
-            flex: 1;
-        }
-        
-        .upload-btn {
-            background: var(--color-light-gray);
-            color: var(--color-dark-gray);
-            border: 1px solid var(--color-medium-gray);
-            padding: 0.75rem 1.5rem;
-            border-radius: 2px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-family: 'DM Sans', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            white-space: nowrap;
-            margin-top: 0.75rem;
-            transition: all 0.3s ease;
-        }
-        
-        .upload-btn:hover {
-            background: var(--color-medium-gray);
-            color: var(--color-white);
-            transform: translateY(-1px);
-        }
-        
-        .image-preview,
-        .gallery-preview {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-        
-        .image-preview img,
-        .gallery-preview img {
-            border-radius: 2px;
-            border: 1px solid var(--color-light-gray);
-            transition: all 0.3s ease;
-            max-width: 120px;
-            height: auto;
-        }
-        
-        .image-preview img:hover,
-        .gallery-preview img:hover {
-            border-color: var(--color-black);
-            transform: scale(1.05);
-        }
-        
-        .status-message.info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-        }
-        
-        .gallery-upload-container {
-            flex-direction: column;
-        }
-        
-        .gallery-upload-container textarea {
-            margin-bottom: 10px;
-        }
-
-        /* Two column layout for form fields */
-        .two-column {
+        .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
         }
-
-        /* Responsive design for admin panel */
-        @media (max-width: 1024px) {
-            .two-column {
-                gap: 1.5rem;
-            }
+        
+        .save-btn {
+            background: var(--color-black);
+            color: var(--color-white);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+        
+        .save-btn:hover {
+            background: var(--color-dark-gray);
+        }
+        
+        .upload-btn {
+            background: var(--color-medium-gray);
+            color: var(--color-white);
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-btn:hover {
+            background: var(--color-dark-gray);
+        }
+        
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+        
+        .list-item {
+            background: var(--color-light-gray);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            border: 1px solid var(--color-medium-gray);
+        }
+        
+        .list-item h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--color-black);
+        }
+        
+        .remove-btn {
+            background: var(--error-color);
+            color: var(--color-white);
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        
+        .add-btn {
+            background: var(--success-color);
+            color: var(--color-white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 1rem 0;
+        }
+        
+        .logout-btn {
+            background: var(--error-color);
+            color: var(--color-white);
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-email {
+            color: var(--color-white);
+            font-size: 0.9rem;
+        }
+        
+        .success-message,
+        .error-message {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
         }
         
         @media (max-width: 768px) {
@@ -484,1445 +345,436 @@
             }
             
             .admin-header {
-                padding: 1rem;
                 flex-direction: column;
                 gap: 1rem;
                 text-align: center;
             }
             
-            .admin-header h1 {
-                font-size: 1.5rem;
-            }
-            
-            .admin-section {
-                padding: 1.5rem;
-            }
-            
-            .admin-section h2 {
-                font-size: 1.5rem;
-            }
-            
-            .two-column {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
             .admin-nav ul {
-                flex-direction: column;
-                gap: 0.5rem;
+                justify-content: center;
             }
             
-            .admin-nav button {
-                width: 100%;
-                text-align: left;
+            .form-row {
+                grid-template-columns: 1fr;
             }
-            
-            .image-upload-container {
-                flex-direction: column;
-            }
-            
-            .upload-btn {
-                width: 100%;
-                margin-top: 0.75rem;
-            }
-            
-            .service-item,
-            .blog-item,
-            .portfolio-item {
-                padding: 1.5rem;
-            }
-            
-            .remove-btn {
-                position: relative;
-                top: auto;
-                right: auto;
-                margin-bottom: 1rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .admin-nav {
-                padding: 1rem;
-            }
-            
-            .admin-section {
-                padding: 1rem;
-            }
-        }
-        
-        .images-array {
-            font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-            background: var(--color-light-gray);
-            padding: 0.75rem;
-            border-radius: 2px;
-            border: 1px solid var(--color-light-gray);
-        }
-        
-        /* OAuth Login Styles */
-        .login-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .login-container {
-            background: var(--color-white);
-            border-radius: 16px;
-            padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-        }
-        
-        .login-header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 300;
-            color: var(--color-black);
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
-        }
-        
-        .login-header p {
-            color: var(--color-dark-gray);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            line-height: 1.5;
-        }
-        
-        .login-btn {
-            background: var(--color-black);
-            color: var(--color-white);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            font-family: 'Inter', sans-serif;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        .login-btn:hover {
-            background: var(--color-dark-gray);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-        }
-        
-        .login-btn svg {
-            width: 20px;
-            height: 20px;
-        }
-        
-        .login-info {
-            background: var(--color-off-white);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            text-align: left;
-        }
-        
-        .login-info p {
-            font-weight: 600;
-            color: var(--color-black);
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        
-        .login-info ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .login-info li {
-            color: var(--color-dark-gray);
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .login-footer {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--color-light-gray);
-        }
-        
-        .login-footer a {
-            color: var(--color-black);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .login-footer a:hover {
-            text-decoration: underline;
-        }
-        
-        .user-info {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            background: var(--color-white);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            display: none;
-        }
-        
-        .user-info.show {
-            display: block;
-        }
-        
-        .user-info .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            margin-right: 0.75rem;
-        }
-        
-        .user-info .user-name {
-            font-weight: 600;
-            color: var(--color-black);
-        }
-        
-        .user-info .user-email {
-            font-size: 0.9rem;
-            color: var(--color-dark-gray);
-        }
-        
-        .logout-btn {
-            background: var(--error-color);
-            color: var(--color-white);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            margin-left: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        .logout-btn:hover {
-            background: #c82333;
-        }
-        
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--color-white);
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 1s ease-in-out infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div id="login-screen" class="login-screen">
-        <div class="login-container">
-            <div class="login-header">
-                <h1>🔐 Acceso Seguro</h1>
-                <p>Autentícate con GitHub para acceder al panel de administración</p>
-            </div>
+    <!-- Authentication Wrapper - Solo UN sistema de autenticación -->
+    <div id="auth-wrapper" class="auth-wrapper">
+        <div class="login-card">
+            <h2>Acceso Seguro</h2>
+            <p>Autentícate con GitHub para acceder al panel de administración</p>
             
-            <div class="login-button-container">
-                <div data-netlify-identity-button style="margin: 2rem 0;">
-                    <button type="button" class="login-btn" onclick="initNetlifyIdentity()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                        Iniciar Sesión con GitHub
-                    </button>
-                </div>
-            </div>
+            <!-- Único botón de login -->
+            <button class="login-btn" id="login-btn">
+                🔐 Iniciar Sesión con GitHub
+            </button>
             
-            <div class="login-info">
-                <p><strong>Seguridad OAuth 2.0</strong></p>
-                <ul>
-                    <li>✅ Autenticación segura con GitHub</li>
-                    <li>✅ Sin almacenamiento de contraseñas</li>
-                    <li>✅ Tokens JWT de tiempo limitado</li>
-                    <li>✅ Auditoría completa de actividades</li>
-                </ul>
-            </div>
-            
-            <div class="login-footer">
-                <p>¿Problemas de acceso? <a href="#" onclick="showTroubleshooting()">Ver ayuda</a></p>
+            <div class="security-info">
+                <strong>Seguridad OAuth 2.0</strong><br>
+                ✅ Autenticación segura con GitHub<br>
+                ✅ Sin almacenamiento de contraseñas<br>
+                ✅ Tokens JWT de tiempo limitado<br>
+                ✅ Auditoría completa de actividades
             </div>
         </div>
     </div>
 
     <!-- Admin Panel (Hidden until login) -->
-    <div id="admin-panel" class="admin-container" style="display: none;">
-        <div class="admin-header">
-            <h1>Panel de Administración CMS</h1>
-            <a href="index.html" style="color: white; text-decoration: none;">Ver Sitio</a>
-        </div>
-        
-        <div class="admin-nav">
-            <ul>
-                <li><button onclick="showSection('general')" class="active">Configuración General</button></li>
-                <li><button onclick="showSection('photographer')">Sobre el Fotógrafo</button></li>
-                <li><button onclick="showSection('hero')">Hero Section</button></li>
-                <li><button onclick="showSection('social')">Redes Sociales</button></li>
-                <li><button onclick="showSection('services')">Servicios</button></li>
-                <li><button onclick="showSection('portfolio')">Portfolio</button></li>
-                <li><button onclick="showSection('blog')">Blog</button></li>
-                <li><button onclick="showSection('contact')">Contacto</button></li>
-                <li><button onclick="showSection('preview')">Vista Previa</button></li>
-            </ul>
-        </div>
-        
-        <div id="status-message" class="status-message"></div>
-        
-        <!-- General Settings -->
-        <div id="general" class="admin-section active">
-            <h2>Configuración General</h2>
-            <div class="form-group">
-                <label for="site-title-input">Título del Sitio</label>
-                <input type="text" id="site-title-input" placeholder="Mi Sitio Web">
-            </div>
-            <div class="form-group">
-                <label for="copyright-input">Texto de Copyright</label>
-                <input type="text" id="copyright-input" placeholder="© 2025 Mi Sitio Web. Todos los derechos reservados.">
-            </div>
-            <div class="form-group">
-                <label for="footer-title-input">Título en el Footer</label>
-                <input type="text" id="footer-title-input" placeholder="Mi Sitio Web">
-            </div>
-        </div>
-        
-        <!-- Photographer Info -->
-        <div id="photographer" class="admin-section">
-            <h2>Información del Fotógrafo</h2>
-            <div class="form-group">
-                <label for="photographer-name-input">Nombre del Fotógrafo</label>
-                <input type="text" id="photographer-name-input" placeholder="Carlos Martínez">
-            </div>
-            <div class="form-group">
-                <label for="photographer-specialty-input">Especialidad</label>
-                <input type="text" id="photographer-specialty-input" placeholder="Fotografía de Retratos y Eventos">
-            </div>
-            <div class="form-group">
-                <label for="photographer-experience-input">Experiencia</label>
-                <input type="text" id="photographer-experience-input" placeholder="8 años de experiencia">
-            </div>
-            <div class="form-group">
-                <label for="photographer-bio-input">Biografía del Fotógrafo</label>
-                <textarea id="photographer-bio-input" rows="6" placeholder="Escribe aquí tu biografía profesional..."></textarea>
-            </div>
-            <div class="form-group">
-                <label for="photographer-image-input">Foto del Fotógrafo</label>
-                <div class="image-upload-container">
-                    <input type="text" id="photographer-image-input" placeholder="URL de la imagen o usa el botón de carga">
-                    <button type="button" class="upload-btn" onclick="uploadPhotographerImage()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <polyline points="17 8 12 3 7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        Cargar Imagen
-                    </button>
+    <div id="admin-panel" class="admin-panel">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1>Panel de Administración</h1>
+                <div class="user-info">
+                    <span class="user-email" id="user-email"></span>
+                    <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
                 </div>
-                <div id="photographer-image-preview" class="image-preview"></div>
             </div>
-        </div>
+            
+            <nav class="admin-nav">
+                <ul>
+                    <li><button onclick="showSection('general')" class="active">Configuración General</button></li>
+                    <li><button onclick="showSection('photographer')">Sobre el Fotógrafo</button></li>
+                    <li><button onclick="showSection('hero')">Hero Section</button></li>
+                    <li><button onclick="showSection('social')">Redes Sociales</button></li>
+                    <li><button onclick="showSection('services')">Servicios</button></li>
+                    <li><button onclick="showSection('portfolio')">Portfolio</button></li>
+                    <li><button onclick="showSection('blog')">Blog</button></li>
+                    <li><button onclick="showSection('contact')">Contacto</button></li>
+                    <li><button onclick="showSection('preview')">Vista Previa</button></li>
+                </ul>
+            </nav>
+            
+            <div class="admin-content">
+                <!-- Configuración General -->
+                <section id="general" class="admin-section active">
+                    <h2>Configuración General</h2>
+                    <div class="form-group">
+                        <label>Título del Sitio</label>
+                        <input type="text" id="site-title" placeholder="Nombre de tu sitio web">
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea id="site-description" rows="4" placeholder="Descripción breve de tu sitio"></textarea>
+                    </div>
+                </section>
 
-        <!-- Hero Section -->
-        <div id="hero" class="admin-section">
-            <h2>Hero Section</h2>
-            <div class="form-group">
-                <label for="hero-title-input">Título Principal</label>
-                <input type="text" id="hero-title-input" placeholder="Bienvenido a Mi Sitio">
-            </div>
-            <div class="form-group">
-                <label for="hero-subtitle-input">Subtítulo</label>
-                <input type="text" id="hero-subtitle-input" placeholder="Soluciones digitales modernas">
-            </div>
-            <div class="form-group">
-                <label for="hero-cta-input">Texto del Botón</label>
-                <input type="text" id="hero-cta-input" placeholder="Conoce Más">
-            </div>
-            <div class="form-group">
-                <label>Imagen de Fondo del Hero</label>
-                <div class="image-upload-container">
-                    <input type="url" id="hero-image-input" placeholder="https://ejemplo.com/imagen-hero.jpg">
-                    <button type="button" class="upload-btn" onclick="uploadHeroImage()">📁 Subir Imagen Hero</button>
-                    <div class="image-preview" id="hero-image-preview"></div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Services Section -->
-        <div id="services" class="admin-section">
-            <h2>Servicios</h2>
-            <div id="services-container">
-                <!-- Services will be dynamically added here -->
-            </div>
-            <button class="add-btn" onclick="addService()">+ Agregar Servicio</button>
-        </div>
-        
-        <!-- Portfolio Section -->
-        <div id="portfolio" class="admin-section">
-            <h2>Portfolio</h2>
-            <div id="portfolio-container">
-                <!-- Portfolio items will be dynamically added here -->
-            </div>
-            <button class="add-btn" onclick="addPortfolioItem()">+ Agregar Proyecto</button>
-        </div>
-        
-        <!-- Blog Section -->
-        <div id="blog" class="admin-section">
-            <h2>Posts del Blog</h2>
-            <div id="blog-container">
-                <!-- Blog posts will be dynamically added here -->
-            </div>
-            <button class="add-btn" onclick="addBlogPost()">+ Agregar Post</button>
-        </div>
-        
-        <!-- Social Media Section -->
-        <div id="social" class="admin-section">
-            <h2>Redes Sociales</h2>
-            <div class="social-controls">
-                <h3>Mostrar/Ocultar Redes Sociales</h3>
-                <div class="social-toggles">
-                    <label class="toggle-label">
-                        <input type="checkbox" id="show-instagram" checked>
-                        <span class="toggle-slider"></span>
-                        Mostrar Instagram
-                    </label>
-                    <label class="toggle-label">
-                        <input type="checkbox" id="show-facebook" checked>
-                        <span class="toggle-slider"></span>
-                        Mostrar Facebook
-                    </label>
-                    <label class="toggle-label">
-                        <input type="checkbox" id="show-twitter">
-                        <span class="toggle-slider"></span>
-                        Mostrar Twitter
-                    </label>
-                    <label class="toggle-label">
-                        <input type="checkbox" id="show-linkedin" checked>
-                        <span class="toggle-slider"></span>
-                        Mostrar LinkedIn
-                    </label>
-                    <label class="toggle-label">
-                        <input type="checkbox" id="show-website">
-                        <span class="toggle-slider"></span>
-                        Mostrar Sitio Web
-                    </label>
-                </div>
-            </div>
-            <div class="social-urls">
-                <h3>URLs de Redes Sociales</h3>
-                <div class="two-column">
+                <!-- Sobre el Fotógrafo -->
+                <section id="photographer" class="admin-section">
+                    <h2>Sobre el Fotógrafo</h2>
                     <div class="form-group">
-                        <label for="instagram-input">Instagram URL</label>
-                        <input type="url" id="instagram-input" placeholder="https://instagram.com/tu_usuario">
+                        <label>Nombre</label>
+                        <input type="text" id="photographer-name" placeholder="Tu nombre completo">
                     </div>
                     <div class="form-group">
-                        <label for="facebook-input">Facebook URL</label>
-                        <input type="url" id="facebook-input" placeholder="https://facebook.com/tu_pagina">
+                        <label>Biografía</label>
+                        <textarea id="photographer-bio" rows="6" placeholder="Cuéntanos tu historia como fotógrafo"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="twitter-input">Twitter URL</label>
-                        <input type="url" id="twitter-input" placeholder="https://twitter.com/tu_usuario">
+                        <label>Foto de Perfil</label>
+                        <input type="file" id="photographer-photo" accept="image/*" onchange="uploadImage('photographer-photo')">
+                        <img id="photographer-photo-preview" class="image-preview" style="display: none;">
                     </div>
                     <div class="form-group">
-                        <label for="linkedin-input">LinkedIn URL</label>
-                        <input type="url" id="linkedin-input" placeholder="https://linkedin.com/in/tu_perfil">
+                        <label>Experiencia (años)</label>
+                        <input type="number" id="photographer-experience" min="0" placeholder="Número de años de experiencia">
+                    </div>
+                </section>
+
+                <!-- Hero Section -->
+                <section id="hero" class="admin-section">
+                    <h2>Hero Section</h2>
+                    <div class="form-group">
+                        <label>Título Principal</label>
+                        <input type="text" id="hero-title" placeholder="Título impactante">
                     </div>
                     <div class="form-group">
-                        <label for="website-input">Sitio Web Personal URL</label>
-                        <input type="url" id="website-input" placeholder="https://tuweb.com">
+                        <label>Subtítulo</label>
+                        <input type="text" id="hero-subtitle" placeholder="Descripción que complemente el título">
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label>Imagen Hero</label>
+                        <input type="file" id="hero-image" accept="image/*" onchange="uploadImage('hero-image')">
+                        <img id="hero-image-preview" class="image-preview" style="display: none;">
+                    </div>
+                    <div class="form-group">
+                        <label>Texto del Botón</label>
+                        <input type="text" id="hero-button-text" placeholder="Ver Galería">
+                    </div>
+                </section>
+
+                <!-- Servicios -->
+                <section id="services" class="admin-section">
+                    <h2>Servicios</h2>
+                    <button class="add-btn" onclick="addService()">+ Agregar Servicio</button>
+                    <div id="services-list">
+                        <!-- Los servicios se cargarán aquí dinámicamente -->
+                    </div>
+                </section>
+
+                <!-- Portfolio -->
+                <section id="portfolio" class="admin-section">
+                    <h2>Portfolio</h2>
+                    <button class="add-btn" onclick="addPortfolioItem()">+ Agregar Proyecto</button>
+                    <div id="portfolio-list">
+                        <!-- Los proyectos se cargarán aquí dinámicamente -->
+                    </div>
+                </section>
+
+                <!-- Blog -->
+                <section id="blog" class="admin-section">
+                    <h2>Blog</h2>
+                    <button class="add-btn" onclick="addBlogPost()">+ Agregar Post</button>
+                    <div id="blog-list">
+                        <!-- Los posts se cargarán aquí dinámicamente -->
+                    </div>
+                </section>
+
+                <!-- Redes Sociales -->
+                <section id="social" class="admin-section">
+                    <h2>Redes Sociales</h2>
+                    <div class="form-group">
+                        <label>Instagram</label>
+                        <input type="url" id="social-instagram" placeholder="URL de tu Instagram">
+                    </div>
+                    <div class="form-group">
+                        <label>Facebook</label>
+                        <input type="url" id="social-facebook" placeholder="URL de tu Facebook">
+                    </div>
+                    <div class="form-group">
+                        <label>Twitter</label>
+                        <input type="url" id="social-twitter" placeholder="URL de tu Twitter">
+                    </div>
+                </section>
+
+                <!-- Contacto -->
+                <section id="contact" class="admin-section">
+                    <h2>Información de Contacto</h2>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="contact-email" placeholder="tu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="tel" id="contact-phone" placeholder="+1 234 567 8900">
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <textarea id="contact-address" rows="3" placeholder="Tu dirección"></textarea>
+                    </div>
+                </section>
+
+                <!-- Vista Previa -->
+                <section id="preview" class="admin-section">
+                    <h2>Vista Previa</h2>
+                    <p>Haz clic en el botón para ver cómo se ve tu sitio web:</p>
+                    <button class="add-btn" onclick="window.open('/', '_blank')">🔗 Ver Sitio Web</button>
+                </section>
+
+                <button class="save-btn" onclick="saveChanges()">💾 Guardar Cambios</button>
             </div>
         </div>
-        
-        <!-- Contact Section -->
-        <div id="contact" class="admin-section">
-            <h2>Información de Contacto</h2>
-            <div class="two-column">
-                <div class="form-group">
-                    <label for="contact-email-input">Email</label>
-                    <input type="email" id="contact-email-input" placeholder="info@misitio.com">
-                </div>
-                <div class="form-group">
-                    <label for="contact-phone-input">Teléfono</label>
-                    <input type="text" id="contact-phone-input" placeholder="+123456789">
-                </div>
-            </div>
-            <div class="two-column">
-                <div class="form-group">
-                    <label for="contact-address-input">Dirección</label>
-                    <input type="text" id="contact-address-input" placeholder="Calle Principal 123, Ciudad">
-                </div>
-                <div class="form-group">
-                    <label for="contact-studio-input">Descripción del Estudio</label>
-                    <input type="text" id="contact-studio-input" placeholder="Estudio fotográfico con iluminación profesional">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="contact-availability-input">Horario de Atención</label>
-                <input type="text" id="contact-availability-input" placeholder="Lunes a Viernes - 9:00 a 18:00">
-            </div>
-        </div>
-        
-        <!-- Preview Section -->
-        <div id="preview" class="admin-section">
-            <h2>Vista Previa</h2>
-            <p>Abre tu sitio web para ver los cambios en tiempo real:</p>
-            <div class="preview-links">
-                <a id="site-preview-link" href="index.html" target="_blank" class="preview-link">
-                    🌐 Abrir Sitio Web
-                </a>
-                <p class="preview-note">
-                    <em>Nota: Los cambios se reflejarán después de guardar y refrescar esta página.</em>
-                </p>
-            </div>
-        </div>
-        
-        <button class="save-btn" onclick="saveChanges()">💾 Guardar Cambios</button>
     </div>
 
     <script>
-        let siteData = {};
-        let currentSection = 'general';
+        // ===============================
+        // SISTEMA DE AUTENTICACIÓN SIMPLIFICADO
+        // ===============================
 
-        // Load data on page load
-        document.addEventListener('DOMContentLoaded', async () => {
-            await loadData();
-            populateForms();
-        });
+        // Configurar Netlify Identity
+        function setupNetlifyIdentity() {
+            if (typeof window.netlifyIdentity !== 'undefined') {
+                // Limpiar listeners previos para evitar duplicación
+                window.netlifyIdentity.off('init');
+                window.netlifyIdentity.off('login');
+                window.netlifyIdentity.off('logout');
 
-        // Navigation between sections
-        function showSection(sectionName) {
-            // Hide all sections
-            document.querySelectorAll('.admin-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Remove active class from all buttons
-            document.querySelectorAll('.admin-nav button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Show selected section
-            document.getElementById(sectionName).classList.add('active');
-            
-            // Add active class to clicked button
-            event.target.classList.add('active');
-            
-            currentSection = sectionName;
-        }
-
-        // Load data from JSON
-        async function loadData() {
-            try {
-                const response = await fetch('data.json');
-                siteData = await response.json();
-            } catch (error) {
-                console.error('Error loading data:', error);
-                showStatus('Error cargando los datos', 'error');
-            }
-        }
-
-        // Populate forms with current data
-        function populateForms() {
-            // General settings
-            document.getElementById('site-title-input').value = siteData.siteTitle || '';
-            document.getElementById('footer-title-input').value = siteData.siteTitle || '';
-            document.getElementById('copyright-input').value = siteData.meta?.copyright || '';
-            
-            // Photographer info
-            document.getElementById('photographer-name-input').value = siteData.photographer?.name || '';
-            document.getElementById('photographer-specialty-input').value = siteData.photographer?.specialty || '';
-            document.getElementById('photographer-experience-input').value = siteData.photographer?.experience || '';
-            document.getElementById('photographer-bio-input').value = siteData.photographer?.bio || '';
-            document.getElementById('photographer-image-input').value = siteData.photographer?.image || '';
-            
-            // Hero section
-            document.getElementById('hero-title-input').value = siteData.hero?.title || '';
-            document.getElementById('hero-subtitle-input').value = siteData.hero?.subtitle || '';
-            document.getElementById('hero-cta-input').value = siteData.hero?.ctaText || '';
-            document.getElementById('hero-image-input').value = siteData.hero?.image || '';
-            
-            // Social media
-            document.getElementById('instagram-input').value = siteData.socialMedia?.instagram || '';
-            document.getElementById('facebook-input').value = siteData.socialMedia?.facebook || '';
-            document.getElementById('twitter-input').value = siteData.socialMedia?.twitter || '';
-            document.getElementById('linkedin-input').value = siteData.socialMedia?.linkedin || '';
-            document.getElementById('website-input').value = siteData.socialMedia?.website || '';
-            
-            // Social media visibility toggles
-            const showControls = siteData.socialMedia?.show || {};
-            document.getElementById('show-instagram').checked = showControls.instagram ?? true;
-            document.getElementById('show-facebook').checked = showControls.facebook ?? true;
-            document.getElementById('show-twitter').checked = showControls.twitter ?? false;
-            document.getElementById('show-linkedin').checked = showControls.linkedin ?? true;
-            document.getElementById('show-website').checked = showControls.website ?? false;
-            
-            // Contact
-            document.getElementById('contact-email-input').value = siteData.contact?.email || '';
-            document.getElementById('contact-phone-input').value = siteData.contact?.phone || '';
-            document.getElementById('contact-address-input').value = siteData.contact?.address || '';
-            document.getElementById('contact-studio-input').value = siteData.contact?.studio || '';
-            document.getElementById('contact-availability-input').value = siteData.contact?.availability || '';
-            
-            // Services
-            renderServices();
-            
-            // Portfolio
-            renderPortfolio();
-            
-            // Blog posts
-            renderBlogPosts();
-        }
-
-        // Render services
-        function renderServices() {
-            const container = document.getElementById('services-container');
-            container.innerHTML = '';
-            
-            siteData.services?.forEach((service, index) => {
-                const serviceDiv = document.createElement('div');
-                serviceDiv.className = 'service-item';
-                serviceDiv.innerHTML = `
-                    <button class="remove-btn" onclick="removeService(${index})">Eliminar</button>
-                    <div class="form-group">
-                        <label>Título del Servicio</label>
-                        <input type="text" value="${service.title}" onchange="updateService(${index}, 'title', this.value)">
-                    </div>
-                    <div class="form-group">
-                        <label>Descripción</label>
-                        <textarea onchange="updateService(${index}, 'description', this.value)">${service.description}</textarea>
-                    </div>
-                `;
-                container.appendChild(serviceDiv);
-            });
-        }
-
-        // Render blog posts
-        function renderBlogPosts() {
-            const container = document.getElementById('blog-container');
-            container.innerHTML = '';
-            
-            siteData.blogPosts?.forEach((post, index) => {
-                const postDiv = document.createElement('div');
-                postDiv.className = 'blog-item';
-                postDiv.innerHTML = `
-                    <button class="remove-btn" onclick="removeBlogPost(${index})">Eliminar</button>
-                    <div class="form-group">
-                        <label>Título del Post</label>
-                        <input type="text" value="${post.title}" onchange="updateBlogPost(${index}, 'title', this.value)">
-                    </div>
-                    <div class="form-group">
-                        <label>Fecha</label>
-                        <input type="date" value="${post.date}" onchange="updateBlogPost(${index}, 'date', this.value)">
-                    </div>
-                    <div class="form-group">
-                        <label>Contenido</label>
-                        <textarea onchange="updateBlogPost(${index}, 'content', this.value)">${post.content}</textarea>
-                    </div>
-                `;
-                container.appendChild(postDiv);
-            });
-        }
-
-        // Render portfolio
-        function renderPortfolio() {
-            const container = document.getElementById('portfolio-container');
-            container.innerHTML = '';
-            
-            siteData.portfolio?.forEach((item, index) => {
-                const portfolioDiv = document.createElement('div');
-                portfolioDiv.className = 'portfolio-item';
-                portfolioDiv.innerHTML = `
-                    <button class="remove-btn" onclick="removePortfolioItem(${index})">Eliminar</button>
-                    <div class="form-group">
-                        <label>Título del Proyecto</label>
-                        <input type="text" value="${item.title}" onchange="updatePortfolioItem(${index}, 'title', this.value)">
-                    </div>
-                    <div class="form-group">
-                        <label>Categoría</label>
-                        <input type="text" value="${item.category}" onchange="updatePortfolioItem(${index}, 'category', this.value)" placeholder="Retratos, Eventos, Comercial">
-                    </div>
-                    <div class="form-group">
-                        <label>Descripción</label>
-                        <textarea onchange="updatePortfolioItem(${index}, 'description', this.value)">${item.description}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Imagen Principal</label>
-                        <div class="image-upload-container">
-                            <input type="url" value="${item.image}" onchange="updatePortfolioItem(${index}, 'image', this.value)" placeholder="https://ejemplo.com/imagen.jpg" id="portfolio-image-${index}">
-                            <button type="button" class="upload-btn" onclick="uploadImage('portfolio-image-${index}', ${index}, 'image')">📁 Subir Imagen</button>
-                            ${item.image ? `<div class="image-preview"><img src="${item.image}" alt="Preview" style="max-width: 100px; margin-top: 10px; border-radius: 4px;"></div>` : ''}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Imágenes de la Galería</label>
-                        <div class="gallery-upload-container">
-                            <textarea onchange="updatePortfolioItem(${index}, 'images', this.value)" placeholder="https://ejemplo1.jpg, https://ejemplo2.jpg, ..." id="portfolio-gallery-${index}">${item.images?.join(', ') || ''}</textarea>
-                            <button type="button" class="upload-btn" onclick="addGalleryImages(${index})">📁 Agregar Imágenes</button>
-                            ${item.images?.length ? `
-                                <div class="gallery-preview">
-                                    ${item.images.map(img => `<img src="${img}" alt="Preview" style="max-width: 60px; margin: 5px; border-radius: 4px;">`).join('')}
-                                </div>
-                            ` : ''}
-                        </div>
-                    </div>
-                `;
-                container.appendChild(portfolioDiv);
-            });
-        }
-
-        // Add new service
-        function addService() {
-            if (!siteData.services) siteData.services = [];
-            
-            siteData.services.push({
-                title: 'Nuevo Servicio',
-                description: 'Descripción del nuevo servicio'
-            });
-            
-            renderServices();
-        }
-
-        // Remove service
-        function removeService(index) {
-            siteData.services.splice(index, 1);
-            renderServices();
-        }
-
-        // Update service
-        function updateService(index, field, value) {
-            siteData.services[index][field] = value;
-        }
-
-        // Add new portfolio item
-        function addPortfolioItem() {
-            if (!siteData.portfolio) siteData.portfolio = [];
-            
-            siteData.portfolio.push({
-                title: 'Nuevo Proyecto',
-                category: 'Fotografía',
-                description: 'Descripción del nuevo proyecto fotográfico',
-                image: 'https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=600&h=400&fit=crop',
-                images: [
-                    'https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=800&h=600&fit=crop',
-                    'https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800&h=600&fit=crop'
-                ]
-            });
-            
-            renderPortfolio();
-        }
-
-        // Remove portfolio item
-        function removePortfolioItem(index) {
-            siteData.portfolio.splice(index, 1);
-            renderPortfolio();
-        }
-
-        // Update portfolio item
-        function updatePortfolioItem(index, field, value) {
-            if (field === 'images') {
-                // Convert comma-separated string to array
-                siteData.portfolio[index][field] = value.split(',').map(url => url.trim()).filter(url => url);
-            } else {
-                siteData.portfolio[index][field] = value;
-            }
-        }
-
-        // Add new blog post
-        function addBlogPost() {
-            if (!siteData.blogPosts) siteData.blogPosts = [];
-            
-            siteData.blogPosts.push({
-                title: 'Nuevo Post',
-                content: 'Contenido del nuevo post',
-                date: new Date().toISOString().split('T')[0]
-            });
-            
-            renderBlogPosts();
-        }
-
-        // Remove blog post
-        function removeBlogPost(index) {
-            siteData.blogPosts.splice(index, 1);
-            renderBlogPosts();
-        }
-
-        // Update blog post
-        function updateBlogPost(index, field, value) {
-            siteData.blogPosts[index][field] = value;
-        }
-
-        // Save changes
-        async function saveChanges() {
-            const btn = document.querySelector('.save-btn');
-            btn.disabled = true;
-            btn.textContent = 'Guardando...';
-            
-            try {
-                // Update siteData from forms
-                siteData.siteTitle = document.getElementById('site-title-input').value;
-                
-                // Update meta section for copyright
-                if (!siteData.meta) siteData.meta = {};
-                siteData.meta.copyright = document.getElementById('copyright-input').value;
-                
-                siteData.photographer = {
-                    name: document.getElementById('photographer-name-input').value,
-                    specialty: document.getElementById('photographer-specialty-input').value,
-                    experience: document.getElementById('photographer-experience-input').value,
-                    bio: document.getElementById('photographer-bio-input').value,
-                    image: document.getElementById('photographer-image-input').value
-                };
-                
-                siteData.hero = {
-                    title: document.getElementById('hero-title-input').value,
-                    subtitle: document.getElementById('hero-subtitle-input').value,
-                    image: document.getElementById('hero-image-input').value,
-                    ctaText: document.getElementById('hero-cta-input').value
-                };
-                
-                siteData.socialMedia = {
-                    show: {
-                        instagram: document.getElementById('show-instagram').checked,
-                        facebook: document.getElementById('show-facebook').checked,
-                        twitter: document.getElementById('show-twitter').checked,
-                        linkedin: document.getElementById('show-linkedin').checked,
-                        website: document.getElementById('show-website').checked
-                    },
-                    instagram: document.getElementById('instagram-input').value,
-                    facebook: document.getElementById('facebook-input').value,
-                    twitter: document.getElementById('twitter-input').value,
-                    linkedin: document.getElementById('linkedin-input').value,
-                    website: document.getElementById('website-input').value
-                };
-                
-                siteData.contact = {
-                    email: document.getElementById('contact-email-input').value,
-                    phone: document.getElementById('contact-phone-input').value,
-                    address: document.getElementById('contact-address-input').value,
-                    studio: document.getElementById('contact-studio-input').value,
-                    availability: document.getElementById('contact-availability-input').value
-                };
-                
-                // Send to Netlify Function
-                const response = await fetch('/.netlify/functions/update-content', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(siteData)
-                });
-                
-                if (response.ok) {
-                    showStatus('¡Cambios guardados exitosamente!', 'success');
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
-                } else {
-                    throw new Error('Error en la respuesta del servidor');
-                }
-                
-            } catch (error) {
-                console.error('Error saving:', error);
-                showStatus('Error guardando los cambios: ' + error.message, 'error');
-            } finally {
-                btn.disabled = false;
-                btn.textContent = '💾 Guardar Cambios';
-            }
-        }
-
-        // Image upload functionality
-        async function uploadImage(inputId, portfolioIndex, field) {
-            const input = document.getElementById(inputId);
-            if (input.type === 'text') return;
-            
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.accept = 'image/*';
-            fileInput.onchange = async (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    try {
-                        showStatus('Subiendo imagen...', 'info');
-                        
-                        // Convert file to base64
-                        const base64 = await fileToBase64(file);
-                        const fileName = generateFileName(file.name);
-                        
-                        // Upload to GitHub via Netlify Function
-                        const response = await fetch('/.netlify/functions/upload-image', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                fileName: fileName,
-                                fileContent: base64,
-                                portfolioIndex: portfolioIndex,
-                                field: field
-                            })
-                        });
-                        
-                        if (response.ok) {
-                            const result = await response.json();
-                            input.value = result.url;
-                            
-                            // Update the data
-                            if (field === 'image') {
-                                updatePortfolioItem(portfolioIndex, 'image', result.url);
-                            }
-                            
-                            // Reload the portfolio section to show preview
-                            renderPortfolio();
-                            showStatus('¡Imagen subida exitosamente!', 'success');
-                        } else {
-                            throw new Error('Error subiendo la imagen');
-                        }
-                        
-                    } catch (error) {
-                        console.error('Error uploading image:', error);
-                        showStatus('Error subiendo la imagen: ' + error.message, 'error');
-                    }
-                }
-            };
-            fileInput.click();
-        }
-
-        async function uploadPhotographerImage() {
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.accept = 'image/*';
-            fileInput.onchange = async (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    try {
-                        showStatus('Subiendo imagen del fotógrafo...', 'info');
-                        
-                        // Convert file to base64
-                        const base64 = await fileToBase64(file);
-                        const fileName = generateFileName(file.name);
-                        
-                        // Upload to GitHub via Netlify Function
-                        const response = await fetch('/.netlify/functions/upload-image', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                fileName: fileName,
-                                fileContent: base64,
-                                folder: 'photographer'
-                            })
-                        });
-                        
-                        const result = await response.json();
-                        
-                        if (result.url) {
-                            // Update the input with the uploaded image URL
-                            document.getElementById('photographer-image-input').value = result.url;
-                            
-                            // Show preview in photographer image preview
-                            const preview = document.getElementById('photographer-image-preview');
-                            preview.innerHTML = `<img src="${result.url}" alt="Preview" style="max-width: 200px; border-radius: 4px; margin-top: 10px;">`;
-                            
-                            showStatus('¡Imagen del fotógrafo subida exitosamente!', 'success');
-                        } else {
-                            throw new Error('Error subiendo la imagen');
-                        }
-                        
-                    } catch (error) {
-                        console.error('Error uploading photographer image:', error);
-                        showStatus('Error subiendo la imagen: ' + error.message, 'error');
-                    }
-                }
-            };
-            fileInput.click();
-        }
-
-        async function addGalleryImages(portfolioIndex) {
-            const textarea = document.getElementById(`portfolio-gallery-${portfolioIndex}`);
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.accept = 'image/*';
-            fileInput.multiple = true;
-            fileInput.onchange = async (e) => {
-                const files = Array.from(e.target.files);
-                if (files.length > 0) {
-                    try {
-                        showStatus(`Subiendo ${files.length} imagen(es)...`, 'info');
-                        
-                        const uploadedUrls = [];
-                        
-                        for (const file of files) {
-                            const base64 = await fileToBase64(file);
-                            const fileName = generateFileName(file.name);
-                            
-                            const response = await fetch('/.netlify/functions/upload-image', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    fileName: fileName,
-                                    fileContent: base64
-                                })
-                            });
-                            
-                            if (response.ok) {
-                                const result = await response.json();
-                                uploadedUrls.push(result.url);
-                            }
-                        }
-                        
-                        // Add to existing URLs
-                        const currentUrls = textarea.value.split(',').filter(url => url.trim()).map(url => url.trim());
-                        const allUrls = [...currentUrls, ...uploadedUrls];
-                        textarea.value = allUrls.join(', ');
-                        updatePortfolioItem(portfolioIndex, 'images', textarea.value);
-                        
-                        // Reload the portfolio section to show previews
-                        renderPortfolio();
-                        showStatus('¡Imágenes subidas exitosamente!', 'success');
-                        
-                    } catch (error) {
-                        console.error('Error uploading gallery images:', error);
-                        showStatus('Error subiendo las imágenes: ' + error.message, 'error');
-                    }
-                }
-            };
-            fileInput.click();
-        }
-
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => {
-                    const base64 = reader.result.split(',')[1]; // Remove data:image/jpeg;base64, prefix
-                    resolve(base64);
-                };
-                reader.onerror = error => reject(error);
-            });
-        }
-
-        function generateFileName(originalName) {
-            const timestamp = Date.now();
-            const random = Math.random().toString(36).substring(2);
-            const extension = originalName.split('.').pop();
-            return `hero/${timestamp}-${random}.${extension}`;
-        }
-
-        // Upload hero background image
-        async function uploadHeroImage() {
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.accept = 'image/*';
-            fileInput.onchange = async (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    try {
-                        showStatus('Subiendo imagen de hero...', 'info');
-                        
-                        // Convert file to base64
-                        const base64 = await fileToBase64(file);
-                        const fileName = generateFileName(file.name);
-                        
-                        // Upload to GitHub via Netlify Function
-                        const response = await fetch('/.netlify/functions/upload-image', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                fileName: fileName,
-                                fileContent: base64
-                            })
-                        });
-                        
-                        if (response.ok) {
-                            const result = await response.json();
-                            document.getElementById('hero-image-input').value = result.url;
-                            
-                            // Show preview
-                            const preview = document.getElementById('hero-image-preview');
-                            preview.innerHTML = `<img src="${result.url}" alt="Preview" style="max-width: 200px; border-radius: 4px; margin-top: 10px;">`;
-                            
-                            showStatus('¡Imagen de hero subida exitosamente!', 'success');
-                        } else {
-                            throw new Error('Error subiendo la imagen');
-                        }
-                        
-                    } catch (error) {
-                        console.error('Error uploading hero image:', error);
-                        showStatus('Error subiendo la imagen: ' + error.message, 'error');
-                    }
-                }
-            };
-            fileInput.click();
-        }
-
-        // Show status message
-        function showStatus(message, type) {
-            const statusDiv = document.getElementById('status-message');
-            statusDiv.textContent = message;
-            statusDiv.className = `status-message ${type}`;
-            statusDiv.style.display = 'block';
-            
-            setTimeout(() => {
-                statusDiv.style.display = 'none';
-            }, 5000);
-        }
-        
-        // === OAUTH 2.0 AUTHENTICATION ===
-        
-        // Initialize Netlify Identity
-        function initNetlifyIdentity() {
-            if (window.netlifyIdentity) {
                 window.netlifyIdentity.on('init', (user) => {
+                    console.log('🔐 Netlify Identity inicializado');
                     if (user) {
-                        // User is already logged in
+                        console.log('✅ Usuario ya autenticado:', user.email);
                         showAdminPanel(user);
                     } else {
-                        // No user logged in, show login
+                        console.log('👤 No hay usuario autenticado - mostrando login');
                         showLoginScreen();
                     }
                 });
-                
+
                 window.netlifyIdentity.on('login', (user) => {
-                    // User successfully logged in
+                    console.log('✅ Login exitoso:', user.email);
                     showAdminPanel(user);
                 });
-                
+
                 window.netlifyIdentity.on('logout', () => {
-                    // User logged out
+                    console.log('🚪 Usuario cerró sesión');
                     showLoginScreen();
                 });
-                
-                // Initialize the widget
+
+                // Inicializar widget
                 window.netlifyIdentity.init();
             } else {
-                console.error('Netlify Identity widget not loaded');
-                showError('Error de configuración: Netlify Identity no está disponible');
+                console.error('❌ Netlify Identity widget no está disponible');
             }
         }
-        
-        // Show admin panel after successful login
+
+        // Mostrar panel de administración
         function showAdminPanel(user) {
-            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('auth-wrapper').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'block';
+            document.getElementById('user-email').textContent = user.email;
             
-            // Show user info
-            showUserInfo(user);
-            
-            // Load data and populate forms
-            loadDataAndPopulate();
-        }
-        
-        // Show login screen
-        function showLoginScreen() {
-            document.getElementById('login-screen').style.display = 'flex';
-            document.getElementById('admin-panel').style.display = 'none';
-            document.getElementById('user-info').classList.remove('show');
-        }
-        
-        // Show user information
-        function showUserInfo(user) {
-            const userInfo = document.getElementById('user-info');
-            if (userInfo) {
-                userInfo.innerHTML = `
-                    <div style="display: flex; align-items: center;">
-                        <img src="${user.user_metadata?.avatar_url || user.avatar_url || 'https://github.com/github.png'}" 
-                             alt="Avatar" class="user-avatar">
-                        <div>
-                            <div class="user-name">${user.user_metadata?.full_name || user.user_metadata?.name || user.email}</div>
-                            <div class="user-email">${user.email}</div>
-                        </div>
-                        <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
-                    </div>
-                `;
-                userInfo.classList.add('show');
+            // Ejecutar OAuth verification una sola vez
+            if (window.runOAuthVerification) {
+                window.runOAuthVerification();
             }
         }
-        
-        // Logout function
+
+        // Mostrar pantalla de login
+        function showLoginScreen() {
+            document.getElementById('admin-panel').style.display = 'none';
+            document.getElementById('auth-wrapper').style.display = 'flex';
+        }
+
+        // Función de login
+        function handleLogin() {
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.open('login');
+            }
+        }
+
+        // Función de logout
         function logout() {
             if (window.netlifyIdentity) {
                 window.netlifyIdentity.logout();
             }
         }
-        
-        // Load data and populate forms (modified to work with OAuth)
-        async function loadDataAndPopulate() {
-            try {
-                await loadData();
-                populateForms();
-            } catch (error) {
-                console.error('Error loading data:', error);
-                showStatus('Error cargando los datos del sitio', 'error');
-            }
-        }
-        
-        // Modified fetch function to include auth token
-        async function authenticatedFetch(url, options = {}) {
-            if (!window.netlifyIdentity) {
-                throw new Error('Netlify Identity no está inicializado');
-            }
-            
-            const user = window.netlifyIdentity.currentUser();
-            if (!user) {
-                throw new Error('Usuario no autenticado');
-            }
-            
-            // Get the access token
-            const token = await user.jwt();
-            
-            // Add authorization header
-            const headers = {
-                ...options.headers,
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            };
-            
-            return fetch(url, {
-                ...options,
-                headers
+
+        // ===============================
+        // FUNCIONES DEL ADMIN PANEL
+        // ===============================
+
+        // Navegación entre secciones
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
             });
-        }
-        
-        // Modified save function to use OAuth
-        async function saveChanges() {
-            const btn = document.querySelector('.save-btn');
-            btn.disabled = true;
-            btn.innerHTML = '<span class="loading-spinner"></span> Guardando...';
             
-            try {
-                // Update siteData from forms
-                siteData.siteTitle = document.getElementById('site-title-input').value;
-                
-                if (!siteData.meta) siteData.meta = {};
-                siteData.meta.copyright = document.getElementById('copyright-input').value;
-                
-                siteData.photographer = {
-                    name: document.getElementById('photographer-name-input').value,
-                    specialty: document.getElementById('photographer-specialty-input').value,
-                    experience: document.getElementById('photographer-experience-input').value,
-                    bio: document.getElementById('photographer-bio-input').value,
-                    image: document.getElementById('photographer-image-input').value
-                };
-                
-                siteData.hero = {
-                    title: document.getElementById('hero-title-input').value,
-                    subtitle: document.getElementById('hero-subtitle-input').value,
-                    image: document.getElementById('hero-image-input').value,
-                    ctaText: document.getElementById('hero-cta-input').value
-                };
-                
-                siteData.socialMedia = {
-                    show: {
-                        instagram: document.getElementById('show-instagram').checked,
-                        facebook: document.getElementById('show-facebook').checked,
-                        twitter: document.getElementById('show-twitter').checked,
-                        linkedin: document.getElementById('show-linkedin').checked,
-                        website: document.getElementById('show-website').checked
-                    },
-                    instagram: document.getElementById('instagram-input').value,
-                    facebook: document.getElementById('facebook-input').value,
-                    twitter: document.getElementById('twitter-input').value,
-                    linkedin: document.getElementById('linkedin-input').value,
-                    website: document.getElementById('website-input').value
-                };
-                
-                siteData.contact = {
-                    email: document.getElementById('contact-email-input').value,
-                    phone: document.getElementById('contact-phone-input').value,
-                    address: document.getElementById('contact-address-input').value,
-                    studio: document.getElementById('contact-studio-input').value,
-                    availability: document.getElementById('contact-availability-input').value
-                };
-                
-                // Send to Netlify Function with authentication
-                const response = await authenticatedFetch('/.netlify/functions/update-content', {
-                    method: 'POST',
-                    body: JSON.stringify(siteData)
-                });
-                
-                if (response.ok) {
-                    showStatus('¡Cambios guardados exitosamente!', 'success');
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
-                } else {
-                    const errorData = await response.json().catch(() => ({ error: 'Error desconocido' }));
-                    throw new Error(errorData.error || 'Error en la respuesta del servidor');
-                }
-                
-            } catch (error) {
-                console.error('Error saving:', error);
-                showStatus('Error guardando los cambios: ' + error.message, 'error');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '💾 Guardar Cambios';
-            }
-        }
-        
-        // Modified image upload to use OAuth
-        async function uploadImage(inputId, portfolioIndex, field) {
-            const input = document.getElementById(inputId);
-            if (input.type === 'text') return;
+            // Remover clase active de todos los botones
+            document.querySelectorAll('.admin-nav button').forEach(btn => {
+                btn.classList.remove('active');
+            });
             
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.accept = 'image/*';
-            fileInput.onchange = async (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    try {
-                        showStatus('Subiendo imagen...', 'info');
-                        
-                        const base64 = await fileToBase64(file);
-                        const fileName = generateFileName(file.name);
-                        
-                        // Upload to GitHub via Netlify Function with OAuth
-                        const response = await authenticatedFetch('/.netlify/functions/upload-image', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                fileName: fileName,
-                                fileContent: base64,
-                                portfolioIndex: portfolioIndex,
-                                field: field
-                            })
-                        });
-                        
-                        if (response.ok) {
-                            const result = await response.json();
-                            input.value = result.url;
-                            
-                            if (field === 'image') {
-                                updatePortfolioItem(portfolioIndex, 'image', result.url);
-                            }
-                            
-                            renderPortfolio();
-                            showStatus('¡Imagen subida exitosamente!', 'success');
-                        } else {
-                            const errorData = await response.json().catch(() => ({ error: 'Error desconocido' }));
-                            throw new Error(errorData.error || 'Error subiendo la imagen');
-                        }
-                        
-                    } catch (error) {
-                        console.error('Error uploading image:', error);
-                        showStatus('Error subiendo la imagen: ' + error.message, 'error');
-                    }
-                }
-            };
-            fileInput.click();
+            // Mostrar sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Activar botón correspondiente
+            event.target.classList.add('active');
         }
-        
-        // Show troubleshooting information
-        function showTroubleshooting() {
-            const troubleshooting = `
-                <div style="background: var(--color-off-white); padding: 1.5rem; border-radius: 8px; margin-top: 1rem; text-align: left;">
-                    <h3 style="margin-top: 0; color: var(--color-black);">🔧 Solución de Problemas</h3>
-                    <ul style="color: var(--color-dark-gray); line-height: 1.6;">
-                        <li><strong>No aparece el botón de GitHub:</strong> Verifica que Netlify Identity esté habilitado</li>
-                        <li><strong>Error 401:</strong> Tu sesión ha expirado, refresca la página</li>
-                        <li><strong>Error al guardar:</strong> Verifica que Git Gateway esté habilitado</li>
-                        <li><strong>Problemas de carga:</strong> Asegúrate de que las Netlify Functions estén desplegadas</li>
-                    </ul>
-                    <p style="font-size: 0.9rem; color: var(--color-medium-gray); margin-bottom: 0;">
-                        <strong>Documentación completa:</strong> Revisa los archivos de configuración incluidos
-                    </p>
+
+        // Agregar servicio
+        function addService() {
+            const servicesList = document.getElementById('services-list');
+            const serviceIndex = servicesList.children.length;
+            
+            const serviceDiv = document.createElement('div');
+            serviceDiv.className = 'list-item';
+            serviceDiv.innerHTML = `
+                <h4>Servicio ${serviceIndex + 1}</h4>
+                <div class="form-group">
+                    <label>Nombre del Servicio</label>
+                    <input type="text" id="service-name-${serviceIndex}" placeholder="Nombre del servicio">
                 </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="service-description-${serviceIndex}" rows="3" placeholder="Descripción del servicio"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Precio</label>
+                    <input type="text" id="service-price-${serviceIndex}" placeholder="Precio del servicio">
+                </div>
+                <button class="remove-btn" onclick="removeService(${serviceIndex})">Eliminar</button>
             `;
             
-            const loginContainer = document.querySelector('.login-container');
-            const existingTroubleshooting = loginContainer.querySelector('.troubleshooting');
-            if (existingTroubleshooting) {
-                existingTroubleshooting.remove();
-            } else {
-                const div = document.createElement('div');
-                div.className = 'troubleshooting';
-                div.innerHTML = troubleshooting;
-                loginContainer.appendChild(div);
-            }
+            servicesList.appendChild(serviceDiv);
         }
-        
-        // Show error message
-        function showError(message) {
-            const loginContainer = document.querySelector('.login-container');
-            const errorDiv = document.createElement('div');
-            errorDiv.style.cssText = `
-                background: var(--error-color);
-                color: white;
-                padding: 1rem;
-                border-radius: 8px;
-                margin: 1rem 0;
-                text-align: center;
-                font-weight: 500;
+
+        // Eliminar servicio
+        function removeService(index) {
+            document.getElementById('services-list').children[index].remove();
+        }
+
+        // Agregar proyecto de portfolio
+        function addPortfolioItem() {
+            const portfolioList = document.getElementById('portfolio-list');
+            const itemIndex = portfolioList.children.length;
+            
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'list-item';
+            itemDiv.innerHTML = `
+                <h4>Proyecto ${itemIndex + 1}</h4>
+                <div class="form-group">
+                    <label>Título del Proyecto</label>
+                    <input type="text" id="portfolio-title-${itemIndex}" placeholder="Título del proyecto">
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="portfolio-description-${itemIndex}" rows="3" placeholder="Descripción del proyecto"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Imagen del Proyecto</label>
+                    <input type="file" id="portfolio-image-${itemIndex}" accept="image/*" onchange="uploadImage('portfolio-image-${itemIndex}', ${itemIndex}, 'portfolio')">
+                    <img id="portfolio-image-${itemIndex}-preview" class="image-preview" style="display: none;">
+                </div>
+                <div class="form-group">
+                    <label>URL del Proyecto (opcional)</label>
+                    <input type="url" id="portfolio-url-${itemIndex}" placeholder="https://ejemplo.com">
+                </div>
+                <button class="remove-btn" onclick="removePortfolioItem(${itemIndex})">Eliminar</button>
             `;
-            errorDiv.textContent = message;
-            loginContainer.appendChild(errorDiv);
             
-            setTimeout(() => {
-                errorDiv.remove();
-            }, 5000);
+            portfolioList.appendChild(itemDiv);
         }
-        
-        // Initialize OAuth on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            // Add user info div
-            if (!document.getElementById('user-info')) {
-                const userInfoDiv = document.createElement('div');
-                userInfoDiv.id = 'user-info';
-                userInfoDiv.className = 'user-info';
-                document.body.appendChild(userInfoDiv);
-            }
+
+        // Eliminar proyecto de portfolio
+        function removePortfolioItem(index) {
+            document.getElementById('portfolio-list').children[index].remove();
+        }
+
+        // Agregar post de blog
+        function addBlogPost() {
+            const blogList = document.getElementById('blog-list');
+            const postIndex = blogList.children.length;
             
-            // Initialize Netlify Identity
-            setTimeout(() => {
-                initNetlifyIdentity();
-            }, 100);
-        });
-        
-        // Handle page visibility changes
-        document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'visible') {
-                // Check if user is still authenticated
-                if (window.netlifyIdentity) {
-                    const user = window.netlifyIdentity.currentUser();
-                    if (!user) {
-                        showLoginScreen();
-                    }
-                }
+            const postDiv = document.createElement('div');
+            postDiv.className = 'list-item';
+            postDiv.innerHTML = `
+                <h4>Post ${postIndex + 1}</h4>
+                <div class="form-group">
+                    <label>Título del Post</label>
+                    <input type="text" id="blog-title-${postIndex}" placeholder="Título del artículo">
+                </div>
+                <div class="form-group">
+                    <label>Contenido</label>
+                    <textarea id="blog-content-${postIndex}" rows="6" placeholder="Contenido del artículo"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Imagen del Post</label>
+                    <input type="file" id="blog-image-${postIndex}" accept="image/*" onchange="uploadImage('blog-image-${postIndex}', ${postIndex}, 'blog')">
+                    <img id="blog-image-${postIndex}-preview" class="image-preview" style="display: none;">
+                </div>
+                <div class="form-group">
+                    <label>Fecha de Publicación</label>
+                    <input type="date" id="blog-date-${postIndex}">
+                </div>
+                <button class="remove-btn" onclick="removeBlogPost(${postIndex})">Eliminar</button>
+            `;
+            
+            blogList.appendChild(postDiv);
+        }
+
+        // Eliminar post de blog
+        function removeBlogPost(index) {
+            document.getElementById('blog-list').children[index].remove();
+        }
+
+        // Subir imagen (placeholder - implementar según necesidades)
+        function uploadImage(inputId) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(inputId + '-preview');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
             }
+        }
+
+        // Guardar cambios (placeholder - implementar lógica de guardado)
+        function saveChanges() {
+            // Aquí iría la lógica para guardar los datos
+            // Por ahora, solo muestra un mensaje
+            alert('Los cambios se guardarían aquí. Implementar según necesidades.');
+        }
+
+        // ===============================
+        // INICIALIZACIÓN
+        // ===============================
+
+        // Configurar Netlify Identity cuando la página esté lista
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Inicializando admin panel...');
+            
+            // Configurar botón de login
+            document.getElementById('login-btn').addEventListener('click', handleLogin);
+            
+            // Configurar Netlify Identity
+            setTimeout(setupNetlifyIdentity, 1000);
         });
     </script>
 </body>
